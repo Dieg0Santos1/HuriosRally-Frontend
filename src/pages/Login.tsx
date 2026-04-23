@@ -1,11 +1,11 @@
-// src/pages/Login.tsx
-// import { Input } from "../components/Input";
-// import { ButtonState } from "../components/ButtonState";
+
+import { Input } from "../components/Input";
+import { ButtonState } from "../components/ButtonState";
 import { useState } from "react";
-// import { loginUser } from "../api/auth";
-// import { saveToken, saveRole } from "../utils/token";
+import { loginUser } from "../api/auth";
+import { saveToken, saveRole } from "../utils/token";
 import { useNavigate, Link } from "react-router-dom";
-// import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar";
 
 export function Login() {
   const [selectedRole, setSelectedRole] = useState<"CLIENTE" | "ADMINISTRADOR" | null>(null);
@@ -15,28 +15,28 @@ export function Login() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     setError(null);
-//     if (!isFormValid || !selectedRole) return;
-//     setClicked(true);
-//     try {
-//       const res = await loginUser({ email: correo, password: clave, role: selectedRole });
-//       // res: { token, role }
-//       saveToken(res.token);
-//       saveRole(res.role);
-//       // redirigir a home
-//       navigate("/");
-//     } catch (err: unknown) {
-//       if (err instanceof Error) {
-//         setError(err.message);
-//       } else {
-//         setError("Error al iniciar sesión");
-//       }
-//     } finally {
-//       setClicked(false);
-//     }
-//   };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    if (!isFormValid || !selectedRole) return;
+    setClicked(true);
+    try {
+      const res = await loginUser({ email: correo, password: clave, role: selectedRole });
+      // res: { token, role }
+      saveToken(res.token);
+      saveRole(res.role);
+      // redirigir a home
+      navigate("/");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Error al iniciar sesión");
+      }
+    } finally {
+      setClicked(false);
+    }
+  };
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
   const isPasswordMatch = clave.length >= 8;
@@ -44,7 +44,7 @@ export function Login() {
 
   return (
     <>
-    {/* <Navbar/> */}
+    <Navbar/>
     <main className="min-h-screen bg-gradient-to-br from-[var(--Primary_0)] via-[var(--Primary_1)] to-[var(--Primary_2)] flex flex-col justify-center items-center relative overflow-hidden">
       {/* Elementos decorativos de fondo */}
       <div className="absolute inset-0 overflow-hidden">
@@ -74,7 +74,7 @@ export function Login() {
           </div>
 
           {/* Formulario */}
-          <form /*onSubmit={handleSubmit}*/ className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Selección de rol */}
             {!selectedRole ? (
               <div className="space-y-4">
@@ -146,18 +146,18 @@ export function Login() {
                   </button>
                 </div>
                 <div className="space-y-4">
-                  {/* <Input 
+                  <Input 
                     label="Correo electrónico" 
                     type="email" 
                     placeholder="ejemplo@gmail.com" 
                     onChange={(e) => setCorreo(e.target.value)} 
-                  /> */}
-                  {/* <Input 
+                  />
+                   <Input 
                     label="Contraseña" 
                     type="password" 
                     placeholder="********" 
                     onChange={(e) => setClave(e.target.value)} 
-                  /> */}
+                  />
                 </div>
 
                 {/* Error message */}
@@ -169,12 +169,12 @@ export function Login() {
 
                 {/* Botón principal */}
                 <div className="space-y-4">
-                  {/* <ButtonState 
+                  <ButtonState 
                     initialText="Iniciar sesión" 
                     successText="¡Ingreso exitoso!" 
                     disabled={!isFormValid || !selectedRole} 
                     clicked={clicked} 
-                  /> */}
+                  />
                   
                   {/* Enlace de registro */}
                   <a 

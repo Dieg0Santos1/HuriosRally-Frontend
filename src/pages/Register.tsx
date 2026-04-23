@@ -1,7 +1,7 @@
-// src/pages/Register.tsx
+
 import React, { useState } from "react";
-// import { ButtonState } from "../components/ButtonState";
-// import { Input } from "../components/Input";
+import { ButtonState } from "../components/ButtonState";
+import { Input } from "../components/Input";
 import { useNavigate } from "react-router-dom";
 
 /*
