@@ -1,7 +1,6 @@
-
 import React, { useState } from "react";
 import { ButtonState } from "../components/ButtonState";
-import { Input } from "../components/Input";
+import { Input } from "../components/ui/Input";
 import { useNavigate } from "react-router-dom";
 
 /*
