@@ -29,7 +29,7 @@ import { Category } from "../pages/Category";
 
 function LocationDebugger() {
   const loc = useLocation();
-  // imprime en consola cada vez que cambia la ubicaciÃ³n
+  // imprime en consola cada vez que cambia la ubicación
   console.log("[Router] location changed:", loc);
   return (
     <div style={{ position: "fixed", right: 8, bottom: 8, zIndex: 9999 }}>
@@ -87,6 +87,5 @@ const AppRoutes: React.FC = () => (
 );
 
 export default AppRoutes;
-
 
 
