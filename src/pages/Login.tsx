@@ -1,11 +1,11 @@
-
-import { Input } from "../components/Input";
-import { ButtonState } from "../components/ButtonState";
+﻿
+import { Input } from "../components/ui/Input";
+import { ButtonState } from "../components/ui/ButtonState";
 import { useState } from "react";
 import { loginUser } from "../api/auth";
 import { saveToken, saveRole } from "../utils/token";
 import { useNavigate, Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/layout/Navbar";
 
 export function Login() {
   const [selectedRole, setSelectedRole] = useState<"CLIENTE" | "ADMINISTRADOR" | null>(null);
@@ -31,7 +31,7 @@ export function Login() {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("Error al iniciar sesión");
+        setError("Error al iniciar sesiÃ³n");
       }
     } finally {
       setClicked(false);
@@ -69,13 +69,13 @@ export function Login() {
               Bienvenido de vuelta
             </h1>
             <p className="text-[var(--Primary_5)] text-sm">
-              Inicia sesión en tu cuenta
+              Inicia sesiÃ³n en tu cuenta
             </p>
           </div>
 
           {/* Formulario */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Selección de rol */}
+            {/* SelecciÃ³n de rol */}
             {!selectedRole ? (
               <div className="space-y-4">
                 <h2 className="text-center text-lg font-semibold text-[var(--Primary_6)] mb-4">
@@ -147,13 +147,13 @@ export function Login() {
                 </div>
                 <div className="space-y-4">
                   <Input 
-                    label="Correo electrónico" 
+                    label="Correo electrÃ³nico" 
                     type="email" 
                     placeholder="ejemplo@gmail.com" 
                     onChange={(e) => setCorreo(e.target.value)} 
                   />
                    <Input 
-                    label="Contraseña" 
+                    label="ContraseÃ±a" 
                     type="password" 
                     placeholder="********" 
                     onChange={(e) => setClave(e.target.value)} 
@@ -167,11 +167,11 @@ export function Login() {
                   </div>
                 )}
 
-                {/* Botón principal */}
+                {/* BotÃ³n principal */}
                 <div className="space-y-4">
                   <ButtonState 
-                    initialText="Iniciar sesión" 
-                    successText="¡Ingreso exitoso!" 
+                    initialText="Iniciar sesiÃ³n" 
+                    successText="Â¡Ingreso exitoso!" 
                     disabled={!isFormValid || !selectedRole} 
                     clicked={clicked} 
                   />
@@ -185,13 +185,13 @@ export function Login() {
                   </a>
                 </div>
 
-                {/* Enlace de recuperación */}
+                {/* Enlace de recuperaciÃ³n */}
                 <div className="text-center">
                   <Link 
                     to="/reset-password" 
                     className="text-[var(--Primary_5)] hover:text-[var(--Primary_6)] text-sm font-medium transition-colors duration-200 hover:underline"
                   >
-                    ¿Olvidaste tu contraseña?
+                    Â¿Olvidaste tu contraseÃ±a?
                   </Link>
                 </div>
               </div>
@@ -210,3 +210,4 @@ export function Login() {
     </>
   );
 }
+
