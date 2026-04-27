@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getToken, getRole } from '../utils/token';
 import { getUserProfile } from '../api/user';
 
 /**
- * Hook para proteger rutas según el rol del usuario
+ * Hook para proteger rutas segÃºn el rol del usuario
  * Redirige a admins que intenten acceder a rutas de compra
  */
 export function useRoleProtection(protectedRoute: 'products' | 'cart' | 'checkout' | 'payment') {
@@ -14,7 +14,7 @@ export function useRoleProtection(protectedRoute: 'products' | 'cart' | 'checkou
     const checkAccess = async () => {
       const token = getToken();
       
-      // Si no hay token, permitir acceso (el usuario no está logueado)
+      // Si no hay token, permitir acceso (el usuario no estÃ¡ logueado)
       if (!token) {
         return;
       }
@@ -42,3 +42,6 @@ export function useRoleProtection(protectedRoute: 'products' | 'cart' | 'checkou
     checkAccess();
   }, [navigate, protectedRoute]);
 }
+
+
+

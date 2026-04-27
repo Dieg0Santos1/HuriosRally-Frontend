@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import Navbar from "../components/Navbar";
+﻿import React, { useMemo, useState } from "react";
+import Navbar from "../components/layout/Navbar";
 import { useNavigate } from "react-router-dom";
 
 type Provider = {
@@ -35,7 +35,7 @@ export default function Proveedores() {
   const [newDate, setNewDate] = useState("");
   const [newStatus, setNewStatus] = useState("");
   const [newAmount, setNewAmount] = useState("");
-  // edición por fila
+  // ediciÃ³n por fila
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editName, setEditName] = useState("");
   const [editDate, setEditDate] = useState("");
@@ -78,7 +78,7 @@ export default function Proveedores() {
   };
 
   const deleteProvider = (id: number) => {
-    if (!confirm('¿Eliminar registro? Esta acción no se puede deshacer.')) return;
+    if (!confirm('Â¿Eliminar registro? Esta acciÃ³n no se puede deshacer.')) return;
     setProviders(prev => prev.filter(p => p.id !== id));
   };
 
@@ -152,14 +152,14 @@ export default function Proveedores() {
           </div>
 
           <div className="mt-3 flex items-center justify-center gap-2">
-            <button onClick={() => setPage(1)} className="px-2 py-1 border rounded">«</button>
-            <button onClick={() => setPage(p => Math.max(1, p-1))} className="px-2 py-1 border rounded">‹</button>
+            <button onClick={() => setPage(1)} className="px-2 py-1 border rounded">Â«</button>
+            <button onClick={() => setPage(p => Math.max(1, p-1))} className="px-2 py-1 border rounded">â€¹</button>
             {/* simple numeric pages */}
             {Array.from({ length: totalPages }).map((_, i) => (
               <button key={i} onClick={() => setPage(i+1)} className={`px-2 py-1 border rounded ${page===i+1 ? 'bg-[var(--Primary_3)] text-white' : ''}`}>{i+1}</button>
             ))}
-            <button onClick={() => setPage(p => Math.min(totalPages, p+1))} className="px-2 py-1 border rounded">›</button>
-            <button onClick={() => setPage(totalPages)} className="px-2 py-1 border rounded">»</button>
+            <button onClick={() => setPage(p => Math.min(totalPages, p+1))} className="px-2 py-1 border rounded">â€º</button>
+            <button onClick={() => setPage(totalPages)} className="px-2 py-1 border rounded">Â»</button>
           </div>
 
           {/* Add modal */}
@@ -168,7 +168,7 @@ export default function Proveedores() {
               <div className="bg-white rounded-md w-full max-w-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-medium">Agregar Proveedor</h3>
-                  <button onClick={() => setShowAddModal(false)} className="text-gray-600">✕</button>
+                  <button onClick={() => setShowAddModal(false)} className="text-gray-600">âœ•</button>
                 </div>
                 <form onSubmit={saveNew} className="grid grid-cols-1 gap-3">
                   <label className="text-sm">Proveedor</label>
@@ -212,7 +212,7 @@ export default function Proveedores() {
               <div className="bg-white rounded-md w-full max-w-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-medium">Actualizar Proveedor</h3>
-                  <button onClick={() => setEditingId(null)} className="text-gray-600">✕</button>
+                  <button onClick={() => setEditingId(null)} className="text-gray-600">âœ•</button>
                 </div>
                 <form onSubmit={(e) => { e.preventDefault(); saveEdit(); }} className="grid grid-cols-1 gap-3">
                   <label className="text-sm">Proveedor</label>
@@ -255,3 +255,4 @@ export default function Proveedores() {
     </>
   );
 }
+

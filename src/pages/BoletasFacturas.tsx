@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import Navbar from "../components/Navbar";
+﻿import React, { useMemo, useState } from "react";
+import Navbar from "../components/layout/Navbar";
 import { useNavigate } from "react-router-dom";
 
 type Invoice = {
@@ -19,7 +19,7 @@ export default function BoletasFacturas() {
   });
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
-  // ejemplos estáticos (front-end only)
+  // ejemplos estÃ¡ticos (front-end only)
   const [invoices] = useState<Invoice[]>([
     { id: 1, client: "Cliente_1", amount: 40, type: "boleta", date: new Date().toISOString(), file: "#" },
     { id: 2, client: "Cliente_2", amount: 38, type: "factura", date: new Date(Date.now() - 86400 * 1000 * 2).toISOString(), file: "#" },
@@ -40,7 +40,7 @@ export default function BoletasFacturas() {
     return map;
   }, [invoices]);
 
-  // días del mes visible (no memoizado para simplicidad)
+  // dÃ­as del mes visible (no memoizado para simplicidad)
   const days = (() => {
     const y = visibleMonth.getFullYear();
     const m = visibleMonth.getMonth();
@@ -56,7 +56,7 @@ export default function BoletasFacturas() {
   const goPrev = () => setVisibleMonth(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
   const goNext = () => setVisibleMonth(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
 
-  // tabla simple: paginación local
+  // tabla simple: paginaciÃ³n local
   const [page, setPage] = useState(1);
   const perPage = 5;
   const paged = useMemo(() => {
@@ -83,13 +83,13 @@ export default function BoletasFacturas() {
                   <div className="text-xs text-gray-500">{visibleMonth.toLocaleString(undefined, { month: 'long', year: 'numeric' }).toUpperCase()}</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button onClick={goPrev} className="px-2 py-1 border rounded">◀</button>
-                  <button onClick={goNext} className="px-2 py-1 border rounded">▶</button>
+                  <button onClick={goPrev} className="px-2 py-1 border rounded">â—€</button>
+                  <button onClick={goNext} className="px-2 py-1 border rounded">â–¶</button>
                 </div>
               </div>
 
               <div className="grid grid-cols-7 gap-1 text-center text-sm mb-2">
-                {['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'].map(d => (
+                {['Dom','Lun','Mar','MiÃ©','Jue','Vie','SÃ¡b'].map(d => (
                   <div key={d} className="text-xs text-gray-500">{d}</div>
                 ))}
               </div>
@@ -143,10 +143,10 @@ export default function BoletasFacturas() {
               </div>
 
               <div className="mt-4 flex items-center justify-between">
-                <div className="text-xs text-gray-500">Página {page}</div>
+                <div className="text-xs text-gray-500">PÃ¡gina {page}</div>
                 <div className="flex items-center gap-2">
-                  <button onClick={() => setPage(p => Math.max(1, p-1))} className="px-2 py-1 border rounded">‹</button>
-                  <button onClick={() => setPage(p => p+1)} className="px-2 py-1 border rounded">›</button>
+                  <button onClick={() => setPage(p => Math.max(1, p-1))} className="px-2 py-1 border rounded">â€¹</button>
+                  <button onClick={() => setPage(p => p+1)} className="px-2 py-1 border rounded">â€º</button>
                 </div>
               </div>
             </div>
@@ -161,7 +161,7 @@ export default function BoletasFacturas() {
               </div>
               <ul className="text-sm">
                 {(invoicesByDate[selectedDate] || []).map(it => (
-                  <li key={it.id} className="py-1 border-b">{it.client} — S/ {it.amount} — {it.type}</li>
+                  <li key={it.id} className="py-1 border-b">{it.client} â€” S/ {it.amount} â€” {it.type}</li>
                 ))}
                 {(invoicesByDate[selectedDate] || []).length === 0 && <li className="text-gray-500">No hay llegadas para esta fecha.</li>}
               </ul>
@@ -175,3 +175,4 @@ export default function BoletasFacturas() {
 }
 
 function s(n: number) { return n === 1 ? '' : 's' }
+

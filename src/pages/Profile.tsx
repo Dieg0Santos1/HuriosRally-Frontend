@@ -1,15 +1,15 @@
-// src/pages/Profile.tsx
+﻿// src/pages/Profile.tsx
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getToken, getRole } from "../utils/token";
 import { getUserProfile } from "../api/user";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
 export function Profile() {
   const navigate = useNavigate();
   useEffect(() => {
     const redirectToCorrectProfile = async () => {
-      // Verificar autenticación
+      // Verificar autenticaciÃ³n
       if (!getToken()) {
         navigate("/login");
         return;
@@ -22,7 +22,7 @@ export function Profile() {
           const profile = await getUserProfile();
           userRole = profile.role || "CLIENTE";
         }
-        // Redirigir según el rol
+        // Redirigir segÃºn el rol
         if (userRole === "ADMINISTRADOR") {
           navigate("/admin-profile", { replace: true });
         } else {
@@ -50,3 +50,5 @@ export function Profile() {
     </>
   );
 }
+
+

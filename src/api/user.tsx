@@ -1,4 +1,4 @@
-// src/api/user.tsx
+﻿// src/api/user.tsx
 import { getToken } from "../utils/token";
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
 //Es una clase que ayuda a saber y modificar las propiedades de un usuario
@@ -11,11 +11,11 @@ export interface UserProfile {
   createdAt?: string;
   profileImage?: string;
 }
-//Sirve para que el usuario pueda iniciar sesión
+//Sirve para que el usuario pueda iniciar sesiÃ³n
 export async function getUserProfile(): Promise<UserProfile> {
   const token = getToken();
   if (!token) {
-    throw new Error("No hay sesión activa");
+    throw new Error("No hay sesiÃ³n activa");
   }
 
   try {
@@ -35,7 +35,7 @@ export async function getUserProfile(): Promise<UserProfile> {
     return await res.json();
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
+      throw new Error("No se puede conectar con el servidor. Verifica que el backend estÃ© corriendo.");
     }
     throw error;
   }
@@ -44,7 +44,7 @@ export async function getUserProfile(): Promise<UserProfile> {
 export async function updateUserProfile(updates: Partial<UserProfile>): Promise<void> {
   const token = getToken();
   if (!token) {
-    throw new Error("No hay sesión activa");
+    throw new Error("No hay sesiÃ³n activa");
   }
 
   try {
@@ -63,7 +63,7 @@ export async function updateUserProfile(updates: Partial<UserProfile>): Promise<
     }
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
+      throw new Error("No se puede conectar con el servidor. Verifica que el backend estÃ© corriendo.");
     }
     throw error;
   }
@@ -75,7 +75,7 @@ export async function updateUserProfile(updates: Partial<UserProfile>): Promise<
 export async function uploadProfileImage(file: File): Promise<{ imageUrl: string }> {
   const token = getToken();
   if (!token) {
-    throw new Error("No hay sesión activa");
+    throw new Error("No hay sesiÃ³n activa");
   }
 
   try {
@@ -98,8 +98,9 @@ export async function uploadProfileImage(file: File): Promise<{ imageUrl: string
     return await res.json();
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
+      throw new Error("No se puede conectar con el servidor. Verifica que el backend estÃ© corriendo.");
     }
     throw error;
   }
 }
+

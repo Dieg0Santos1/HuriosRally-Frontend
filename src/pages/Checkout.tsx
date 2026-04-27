@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
+import Footer from "../components/layout/Footer";
+import Navbar from "../components/layout/Navbar";
 import { useCart } from "../context/CartContext";
 import { getToken } from "../utils/token";
 import { useRoleProtection } from "../hooks/useRoleProtection";
@@ -46,7 +46,7 @@ export function Checkout() {
     });
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    // Verificar autenticación
+    // Verificar autenticaciÃ³n
     useEffect(() => {
         const token = getToken();
         if (!token) {
@@ -54,7 +54,7 @@ export function Checkout() {
         }
     }, [navigate]);
 
-    // Verificar si el carrito está vacío
+    // Verificar si el carrito estÃ¡ vacÃ­o
     useEffect(() => {
         if (items.length === 0) {
             navigate("/cart");
@@ -69,23 +69,23 @@ export function Checkout() {
     ) => {
         const { name, value } = e.target;
         
-        // Validaciones de entrada según el tipo de campo
+        // Validaciones de entrada segÃºn el tipo de campo
         let newValue = value;
         
         // Campos que solo permiten letras (nombres)
         if (name === "fullName" || name === "companyName" || name === "deliveryDistrict") {
-            // Permitir solo letras, espacios, tildes y caracteres especiales del español
-            newValue = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, "");
+            // Permitir solo letras, espacios, tildes y caracteres especiales del espaÃ±ol
+            newValue = value.replace(/[^a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ±Ã‘Ã¼Ãœ\s]/g, "");
         }
         
-        // Campos que solo permiten números
+        // Campos que solo permiten nÃºmeros
         if (name === "phone" || name === "dni" || name === "ruc") {
-            // Permitir solo números
+            // Permitir solo nÃºmeros
             newValue = value.replace(/[^0-9]/g, "");
         }
         
-        // Campos de dirección permiten letras, números y caracteres especiales
-        // (deliveryAddress, companyAddress, deliveryReference) - no requieren validación adicional
+        // Campos de direcciÃ³n permiten letras, nÃºmeros y caracteres especiales
+        // (deliveryAddress, companyAddress, deliveryReference) - no requieren validaciÃ³n adicional
         
         setFormData((prev) => ({ ...prev, [name]: newValue }));
         // Limpiar error del campo
@@ -106,17 +106,17 @@ export function Checkout() {
             newErrors.fullName = "El nombre completo es requerido";
         }
         if (!formData.phone.trim()) {
-            newErrors.phone = "El número de celular es requerido";
+            newErrors.phone = "El nÃºmero de celular es requerido";
         } else if (!/^\d{9}$/.test(formData.phone)) {
-            newErrors.phone = "El número debe tener 9 dígitos";
+            newErrors.phone = "El nÃºmero debe tener 9 dÃ­gitos";
         }
 
-        // Validaciones según tipo de documento
+        // Validaciones segÃºn tipo de documento
         if (formData.documentType === "dni") {
             if (!formData.dni.trim()) {
                 newErrors.dni = "El DNI es requerido";
             } else if (!/^\d{8}$/.test(formData.dni)) {
-                newErrors.dni = "El DNI debe tener 8 dígitos";
+                newErrors.dni = "El DNI debe tener 8 dÃ­gitos";
             }
         } else {
             if (!formData.companyName.trim()) {
@@ -125,17 +125,17 @@ export function Checkout() {
             if (!formData.ruc.trim()) {
                 newErrors.ruc = "El RUC es requerido";
             } else if (!/^\d{11}$/.test(formData.ruc)) {
-                newErrors.ruc = "El RUC debe tener 11 dígitos";
+                newErrors.ruc = "El RUC debe tener 11 dÃ­gitos";
             }
             if (!formData.companyAddress.trim()) {
-                newErrors.companyAddress = "La dirección de la empresa es requerida";
+                newErrors.companyAddress = "La direcciÃ³n de la empresa es requerida";
             }
         }
 
         // Validaciones de entrega a domicilio
         if (formData.deliveryMethod === "delivery") {
             if (!formData.deliveryAddress.trim()) {
-                newErrors.deliveryAddress = "La dirección de entrega es requerida";
+                newErrors.deliveryAddress = "La direcciÃ³n de entrega es requerida";
             }
             if (!formData.deliveryDistrict.trim()) {
                 newErrors.deliveryDistrict = "El distrito es requerido";
@@ -149,7 +149,7 @@ export function Checkout() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (validateForm()) {
-            // Guardar datos en sessionStorage para usar en la página de pago
+            // Guardar datos en sessionStorage para usar en la pÃ¡gina de pago
             sessionStorage.setItem("checkoutData", JSON.stringify(formData));
             navigate("/payment");
         }
@@ -167,7 +167,7 @@ export function Checkout() {
                             onClick={() => navigate("/cart")}
                             className="text-[var(--Primary_5)] hover:underline text-sm"
                         >
-                            ← Volver al carrito
+                            â† Volver al carrito
                         </button>
                     </div>
 
@@ -175,10 +175,10 @@ export function Checkout() {
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             {/* Formulario principal */}
                             <div className="lg:col-span-2 space-y-6">
-                                {/* Información personal */}
+                                {/* InformaciÃ³n personal */}
                                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                                     <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                                        Información Personal
+                                        InformaciÃ³n Personal
                                     </h2>
                                     <div className="space-y-4">
                                         <div>
@@ -191,7 +191,7 @@ export function Checkout() {
                                                 value={formData.fullName}
                                                 onChange={handleInputChange}
                                                 className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--Primary_5)]"
-                                                placeholder="Juan Pérez García"
+                                                placeholder="Juan PÃ©rez GarcÃ­a"
                                             />
                                             {errors.fullName && (
                                                 <p className="text-xs text-red-600 mt-1">{errors.fullName}</p>
@@ -200,7 +200,7 @@ export function Checkout() {
 
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Número de Celular *
+                                                NÃºmero de Celular *
                                             </label>
                                             <input
                                                 type="tel"
@@ -306,7 +306,7 @@ export function Checkout() {
                                                 </div>
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        Dirección Fiscal *
+                                                        DirecciÃ³n Fiscal *
                                                     </label>
                                                     <input
                                                         type="text"
@@ -327,10 +327,10 @@ export function Checkout() {
                                     </div>
                                 </div>
 
-                                {/* Método de entrega */}
+                                {/* MÃ©todo de entrega */}
                                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                                     <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                                        Método de Entrega
+                                        MÃ©todo de Entrega
                                     </h2>
                                     <div className="space-y-4">
                                         {/* Retiro en tienda */}
@@ -361,18 +361,18 @@ export function Checkout() {
                                                         Retiro en Tienda
                                                     </h3>
                                                     <p className="text-sm text-gray-600 mt-1">
-                                                        Gratis - Disponible desde mañana
+                                                        Gratis - Disponible desde maÃ±ana
                                                     </p>
                                                     {formData.deliveryMethod === "pickup" && (
                                                         <div className="mt-3 bg-white rounded-md p-3 border border-gray-200">
                                                             <p className="text-sm font-medium text-gray-900">
-                                                                📍 Dirección de recojo:
+                                                                ðŸ“ DirecciÃ³n de recojo:
                                                             </p>
                                                             <p className="text-sm text-gray-700 mt-1">
                                                                 Av. 22 de Agosto 1012, Comas 15312
                                                             </p>
                                                             <p className="text-xs text-gray-500 mt-2">
-                                                                Tu pedido estará listo para recoger desde el día
+                                                                Tu pedido estarÃ¡ listo para recoger desde el dÃ­a
                                                                 siguiente
                                                             </p>
                                                         </div>
@@ -410,14 +410,14 @@ export function Checkout() {
                                                     </h3>
                                                     <p className="text-sm text-gray-600 mt-1">
                                                         {totalPrice >= 200
-                                                            ? "Gratis - Envío priorizado"
-                                                            : "S/ 10.00 - 3-5 días hábiles"}
+                                                            ? "Gratis - EnvÃ­o priorizado"
+                                                            : "S/ 10.00 - 3-5 dÃ­as hÃ¡biles"}
                                                     </p>
                                                     {formData.deliveryMethod === "delivery" && (
                                                         <div className="mt-3 space-y-3">
                                                             <div>
                                                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                                    Dirección de Entrega *
+                                                                    DirecciÃ³n de Entrega *
                                                                 </label>
                                                                 <input
                                                                     type="text"
@@ -492,7 +492,7 @@ export function Checkout() {
                                             </span>
                                         </div>
                                         <div className="flex justify-between text-sm">
-                                            <span className="text-gray-600">Envío</span>
+                                            <span className="text-gray-600">EnvÃ­o</span>
                                             <span
                                                 className={`font-medium ${
                                                     shippingCost === 0 ? "text-green-600" : ""
@@ -528,7 +528,7 @@ export function Checkout() {
                                                         <path d="m9 12 2 2 4-4"></path>
                                                         <circle cx={12} cy={12} r={10}></circle>
                                                     </svg>
-                                                    ¡Envío gratis y priorizado!
+                                                    Â¡EnvÃ­o gratis y priorizado!
                                                 </p>
                                             </div>
                                         )}
@@ -541,7 +541,7 @@ export function Checkout() {
                                         </button>
 
                                         <p className="text-xs text-gray-500 text-center mt-3">
-                                            Al continuar, aceptas nuestros términos y condiciones
+                                            Al continuar, aceptas nuestros tÃ©rminos y condiciones
                                         </p>
                                     </div>
 
@@ -588,3 +588,5 @@ export function Checkout() {
         </>
     );
 }
+
+

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { ButtonAdmin } from "../components/ButtonAdmin";
+import Navbar from "../components/layout/Navbar";
+import { ButtonAdmin } from "../components/ui/ButtonAdmin";
 import { getUserProfile, updateUserProfile, type UserProfile as UserProfileType } from "../api/user";
 import { getToken } from "../utils/token";
 import { useAdminSessionTimeout } from "../hooks/useAdminSessionTimeout";
-import { ProfileAvatar } from "../components/ProfileAvatar";
+import { ProfileAvatar } from "../components/user/ProfileAvatar";
 
 export function AdminProfile() {
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ export function AdminProfile() {
     const [fullName, setFullName] = useState("");
 
     useEffect(() => {
-        // Verificar autenticación
+        // Verificar autenticaciÃ³n
         if (!getToken()) {
             navigate("/login");
             return;
@@ -67,7 +67,7 @@ export function AdminProfile() {
             // Recargar perfil
             await loadProfile();
 
-            // Ocultar mensaje después de 3 segundos
+            // Ocultar mensaje despuÃ©s de 3 segundos
             setTimeout(() => setSuccessMessage(null), 3000);
         } catch (err: unknown) {
             if (err instanceof Error) {
@@ -92,7 +92,7 @@ export function AdminProfile() {
             const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
             const endpoint = `${API_BASE}/export/${type}`;
             
-            // Realizar petición fetch para obtener el archivo
+            // Realizar peticiÃ³n fetch para obtener el archivo
             const response = await fetch(endpoint);
             
             if (!response.ok) {
@@ -105,7 +105,7 @@ export function AdminProfile() {
             // Crear URL temporal para el blob
             const url = window.URL.createObjectURL(blob);
             
-            // Crear enlace temporal y hacer clic automáticamente
+            // Crear enlace temporal y hacer clic automÃ¡ticamente
             const link = document.createElement('a');
             link.href = url;
             
@@ -121,7 +121,7 @@ export function AdminProfile() {
             // Liberar la URL del blob
             window.URL.revokeObjectURL(url);
             
-            setSuccessMessage(`¡Archivo exportado correctamente!`);
+            setSuccessMessage(`Â¡Archivo exportado correctamente!`);
             setTimeout(() => setSuccessMessage(null), 3000);
         } catch (err: unknown) {
             if (err instanceof Error) {
@@ -161,7 +161,7 @@ export function AdminProfile() {
                                 {/* Avatar con subida de imagen */}
                                 <ProfileAvatar
                                     imageUrl={profile?.profileImage}
-                                    onImageUpdate={async (newImageUrl) => {
+                                    onImageUpdate={async (_newImageUrl) => {
                                         // La imagen ya fue guardada en el backend por uploadProfileImage
                                         // Solo recargamos el perfil para reflejar el cambio
                                         await loadProfile();
@@ -201,7 +201,7 @@ export function AdminProfile() {
                         <ButtonAdmin label="PROVEEDORES" route="/proveedores" />
                     </section>
 
-                    {/* Botones de exportación */}
+                    {/* Botones de exportaciÃ³n */}
                     <section className="bg-white rounded-lg shadow-md p-6 mb-6">
                         <h2 className="text-xl font-semibold text-gray-900 mb-4">Exportar Reportes</h2>
                         <div className="flex gap-4 flex-wrap">
@@ -263,13 +263,13 @@ export function AdminProfile() {
 
                     {/* Formulario */}
                     <div className="bg-white rounded-lg shadow-md p-6">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-6">Información personal</h2>
+                        <h2 className="text-xl font-semibold text-gray-900 mb-6">InformaciÃ³n personal</h2>
 
                         <form onSubmit={handleSave} className="space-y-6">
                             {/* Email (solo lectura) */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Correo electrónico
+                                    Correo electrÃ³nico
                                 </label>
                                 <input
                                     type="email"
@@ -322,3 +322,5 @@ export function AdminProfile() {
         </>
     );
 }
+
+

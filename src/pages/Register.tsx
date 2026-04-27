@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ButtonState } from "../components/ButtonState";
+﻿import React, { useState } from "react";
+import { ButtonState } from "../components/ui/ButtonState";
 import { Input } from "../components/ui/Input";
 import { useNavigate } from "react-router-dom";
 
@@ -8,11 +8,11 @@ import { useNavigate } from "react-router-dom";
   - formulario de registro (nombre, correo, celular, clave)
   - al registrar exitosamente: redirige a /verify-email?email=<email>
   - llama al endpoint POST /auth/register en el backend
-  - usa import.meta.env.VITE_API_URL si está definido, sino http://localhost:8080
+  - usa import.meta.env.VITE_API_URL si estÃ¡ definido, sino http://localhost:8080
 */
 
 export function Register() {
-  const navigate = useNavigate(); // hook para navegar programáticamente
+  const navigate = useNavigate(); // hook para navegar programÃ¡ticamente
 
   // campos del formulario
   const [nombre, setNombre] = useState("");
@@ -22,13 +22,13 @@ export function Register() {
   const [repetirClave, setRepetirClave] = useState("");
 
   // estados UI
-  const [clicked, setClicked] = useState(false); // para ButtonState (animación)
+  const [clicked, setClicked] = useState(false); // para ButtonState (animaciÃ³n)
   const [loading, setLoading] = useState(false);  // para bloquear UI mientras se hace la llamada
   const [error, setError] = useState<string | null>(null); // mostrar errores al usuario
 
   // validaciones locales
   const isEmailValid = (() => {
-    // Lista de dominios válidos conocidos
+    // Lista de dominios vÃ¡lidos conocidos
     const validDomains = [
       'gmail', 'yahoo', 'hotmail', 'outlook', 'live', 'msn', 'icloud', 'me',
       'aol', 'protonmail', 'tutanota', 'zoho', 'yandex', 'mail', 'gmx',
@@ -40,7 +40,7 @@ export function Register() {
       'empresa', 'company', 'corp', 'business', 'work', 'office'
     ];
     
-    // Expresión regular para extraer el dominio
+    // ExpresiÃ³n regular para extraer el dominio
     const emailPattern = /^[^\s@]+@([^\s@]+)\.([a-z]{2,})$/i;
     const match = correo.match(emailPattern);
     
@@ -49,18 +49,18 @@ export function Register() {
     const domain = match[1].toLowerCase();
     const extension = match[2].toLowerCase();
     
-    // Verificar extensión válida
+    // Verificar extensiÃ³n vÃ¡lida
     const validExtensions = ['com', 'org', 'net', 'edu', 'gov', 'mil', 'co', 'es', 'pe', 'cl', 'ar', 'mx'];
     const isValidExtension = validExtensions.includes(extension);
     
-    // Verificar dominio válido
+    // Verificar dominio vÃ¡lido
     const isValidDomain = validDomains.includes(domain);
     
     return isValidExtension && isValidDomain;
   })();
   
   const isPasswordMatch = clave.length >= 8 && clave === repetirClave;
-  // Validación para números de celular peruanos (inician con 9 y tienen 9 dígitos)
+  // ValidaciÃ³n para nÃºmeros de celular peruanos (inician con 9 y tienen 9 dÃ­gitos)
   const isCelularValid = celular.length === 9 && /^9[0-9]{8}$/.test(celular);
   const isFormValid =
     nombre.trim() !== "" &&
@@ -76,17 +76,17 @@ export function Register() {
     e.preventDefault();
     setError(null);
 
-    // si el formulario no es válido, no intentar
+    // si el formulario no es vÃ¡lido, no intentar
     if (!isFormValid) {
       setError("Completa correctamente todos los campos.");
       return;
     }
 
     setLoading(true);
-    setClicked(true); // activar animación del botón (si tu componente lo usa)
+    setClicked(true); // activar animaciÃ³n del botÃ³n (si tu componente lo usa)
 
     try {
-      // Preparar payload. Ajusta si tu backend espera más campos.
+      // Preparar payload. Ajusta si tu backend espera mÃ¡s campos.
       const payload = {
         fullName: nombre,    // backend espera fullName
         email: correo,       // tu servicio usa 'email'
@@ -94,7 +94,7 @@ export function Register() {
         phone: celular       // backend espera phone
       };
 
-      // petición al backend
+      // peticiÃ³n al backend
       const res = await fetch(`${API_BASE}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -104,7 +104,7 @@ export function Register() {
       const body = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        // backend devolvió error HTTP
+        // backend devolviÃ³ error HTTP
         const msg = body.error || body.message || "Error al registrar";
         setError(msg);
         setLoading(false);
@@ -112,16 +112,16 @@ export function Register() {
         return;
       }
 
-      // respuesta OK -> redirigir al formulario de verificación
+      // respuesta OK -> redirigir al formulario de verificaciÃ³n
       // pasamos el email por query para autocompletar el campo en VerifyEmail
       navigate(`/verify-email?email=${encodeURIComponent(correo)}`);
 
     } catch (err: unknown) {
       // error de red u otro
       if (err instanceof Error) {
-        setError(err.message || "Error de conexión al registrar");
+        setError(err.message || "Error de conexiÃ³n al registrar");
       } else {
-        setError("Error de conexión al registrar");
+        setError("Error de conexiÃ³n al registrar");
       }
       setClicked(false);
     } finally {
@@ -172,17 +172,17 @@ export function Register() {
               {/* Input para correo */}
               <div className="sm:col-span-2">
                 <Input 
-                  label="Correo electrónico" 
+                  label="Correo electrÃ³nico" 
                   type="email" 
                   value={correo}
                   onChange={(e) => setCorreo(e.target.value)} 
                   placeholder="ejemplo@gmail.com" 
                 />
-                {/* Validación visual del correo */}
+                {/* ValidaciÃ³n visual del correo */}
                 {correo.length > 0 && (
                   <div className="mt-1 text-xs">
                     <p className={`${isEmailValid ? 'text-green-600' : 'text-red-500'}`}>
-                      Válido (gmail, yahoo, hotmail, outlook, etc.) {isEmailValid ? '✓' : '✗'}
+                      VÃ¡lido (gmail, yahoo, hotmail, outlook, etc.) {isEmailValid ? 'âœ“' : 'âœ—'}
                     </p>
                     {!isEmailValid && correo.includes('@') && correo.includes('.') && (
                       <p className="text-amber-600 text-xs mt-1">
@@ -196,35 +196,35 @@ export function Register() {
               {/* Input para celular */}
               <div className="sm:col-span-2">
                 <Input 
-                  label="Número de celular" 
+                  label="NÃºmero de celular" 
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
                   value={celular}
                   onChange={(e) => {
-                    // Solo permitir números, eliminar cualquier caracter que no sea número
+                    // Solo permitir nÃºmeros, eliminar cualquier caracter que no sea nÃºmero
                     const value = e.target.value.replace(/[^0-9]/g, '');
-                    // Limitar a máximo 9 dígitos
+                    // Limitar a mÃ¡ximo 9 dÃ­gitos
                     if (value.length <= 9) {
                       setCelular(value);
                     }
                   }}
                   onKeyPress={(e) => {
-                    // Prevenir entrada de caracteres no numéricos
+                    // Prevenir entrada de caracteres no numÃ©ricos
                     if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
                       e.preventDefault();
                     }
                   }}
                   placeholder="Ej: 987654321"
                 />
-                {/* Validación visual del celular */}
+                {/* ValidaciÃ³n visual del celular */}
                 {celular.length > 0 && (
                   <div className="mt-1 text-xs">
                     <p className={`${isCelularValid ? 'text-green-600' : 'text-red-500'}`}>
-                      {isCelularValid ? '✓ Número válido' : 
-                        celular.length !== 9 ? `${celular.length}/9 dígitos - Número incompleto` :
+                      {isCelularValid ? 'âœ“ NÃºmero vÃ¡lido' : 
+                        celular.length !== 9 ? `${celular.length}/9 dÃ­gitos - NÃºmero incompleto` :
                         !celular.startsWith('9') ? 'Debe iniciar con 9 (celulares peruanos)' :
-                        'Formato inválido'
+                        'Formato invÃ¡lido'
                       }
                     </p>
                     {!isCelularValid && (
@@ -239,7 +239,7 @@ export function Register() {
               {/* Input para clave */}
               <div className="sm:col-span-1">
                 <Input 
-                  label="Contraseña" 
+                  label="ContraseÃ±a" 
                   type="password" 
                   onChange={(e) => setClave(e.target.value)} 
                   placeholder="********" 
@@ -250,7 +250,7 @@ export function Register() {
               {/* Input para repetir clave */}
               <div className="sm:col-span-1">
                 <Input 
-                  label="Confirmar contraseña" 
+                  label="Confirmar contraseÃ±a" 
                   type="password" 
                   onChange={(e) => setRepetirClave(e.target.value)} 
                   placeholder="********" 
@@ -259,15 +259,15 @@ export function Register() {
               </div>
             </div>
 
-            {/* Indicador de validez de contraseña */}
+            {/* Indicador de validez de contraseÃ±a */}
             {clave.length > 0 && (
               <div className="text-xs text-[var(--Primary_5)] bg-[var(--Primary_0)] p-3 rounded-lg">
                 <p className={`${clave.length >= 8 ? 'text-green-600' : 'text-red-500'}`}>
-                  • Mínimo 8 caracteres {clave.length >= 8 ? '✓' : '✗'}
+                  â€¢ MÃ­nimo 8 caracteres {clave.length >= 8 ? 'âœ“' : 'âœ—'}
                 </p>
                 {repetirClave.length > 0 && (
                   <p className={`${clave === repetirClave ? 'text-green-600' : 'text-red-500'}`}>
-                    • Las contraseñas coinciden {clave === repetirClave ? '✓' : '✗'}
+                    â€¢ Las contraseÃ±as coinciden {clave === repetirClave ? 'âœ“' : 'âœ—'}
                   </p>
                 )}
               </div>
@@ -280,7 +280,7 @@ export function Register() {
               </div>
             )}
 
-            {/* Botón principal */}
+            {/* BotÃ³n principal */}
             <div className="pt-2">
               <ButtonState
                 initialText="Crear cuenta"
@@ -293,13 +293,13 @@ export function Register() {
             {/* Enlaces adicionales */}
             <div className="text-center pt-4 space-y-3">
               <p className="text-sm text-[var(--Primary_5)]">
-                ¿Ya tienes una cuenta?
+                Â¿Ya tienes una cuenta?
               </p>
               <a 
                 href="/login" 
                 className="block w-full text-center border-2 border-[var(--Primary_4)] text-[var(--Primary_4)] py-3 rounded-lg hover:bg-[var(--Primary_4)] hover:text-white transition-all duration-300 transform hover:scale-[1.02] font-medium"
               >
-                Iniciar sesión
+                Iniciar sesiÃ³n
               </a>
             </div>
           </form>
@@ -308,7 +308,7 @@ export function Register() {
         {/* Footer */}
         <div className="text-center mt-6">
           <p className="text-[var(--Primary_5)] text-sm">
-            Al registrarte aceptas nuestros términos y condiciones
+            Al registrarte aceptas nuestros tÃ©rminos y condiciones
           </p>
         </div>
       </div>

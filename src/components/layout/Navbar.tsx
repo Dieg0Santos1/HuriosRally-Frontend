@@ -1,22 +1,22 @@
-
+﻿
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
-import { getToken, clearToken, getRole } from "../utils/token";
+import { useCart } from "../../context/CartContext";
+import { getToken, clearToken, getRole } from "../../utils/token";
 
 
 const categories = [
   { id: 1, name: "Motor" },
-  { id: 2, name: "Suspensión" },
+  { id: 2, name: "SuspensiÃ³n" },
   { id: 3, name: "Frenos" },
-  { id: 4, name: "Eléctrico" },
+  { id: 4, name: "ElÃ©ctrico" },
   { id: 5, name: "Accesorios" },
 ];
 
 const Navbar: React.FC = () => {
-  // menuOpen controla si el menú móvil está visible
+  // menuOpen controla si el menÃº mÃ³vil estÃ¡ visible
   const [menuOpen, setMenuOpen] = useState(false);
-  // catsOpen controla dropdown de categorías en desktop
+  // catsOpen controla dropdown de categorÃ­as en desktop
   const [catsOpen, setCatsOpen] = useState(false);
   // userDropdownOpen controla dropdown de usuario
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
   // const navigate = useNavigate();
   const userDropdownRef = useRef<HTMLDivElement>(null);
   
-  // Verificar si hay sesión activa y rol
+  // Verificar si hay sesiÃ³n activa y rol
   const isAuthenticated = !!getToken();
   const isAdmin = getRole() === 'ADMINISTRADOR';
   
@@ -41,9 +41,9 @@ const Navbar: React.FC = () => {
   
   const handleLogout = () => {
     clearToken();
-    localStorage.removeItem('huriosRally_cart'); // Limpiar carrito también
+    localStorage.removeItem('huriosRally_cart'); // Limpiar carrito tambiÃ©n
     setUserDropdownOpen(false);
-    window.location.href = '/'; // Recargar página
+    window.location.href = '/'; // Recargar pÃ¡gina
   };
 
   return (
@@ -60,9 +60,9 @@ const Navbar: React.FC = () => {
           <Link to="/" className="hover:underline">Inicio</Link>
           <Link to="/products" className="hover:underline">Productos</Link>
 
-          {/* dropdown categorías (desktop) */}
+          {/* dropdown categorÃ­as (desktop) */}
           <div className="relative">
-            {/* botón que abre el dropdown */}
+            {/* botÃ³n que abre el dropdown */}
             <button
               onClick={() => setCatsOpen(v => !v)}
               onMouseEnter={() => setCatsOpen(true)}
@@ -70,7 +70,7 @@ const Navbar: React.FC = () => {
               className="flex items-center gap-1"
               aria-expanded={catsOpen}
             >
-              Categorías
+              CategorÃ­as
               <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
                 <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06-.02L10 10.67l3.71-3.48a.75.75 0 111.04 1.08l-4.25 4a.75.75 0 01-1.04 0l-4.25-4a.75.75 0 01-.02-1.06z" clipRule="evenodd" />
               </svg>
@@ -99,7 +99,7 @@ const Navbar: React.FC = () => {
 
         {/* acciones (search, cart, login, hamburger) */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* search: visible en lg+; diseño para destacarlo (fondo blanco) */}
+          {/* search: visible en lg+; diseÃ±o para destacarlo (fondo blanco) */}
           <div className="hidden lg:block">
             <input
               aria-label="Buscar"
@@ -134,7 +134,7 @@ const Navbar: React.FC = () => {
           <div className="relative" ref={userDropdownRef}>
             <button
               onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-              aria-label={isAuthenticated ? "Menú de usuario" : "Iniciar sesión"}
+              aria-label={isAuthenticated ? "MenÃº de usuario" : "Iniciar sesiÃ³n"}
               className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white text-[#27557a] hover:scale-105 transition flex-shrink-0"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -155,7 +155,7 @@ const Navbar: React.FC = () => {
                     <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                       <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3" />
                     </svg>
-                    <span className="font-medium">Iniciar sesión</span>
+                    <span className="font-medium">Iniciar sesiÃ³n</span>
                   </Link>
                 ) : (
                   /* Usuario autenticado */
@@ -181,7 +181,7 @@ const Navbar: React.FC = () => {
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                       </svg>
-                      <span>Cambiar contraseña</span>
+                      <span>Cambiar contraseÃ±a</span>
                     </Link>
                     
                     <hr className="my-2 border-gray-200" />
@@ -193,7 +193,7 @@ const Navbar: React.FC = () => {
                       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
                       </svg>
-                      <span>Cerrar sesión</span>
+                      <span>Cerrar sesiÃ³n</span>
                     </button>
                   </>
                 )}
@@ -223,7 +223,7 @@ const Navbar: React.FC = () => {
 
           {/* details permite expandir categorias y seguir siendo accesible/clickable */}
           <details className="py-2 border-b border-white/10">
-            <summary className="cursor-pointer">Categorías</summary>
+            <summary className="cursor-pointer">CategorÃ­as</summary>
             <ul className="pl-4 mt-2">
               {categories.map(c => (
                 <li key={c.id} className="py-1">
@@ -252,3 +252,4 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
+
