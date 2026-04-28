@@ -7,6 +7,7 @@ import { getToken } from "../utils/token";
 import { useAdminSessionTimeout } from "../hooks/useAdminSessionTimeout";
 import { ProfileAvatar } from "../components/user/ProfileAvatar";
 import { getOrders, getProducts, getUsers } from "../api/localStorageDb";
+import * as XLSX from "xlsx";
 
 export function AdminProfile() {
     const navigate = useNavigate();
@@ -95,42 +96,42 @@ export function AdminProfile() {
             const filenameBase =
                 type === "clients" ? "Clientes" : type === "sales" ? "Ventas" : "Productos";
 
-            let csv = "";
+            let rows: Record<string, string | number>[] = [];
             if (type === "clients") {
                 const users = getUsers().filter((u) => u.role === "CLIENTE");
-                csv = "email,nombre,telefono,fecha_registro\n";
-                csv += users
-                    .map((u) =>
-                        `${u.email},${u.fullName || ""},${u.phone || ""},${u.createdAt || ""}`
-                    )
-                    .join("\n");
+                rows = users.map((u) => ({
+                    Email: u.email,
+                    Nombre: u.fullName || "",
+                    Telefono: u.phone || "",
+                    FechaRegistro: u.createdAt || "",
+                }));
             } else if (type === "products") {
                 const products = getProducts();
-                csv = "id,nombre,categoria,precio,stock,fecha_creacion\n";
-                csv += products
-                    .map((p) =>
-                        `${p.id},${p.name},${p.category || ""},${p.price},${p.stock ?? 0},${p.createdAt || ""}`
-                    )
-                    .join("\n");
+                rows = products.map((p) => ({
+                    ID: p.id,
+                    Nombre: p.name,
+                    Categoria: p.category || "",
+                    Precio: p.price,
+                    Stock: p.stock ?? 0,
+                    FechaCreacion: p.createdAt || "",
+                }));
             } else {
                 const orders = getOrders();
-                csv = "orden,fecha,pago,total,cliente\n";
-                csv += orders
-                    .map((o) => `${o.orderId},${o.createdAt},${o.paymentMethod},${o.finalTotal},${o.customerEmail || ""}`)
-                    .join("\n");
+                rows = orders.map((o) => ({
+                    Orden: o.orderId,
+                    Fecha: o.createdAt,
+                    Pago: o.paymentMethod,
+                    Total: o.finalTotal,
+                    Cliente: o.customerEmail || "",
+                }));
             }
 
-            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = `${filenameBase}_${timestamp}.csv`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
+            const worksheet = XLSX.utils.json_to_sheet(rows);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, filenameBase);
+            XLSX.writeFile(workbook, `${filenameBase}_${timestamp}.xlsx`);
 
-            setSuccessMessage("Archivo exportado correctamente");
+            setSuccessMessage("Archivo Excel exportado correctamente");
             setTimeout(() => setSuccessMessage(null), 3000);
         } catch (err: unknown) {
             if (err instanceof Error) {
