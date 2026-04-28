@@ -69,6 +69,16 @@ function seedUsers(): LocalUser[] {
   return [
     {
       id: 1,
+      email: "huiriosadmin@gmail.com",
+      password: "admin123",
+      role: "ADMINISTRADOR",
+      fullName: "Administrador Principal",
+      phone: "999000111",
+      createdAt: new Date().toISOString(),
+      isVerified: true,
+    },
+    {
+      id: 2,
       email: "admin@huriosrally.com",
       password: "Admin12345",
       role: "ADMINISTRADOR",
@@ -78,7 +88,7 @@ function seedUsers(): LocalUser[] {
       isVerified: true,
     },
     {
-      id: 2,
+      id: 3,
       email: "cliente@huriosrally.com",
       password: "Cliente12345",
       role: "CLIENTE",
@@ -142,7 +152,27 @@ function seedProducts(): LocalProduct[] {
 
 export function initLocalDb() {
   const users = readJson<LocalUser[]>(USERS_KEY, []);
-  if (users.length === 0) writeJson(USERS_KEY, seedUsers());
+  if (users.length === 0) {
+    writeJson(USERS_KEY, seedUsers());
+  } else {
+    const hasRequiredAdmin = users.some(
+      (u) => u.email.toLowerCase() === "huiriosadmin@gmail.com"
+    );
+    if (!hasRequiredAdmin) {
+      const nextId = users.length ? Math.max(...users.map((u) => u.id)) + 1 : 1;
+      users.unshift({
+        id: nextId,
+        email: "huiriosadmin@gmail.com",
+        password: "admin123",
+        role: "ADMINISTRADOR",
+        fullName: "Administrador Principal",
+        phone: "999000111",
+        createdAt: new Date().toISOString(),
+        isVerified: true,
+      });
+      writeJson(USERS_KEY, users);
+    }
+  }
 
   const products = readJson<LocalProduct[]>(PRODUCTS_KEY, []);
   if (products.length === 0) writeJson(PRODUCTS_KEY, seedProducts());
