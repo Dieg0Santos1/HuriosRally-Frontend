@@ -9,7 +9,7 @@ export function Profile() {
   const navigate = useNavigate();
   useEffect(() => {
     const redirectToCorrectProfile = async () => {
-      // Verificar autenticaciÃ³n
+      // Verificar autenticación
       if (!getToken()) {
         navigate("/login");
         return;
@@ -22,7 +22,7 @@ export function Profile() {
           const profile = await getUserProfile();
           userRole = profile.role || "CLIENTE";
         }
-        // Redirigir segÃºn el rol
+        // Redirigir según el rol
         if (userRole === "ADMINISTRADOR") {
           navigate("/admin-profile", { replace: true });
         } else {

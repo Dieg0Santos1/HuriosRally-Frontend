@@ -35,7 +35,7 @@ export default function Proveedores() {
   const [newDate, setNewDate] = useState("");
   const [newStatus, setNewStatus] = useState("");
   const [newAmount, setNewAmount] = useState("");
-  // ediciÃ³n por fila
+  // edición por fila
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editName, setEditName] = useState("");
   const [editDate, setEditDate] = useState("");
@@ -78,7 +78,7 @@ export default function Proveedores() {
   };
 
   const deleteProvider = (id: number) => {
-    if (!confirm('Â¿Eliminar registro? Esta acciÃ³n no se puede deshacer.')) return;
+    if (!confirm('Â¿Eliminar registro? Esta acción no se puede deshacer.')) return;
     setProviders(prev => prev.filter(p => p.id !== id));
   };
 

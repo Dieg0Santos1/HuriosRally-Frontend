@@ -4,7 +4,7 @@ import Navbar from "../components/layout/Navbar";
 
 /*
  ResetPassword.tsx
- - PÃ¡gina para resetear la contraseÃ±a
+ - Página para resetear la contraseña
 */
 
 export const ResetPassword: React.FC = () => {
@@ -54,7 +54,7 @@ export const ResetPassword: React.FC = () => {
                   </svg>
                 </div>
                 <h1 className="text-2xl font-bold text-[var(--Primary_7)] mb-2">
-                  Â¿Olvidaste tu contraseÃ±a?
+                  Â¿Olvidaste tu contraseña?
                 </h1>
               </div>
 
@@ -62,7 +62,7 @@ export const ResetPassword: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-[var(--Primary_6)] mb-2">
-                    Correo electrÃ³nico
+                    Correo electrónico
                   </label>
                   <input
                     type="email"
@@ -92,7 +92,7 @@ export const ResetPassword: React.FC = () => {
                       Enviando...
                     </div>
                   ) : (
-                    "Enviar enlace de recuperaciÃ³n"
+                    "Enviar enlace de recuperación"
                   )}
                 </button>
               </form>
@@ -106,12 +106,12 @@ export const ResetPassword: React.FC = () => {
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                   </svg>
-                  Volver al inicio de sesiÃ³n
+                  Volver al inicio de sesión
                 </a>
               </div>
             </>
           ) : (
-            /* Estado de Ã©xito */
+            /* Estado de Éxito */
             <div className="text-center">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -122,13 +122,13 @@ export const ResetPassword: React.FC = () => {
                 Â¡Enlace enviado!
               </h2>
               <p className="text-[var(--Primary_5)] text-sm mb-6">
-                Revisa tu correo electrÃ³nico para continuar con la recuperaciÃ³n de tu contraseÃ±a.
+                Revisa tu correo electrónico para continuar con la recuperación de tu contraseña.
               </p>
               <a 
                 href="/login" 
                 className="inline-flex items-center text-[var(--Primary_5)] hover:text-[var(--Primary_6)] text-sm font-medium transition-colors duration-200"
               >
-                Volver al inicio de sesiÃ³n
+                Volver al inicio de sesión
               </a>
             </div>
           )}

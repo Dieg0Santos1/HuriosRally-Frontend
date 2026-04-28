@@ -20,7 +20,7 @@ export function UserProfile() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   useEffect(() => {
-    // Verificar autenticaciÃ³n
+    // Verificar autenticación
     if (!getToken()) {
       navigate("/login");
       return;
@@ -52,7 +52,7 @@ export function UserProfile() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    /*En caso de que se cree de forma exitosa,se muestra un mensaje de que esto ocurriÃ³ */
+    /*En caso de que se cree de forma exitosa,se muestra un mensaje de que esto ocurrió */
     try {
       setSaving(true);
       setError(null);
@@ -68,7 +68,7 @@ export function UserProfile() {
       setEditing(false);
       // Recargar perfil
       await loadProfile();
-      // Ocultar mensaje despuÃ©s de 3 segundos
+      // Ocultar mensaje después de 3 segundos
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -80,7 +80,7 @@ export function UserProfile() {
       setSaving(false);
     }
   };
-  /*Sirve para cancelar los cambios que el usuario querÃ­a hacer a su perfil */
+  /*Sirve para cancelar los cambios que el usuario querí­a hacer a su perfil */
   const handleCancel = () => {
     setEditing(false);
     setFullName(profile?.fullName || "");
@@ -135,7 +135,7 @@ export function UserProfile() {
                   )}
                 </div>
               </div>
-              {/*BotÃ³n para cambiar deatos del perfil*/}
+              {/*Botón para cambiar deatos del perfil*/}
               {!editing && (
                 <button
                   onClick={() => setEditing(true)}
@@ -151,7 +151,7 @@ export function UserProfile() {
             </div>
           </div>
 
-          {/* Mensajes de Ã©xito o de error*/}
+          {/* Mensajes de Éxito o de error*/}
           {successMessage && (
             <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
               <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -170,12 +170,12 @@ export function UserProfile() {
 
           {/* Formulario */}
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">InformaciÃ³n personal</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">Información personal</h2>
             <form onSubmit={handleSave} className="space-y-6">
               {/* Email (solo lectura) */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Correo electrÃ³nico
+                  Correo electrónico
                 </label>
                 <input
                   type="email"
@@ -201,31 +201,31 @@ export function UserProfile() {
                 />
               </div>
 
-              {/* TelÃ©fono */}
+              {/* Teléfono */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  TelÃ©fono
+                  Teléfono
                 </label>
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   disabled={!editing}
-                  placeholder="Ingresa tu nÃºmero de telÃ©fono"
+                  placeholder="Ingresa tu número de teléfono"
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--Primary_5)] focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500"
                 />
               </div>
 
-              {/* DirecciÃ³n */}
+              {/* Dirección */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  DirecciÃ³n
+                  Dirección
                 </label>
                 <textarea
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   disabled={!editing}
-                  placeholder="Ingresa tu direcciÃ³n"
+                  placeholder="Ingresa tu dirección"
                   rows={3}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--Primary_5)] focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500 resize-none"
                 />

@@ -38,7 +38,7 @@ export async function getAllProducts(category?: string): Promise<Product[]> {
     return await res.json();
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error("No se puede conectar con el servidor. Verifica que el backend estÃ© corriendo.");
+      throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
     }
     throw error;
   }
@@ -68,7 +68,7 @@ export async function searchProducts(query: string): Promise<Product[]> {
     return await res.json();
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error("No se puede conectar con el servidor. Verifica que el backend estÃ© corriendo.");
+      throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
     }
     throw error;
   }
@@ -80,7 +80,7 @@ export async function searchProducts(query: string): Promise<Product[]> {
 export async function addStockToProduct(productId: number, quantity: number): Promise<{ message: string; newStock: number }> {
   const token = getToken();
   if (!token) {
-    throw new Error("No hay sesiÃ³n activa");
+    throw new Error("No hay sesión activa");
   }
 
   try {
@@ -101,7 +101,7 @@ export async function addStockToProduct(productId: number, quantity: number): Pr
     return await res.json();
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error("No se puede conectar con el servidor. Verifica que el backend estÃ© corriendo.");
+      throw new Error("No se puede conectar con el servidor. Verifica que el backend está corriendo.");
     }
     throw error;
   }
@@ -127,7 +127,7 @@ export async function getProductById(id: number): Promise<Product> {
     return await res.json();
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error("No se puede conectar con el servidor. Verifica que el backend estÃ© corriendo.");
+      throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
     }
     throw error;
   }
@@ -139,7 +139,7 @@ export async function getProductById(id: number): Promise<Product> {
 export async function uploadImage(file: File): Promise<{ imageUrl: string; filename: string }> {
   const token = getToken();
   if (!token) {
-    throw new Error("No hay sesiÃ³n activa");
+    throw new Error("No hay sesión activa");
   }
 
   try {
@@ -162,7 +162,7 @@ export async function uploadImage(file: File): Promise<{ imageUrl: string; filen
     return await res.json();
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error("No se puede conectar con el servidor. Verifica que el backend estÃ© corriendo.");
+      throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
     }
     throw error;
   }
@@ -179,7 +179,7 @@ export async function updateProduct(productId: number, productData: {
 }): Promise<Product> {
   const token = getToken();
   if (!token) {
-    throw new Error("No hay sesiÃ³n activa");
+    throw new Error("No hay sesión activa");
   }
 
   try {
@@ -200,7 +200,7 @@ export async function updateProduct(productId: number, productData: {
     return await res.json();
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error("No se puede conectar con el servidor. Verifica que el backend estÃ© corriendo.");
+      throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
     }
     throw error;
   }
@@ -212,7 +212,7 @@ export async function updateProduct(productId: number, productData: {
 export async function deleteProduct(productId: number): Promise<{ message: string; id: number }> {
   const token = getToken();
   if (!token) {
-    throw new Error("No hay sesiÃ³n activa");
+    throw new Error("No hay sesión activa");
   }
 
   try {
@@ -232,7 +232,7 @@ export async function deleteProduct(productId: number): Promise<{ message: strin
     return await res.json();
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error("No se puede conectar con el servidor. Verifica que el backend estÃ© corriendo.");
+      throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
     }
     throw error;
   }
@@ -250,7 +250,7 @@ export async function createProduct(productData: {
 }): Promise<Product> {
   const token = getToken();
   if (!token) {
-    throw new Error("No hay sesiÃ³n activa");
+    throw new Error("No hay sesión activa");
   }
 
   try {
@@ -271,7 +271,7 @@ export async function createProduct(productData: {
     return await res.json();
   } catch (error) {
     if (error instanceof TypeError && error.message.includes('fetch')) {
-      throw new Error("No se puede conectar con el servidor. Verifica que el backend estÃ© corriendo.");
+      throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
     }
     throw error;
   }

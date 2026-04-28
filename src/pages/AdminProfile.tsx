@@ -21,7 +21,7 @@ export function AdminProfile() {
     const [fullName, setFullName] = useState("");
 
     useEffect(() => {
-        // Verificar autenticaciÃ³n
+        // Verificar autenticación
         if (!getToken()) {
             navigate("/login");
             return;
@@ -67,7 +67,7 @@ export function AdminProfile() {
             // Recargar perfil
             await loadProfile();
 
-            // Ocultar mensaje despuÃ©s de 3 segundos
+            // Ocultar mensaje después de 3 segundos
             setTimeout(() => setSuccessMessage(null), 3000);
         } catch (err: unknown) {
             if (err instanceof Error) {
@@ -92,7 +92,7 @@ export function AdminProfile() {
             const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
             const endpoint = `${API_BASE}/export/${type}`;
             
-            // Realizar peticiÃ³n fetch para obtener el archivo
+            // Realizar petición fetch para obtener el archivo
             const response = await fetch(endpoint);
             
             if (!response.ok) {
@@ -105,7 +105,7 @@ export function AdminProfile() {
             // Crear URL temporal para el blob
             const url = window.URL.createObjectURL(blob);
             
-            // Crear enlace temporal y hacer clic automÃ¡ticamente
+            // Crear enlace temporal y hacer clic automáticamente
             const link = document.createElement('a');
             link.href = url;
             
@@ -201,7 +201,7 @@ export function AdminProfile() {
                         <ButtonAdmin label="PROVEEDORES" route="/proveedores" />
                     </section>
 
-                    {/* Botones de exportaciÃ³n */}
+                    {/* Botones de exportación */}
                     <section className="bg-white rounded-lg shadow-md p-6 mb-6">
                         <h2 className="text-xl font-semibold text-gray-900 mb-4">Exportar Reportes</h2>
                         <div className="flex gap-4 flex-wrap">
@@ -263,13 +263,13 @@ export function AdminProfile() {
 
                     {/* Formulario */}
                     <div className="bg-white rounded-lg shadow-md p-6">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-6">InformaciÃ³n personal</h2>
+                        <h2 className="text-xl font-semibold text-gray-900 mb-6">Información personal</h2>
 
                         <form onSubmit={handleSave} className="space-y-6">
                             {/* Email (solo lectura) */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Correo electrÃ³nico
+                                    Correo electrónico
                                 </label>
                                 <input
                                     type="email"
