@@ -1,62 +1,46 @@
-
+﻿
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { sendVerificationCode, verifyCode } from "../api/auth";
 
 /*
- Página para:
-  - re-enviar código de verificación
-  - ingresar el código recibido por email y validar
+ PÃ¡gina para:
+  - re-enviar cÃ³digo de verificaciÃ³n
+  - ingresar el cÃ³digo recibido por email y validar
   - una vez verificado, redirigir al Login
 */
 
 export function VerifyEmail() {
   const [searchParams] = useSearchParams();
-  const preEmail = searchParams.get("email") || ""; // si frontend recibió ?email=...
+  const preEmail = searchParams.get("email") || ""; // si frontend recibiÃ³ ?email=...
   const [email, setEmail] = useState(preEmail);
   const [code, setCode] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  // Reenviar código: POST /auth/send-verification-code
+  // Reenviar codigo
   const resend = async () => {
     setMsg(null);
     if (!email) { setMsg("Ingresa un correo primero"); return; }
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:8080"}/auth/send-verification-code`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email })
-      });
-      const json = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(json.error || json.message || "Error al reenviar");
-      setMsg("Código reenviado. Revisa tu correo (o consola si estás en dev).");
+      const json = await sendVerificationCode(email);
+      setMsg(`Codigo reenviado. Usa: ${json.code}`);
     } catch (err: any) {
-      setMsg(err.message || "Error al reenviar código");
+      setMsg(err.message || "Error al reenviar codigo");
     } finally { setLoading(false); }
   };
-
-  // Verificar código: POST /auth/verify-code
+  // Verificar codigo
   const verify = async () => {
     setMsg(null);
-    if (!email || !code) { setMsg("Completa email y código"); return; }
+    if (!email || !code) { setMsg("Completa email y codigo"); return; }
     setLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:8080"}/auth/verify-code`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, code })
-      });
-      const json = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        throw new Error(json.error || json.message || "Código inválido");
-      }
-      // éxito
-      setMsg("Email verificado. Serás redirigido al login...");
+      await verifyCode(email, code);
+      setMsg("Email verificado. Seras redirigido al login...");
       setTimeout(() => navigate("/login"), 1000);
     } catch (err: any) {
-      setMsg(err.message || "Error al verificar código");
+      setMsg(err.message || "Error al verificar codigo");
     } finally { setLoading(false); }
   };
 
@@ -81,10 +65,10 @@ export function VerifyEmail() {
               </svg>
             </div>
             <h2 className="text-2xl font-bold text-[var(--Primary_7)] mb-2">
-              Verificar correo electrónico
+              Verificar correo electrÃ³nico
             </h2>
             <p className="text-[var(--Primary_5)] text-sm">
-              Ingresa el código que enviamos a tu correo
+              Ingresa el cÃ³digo que enviamos a tu correo
             </p>
           </div>
 
@@ -93,7 +77,7 @@ export function VerifyEmail() {
             {/* Campo de email */}
             <div>
               <label className="block text-sm font-medium text-[var(--Primary_6)] mb-2">
-                Correo electrónico
+                Correo electrÃ³nico
               </label>
               <input 
                 value={email} 
@@ -104,7 +88,7 @@ export function VerifyEmail() {
               />
             </div>
 
-            {/* Botón reenviar */}
+            {/* BotÃ³n reenviar */}
             <button 
               onClick={resend} 
               disabled={loading || !email}
@@ -120,15 +104,15 @@ export function VerifyEmail() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                   </svg>
-                  Reenviar código
+                  Reenviar cÃ³digo
                 </div>
               )}
             </button>
 
-            {/* Campo de código */}
+            {/* Campo de cÃ³digo */}
             <div>
               <label className="block text-sm font-medium text-[var(--Primary_6)] mb-2">
-                Código de verificación
+                CÃ³digo de verificaciÃ³n
               </label>
               <input 
                 value={code} 
@@ -139,11 +123,11 @@ export function VerifyEmail() {
                 pattern="[0-9]{6}"
               />
               <p className="text-xs text-[var(--Primary_5)] mt-1 text-center">
-                Ingresa el código de 6 dígitos
+                Ingresa el cÃ³digo de 6 dÃ­gitos
               </p>
             </div>
 
-            {/* Botón verificar */}
+            {/* BotÃ³n verificar */}
             <button 
               onClick={verify} 
               disabled={loading || !email || !code}
@@ -159,7 +143,7 @@ export function VerifyEmail() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  Verificar código
+                  Verificar cÃ³digo
                 </div>
               )}
             </button>
@@ -186,7 +170,7 @@ export function VerifyEmail() {
               </div>
             )}
 
-            {/* Información adicional */}
+            {/* InformaciÃ³n adicional */}
             <div className="bg-[var(--Primary_0)] border border-[var(--Primary_2)] rounded-lg p-4">
               <div className="flex items-start gap-3">
                 <div className="w-6 h-6 bg-[var(--Primary_3)] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -195,10 +179,10 @@ export function VerifyEmail() {
                   </svg>
                 </div>
                 <div className="text-xs text-[var(--Primary_6)] leading-relaxed">
-                  <p className="font-medium mb-1">¿No recibes el correo?</p>
-                  <p>• Revisa tu carpeta de spam o correo no deseado</p>
-                  <p>• Usa el botón "Reenviar código" para intentar nuevamente</p>
-                  <p>• El código tiene una validez limitada</p>
+                  <p className="font-medium mb-1">Â¿No recibes el correo?</p>
+                  <p>â€¢ Revisa tu carpeta de spam o correo no deseado</p>
+                  <p>â€¢ Usa el botÃ³n "Reenviar cÃ³digo" para intentar nuevamente</p>
+                  <p>â€¢ El cÃ³digo tiene una validez limitada</p>
                 </div>
               </div>
             </div>
@@ -212,7 +196,7 @@ export function VerifyEmail() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                Volver al inicio de sesión
+                Volver al inicio de sesiÃ³n
               </a>
             </div>
           </div>
@@ -221,4 +205,6 @@ export function VerifyEmail() {
     </main>
   );
 }
+
+
 

@@ -6,6 +6,7 @@ import { getUserProfile, updateUserProfile, type UserProfile as UserProfileType 
 import { getToken } from "../utils/token";
 import { useAdminSessionTimeout } from "../hooks/useAdminSessionTimeout";
 import { ProfileAvatar } from "../components/user/ProfileAvatar";
+import { getOrders, getProducts, getUsers } from "../api/localStorageDb";
 
 export function AdminProfile() {
     const navigate = useNavigate();
@@ -89,39 +90,47 @@ export function AdminProfile() {
     const handleExport = async (type: 'clients' | 'sales' | 'products') => {
         try {
             setLoading(true);
-            const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
-            const endpoint = `${API_BASE}/export/${type}`;
-            
-            // Realizar peticiÃ³n fetch para obtener el archivo
-            const response = await fetch(endpoint);
-            
-            if (!response.ok) {
-                throw new Error('Error al exportar el archivo');
+
+            const timestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, -5);
+            const filenameBase =
+                type === "clients" ? "Clientes" : type === "sales" ? "Ventas" : "Productos";
+
+            let csv = "";
+            if (type === "clients") {
+                const users = getUsers().filter((u) => u.role === "CLIENTE");
+                csv = "email,nombre,telefono,fecha_registro\n";
+                csv += users
+                    .map((u) =>
+                        `${u.email},${u.fullName || ""},${u.phone || ""},${u.createdAt || ""}`
+                    )
+                    .join("\n");
+            } else if (type === "products") {
+                const products = getProducts();
+                csv = "id,nombre,categoria,precio,stock,fecha_creacion\n";
+                csv += products
+                    .map((p) =>
+                        `${p.id},${p.name},${p.category || ""},${p.price},${p.stock ?? 0},${p.createdAt || ""}`
+                    )
+                    .join("\n");
+            } else {
+                const orders = getOrders();
+                csv = "orden,fecha,pago,total,cliente\n";
+                csv += orders
+                    .map((o) => `${o.orderId},${o.createdAt},${o.paymentMethod},${o.finalTotal},${o.customerEmail || ""}`)
+                    .join("\n");
             }
-            
-            // Obtener el blob del archivo
-            const blob = await response.blob();
-            
-            // Crear URL temporal para el blob
+
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
             const url = window.URL.createObjectURL(blob);
-            
-            // Crear enlace temporal y hacer clic automÃ¡ticamente
-            const link = document.createElement('a');
+            const link = document.createElement("a");
             link.href = url;
-            
-            // Nombre del archivo
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
-            const fileName = `${type === 'clients' ? 'Clientes' : type === 'sales' ? 'Ventas' : 'Productos'}_${timestamp}.xlsx`;
-            link.download = fileName;
-            
+            link.download = `${filenameBase}_${timestamp}.csv`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
-            // Liberar la URL del blob
             window.URL.revokeObjectURL(url);
-            
-            setSuccessMessage(`Â¡Archivo exportado correctamente!`);
+
+            setSuccessMessage("Archivo exportado correctamente");
             setTimeout(() => setSuccessMessage(null), 3000);
         } catch (err: unknown) {
             if (err instanceof Error) {

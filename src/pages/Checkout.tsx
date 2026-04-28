@@ -552,8 +552,14 @@ export function Checkout() {
                                         </h3>
                                         <div className="space-y-3">
                                             {items.map((item) => {
-                                                const imgUrl = item.imageUrl 
-                                                  ? (item.imageUrl.startsWith('http') ? item.imageUrl : `${API_BASE}${item.imageUrl}`)
+                                              const imgUrl = item.imageUrl 
+                                                  ? (
+                                                      item.imageUrl.startsWith('http') ||
+                                                      item.imageUrl.startsWith('/assets') ||
+                                                      item.imageUrl.startsWith('blob:')
+                                                        ? item.imageUrl
+                                                        : `${API_BASE}${item.imageUrl}`
+                                                    )
                                                   : "/assets/imgs/placeholder.png";
                                                 return (
                                                 <div key={item.id} className="flex gap-3">

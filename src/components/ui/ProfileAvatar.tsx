@@ -14,7 +14,11 @@ export function ProfileAvatar({ imageUrl, onImageUpdate, size = 'large' }: Profi
   const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
   // Construir URL completa de la imagen
-  const fullImageUrl = imageUrl ? `${API_BASE}${imageUrl}` : undefined;
+  const fullImageUrl = imageUrl
+    ? imageUrl.startsWith("http") || imageUrl.startsWith("/assets") || imageUrl.startsWith("blob:")
+      ? imageUrl
+      : `${API_BASE}${imageUrl}`
+    : undefined;
 
   const sizeClasses = {
     small: 'w-12 h-12',

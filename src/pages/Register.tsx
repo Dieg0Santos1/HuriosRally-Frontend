@@ -2,6 +2,7 @@
 import { ButtonState } from "../components/ui/ButtonState";
 import { Input } from "../components/ui/Input";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../api/auth";
 
 /*
   Register.tsx
@@ -68,9 +69,6 @@ export function Register() {
     isCelularValid &&
     isPasswordMatch;
 
-  // URL base del backend (usa variable de entorno si la defines)
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
-
   // manejador del submit: hace POST /auth/register y redirige a verify-email
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,31 +84,12 @@ export function Register() {
     setClicked(true); // activar animaciÃ³n del botÃ³n (si tu componente lo usa)
 
     try {
-      // Preparar payload. Ajusta si tu backend espera mÃ¡s campos.
-      const payload = {
-        fullName: nombre,    // backend espera fullName
-        email: correo,       // tu servicio usa 'email'
+      await registerUser({
+        fullName: nombre,
+        email: correo,
         password: clave,
-        phone: celular       // backend espera phone
-      };
-
-      // peticiÃ³n al backend
-      const res = await fetch(`${API_BASE}/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        phone: celular,
       });
-
-      const body = await res.json().catch(() => ({}));
-
-      if (!res.ok) {
-        // backend devolviÃ³ error HTTP
-        const msg = body.error || body.message || "Error al registrar";
-        setError(msg);
-        setLoading(false);
-        setClicked(false);
-        return;
-      }
 
       // respuesta OK -> redirigir al formulario de verificaciÃ³n
       // pasamos el email por query para autocompletar el campo en VerifyEmail
@@ -315,3 +294,5 @@ export function Register() {
     </main>
   );
 }
+
+

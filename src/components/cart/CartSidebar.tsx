@@ -75,7 +75,13 @@ const CartSidebar: React.FC = () => {
                 <div className="space-y-3">
                   {items.slice(-3).map((item) => {
                     const imgUrl = item.imageUrl 
-                      ? (item.imageUrl.startsWith('http') ? item.imageUrl : `${API_BASE}${item.imageUrl}`)
+                      ? (
+                          item.imageUrl.startsWith('http') ||
+                          item.imageUrl.startsWith('/assets') ||
+                          item.imageUrl.startsWith('blob:')
+                            ? item.imageUrl
+                            : `${API_BASE}${item.imageUrl}`
+                        )
                       : "/assets/imgs/placeholder.png";
                     return (
                     <div key={item.id} className="flex items-start gap-3 p-2 border-b border-gray-100 last:border-b-0">

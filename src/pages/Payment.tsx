@@ -6,6 +6,7 @@ import { useCart } from "../context/CartContext";
 import { getToken } from "../utils/token";
 import { generateBoletaPDF, generateFacturaPDF } from "../utils/pdfGenerator";
 import { useRoleProtection } from "../hooks/useRoleProtection";
+import { getCurrentEmail, getOrders, saveOrders } from "../api/localStorageDb";
 
 type PaymentMethod = "card" | "yape";
 
@@ -20,8 +21,6 @@ interface YapeData {
     phone: string;
     approvalCode: string;
 }
-
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
 export function Payment() {
     useRoleProtection('payment'); // Bloquear acceso a admins
@@ -247,6 +246,9 @@ export function Payment() {
 
         try {
             const token = getToken();
+            if (!token) {
+                throw new Error("No hay sesion activa");
+            }
             const checkoutData = JSON.parse(sessionStorage.getItem("checkoutData") || "{}");
 
             // Preparar datos de pago
@@ -273,21 +275,20 @@ export function Payment() {
                 finalTotal,
             };
 
-            const res = await fetch(`${API_BASE}/payments/process`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(paymentData),
+            const generatedOrderId = `ORD-${Date.now()}`;
+            const result = { orderId: generatedOrderId };
+
+            // Guardar orden local para reportes/exportaciones
+            const currentOrders = getOrders();
+            currentOrders.unshift({
+                orderId: generatedOrderId,
+                createdAt: new Date().toISOString(),
+                customerEmail: getCurrentEmail() || undefined,
+                paymentMethod,
+                finalTotal,
+                items: paymentData.items,
             });
-
-            if (!res.ok) {
-                const errorData = await res.json().catch(() => ({}));
-                throw new Error(errorData.error || errorData.message || "Error al procesar el pago");
-            }
-
-            const result = await res.json();
+            saveOrders(currentOrders);
 
             // Generar PDF segÃºn tipo de documento
             const documentType = checkoutData.documentType;

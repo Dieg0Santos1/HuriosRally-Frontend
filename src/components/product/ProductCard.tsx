@@ -19,7 +19,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [imgError, setImgError] = React.useState(false);
   
   const imageUrl = product.imageUrl 
-    ? (product.imageUrl.startsWith('http') ? product.imageUrl : `${API_BASE}${product.imageUrl}`)
+    ? (
+        product.imageUrl.startsWith('http') ||
+        product.imageUrl.startsWith('/assets') ||
+        product.imageUrl.startsWith('blob:')
+          ? product.imageUrl
+          : `${API_BASE}${product.imageUrl}`
+      )
     : "/assets/imgs/placeholder.png";
 
   const handleImageError = () => {

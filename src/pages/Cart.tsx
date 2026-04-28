@@ -276,7 +276,13 @@ export function Cart() {
                                 <div className="divide-y divide-gray-200">
                                     {items.map((item) => {
                                         const imgUrl = item.imageUrl 
-                                          ? (item.imageUrl.startsWith('http') ? item.imageUrl : `${API_BASE}${item.imageUrl}`)
+                                          ? (
+                                              item.imageUrl.startsWith('http') ||
+                                              item.imageUrl.startsWith('/assets') ||
+                                              item.imageUrl.startsWith('blob:')
+                                                ? item.imageUrl
+                                                : `${API_BASE}${item.imageUrl}`
+                                            )
                                           : "/assets/imgs/placeholder.png";
                                         return (
                                         <div key={item.id} className="p-4 sm:p-6">
