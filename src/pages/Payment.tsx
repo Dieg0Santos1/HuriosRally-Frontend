@@ -369,12 +369,12 @@ export function Payment() {
                 <div className="max-w-4xl mx-auto px-4 py-6">
                     {/* Header */}
                     <div className="mb-6">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">MÃ©todo de Pago</h1>
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">Metodo de Pago</h1>
                         <button
                             onClick={() => navigate("/checkout")}
                             className="text-[var(--Primary_5)] hover:underline text-sm"
                         >
-                            â† Volver
+                            ← Volver
                         </button>
                     </div>
 
@@ -385,7 +385,7 @@ export function Payment() {
                                 {/* SelecciÃ³n de mÃ©todo de pago */}
                                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
                                     <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                                        Seleccionar MÃ©todo de Pago
+                                        Seleccionar Metodo de Pago
                                     </h2>
                                     <div className="grid grid-cols-2 gap-4">
                                         {/* Tarjeta */}
@@ -539,7 +539,7 @@ export function Payment() {
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        Fecha de expiraciÃ³n *
+                                                        Fecha de expiracion *
                                                     </label>
                                                     <input
                                                         ref={expiryInputRef}
@@ -665,7 +665,7 @@ export function Payment() {
                                         <span className="font-medium">S/ {totalPrice.toFixed(2)}</span>
                                     </div>
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-gray-600">EnvÃ­o</span>
+                                        <span className="text-gray-600">Envio</span>
                                         <span
                                             className={`font-medium ${
                                                 shippingCost === 0 ? "text-green-600" : ""

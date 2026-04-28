@@ -157,12 +157,12 @@ export function Cart() {
         const e: Record<string, string> = {};
         const numSan = sanitizeNumber(cardNumber);
         if (!numSan) e.cardNumber = 'Numerode tarjeta requerido';
-        else if (!luhnCheck(numSan)) e.cardNumber = 'Numerode tarjeta invÃ¡lido';
+        else if (!luhnCheck(numSan)) e.cardNumber = 'Numero de tarjeta invalido';
         if (!cardName.trim()) e.cardName = 'Nombre del titular requerido';
         // expiry MM/YY or MM/YYYY
         const expMatch = expiry.match(/^(0[1-9]|1[0-2])\/(?:(\d{2})|(\d{4}))$/);
         if (!expMatch) {
-            e.expiry = 'Fecha invÃ¡lida (MM/AA)';
+            e.expiry = 'Fecha invalida (MM/AA)';
         } else {
             const month = parseInt(expMatch[1], 10);
             const yearRaw = expMatch[2] || expMatch[3];
@@ -176,9 +176,9 @@ export function Cart() {
             const expDate = new Date(year, month - 1 + 1, 0, 23, 59, 59); // end of month
             if (expDate < new Date()) e.expiry = 'Tarjeta expirada';
         }
-    if (!/^[0-9]{3,4}$/.test(cvc)) e.cvc = 'CVC invÃ¡lido';
+    if (!/^[0-9]{3,4}$/.test(cvc)) e.cvc = 'CVC invalido';
     // email validation
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Correo electronico invÃ¡lido';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Correo electronico invalido';
 
         setErrors(e);
         return Object.keys(e).length === 0;
@@ -246,7 +246,7 @@ export function Cart() {
                                 onClick={() => window.history.back()}
                                 className="text-[var(--Primary_5)] hover:underline"
                             >
-                                â† Continuar comprando
+                                ← Continuar comprando
                             </button>
                             <span>|</span>
                             <button 
@@ -304,7 +304,7 @@ export function Cart() {
                                                                 {item.name}
                                                             </h3>
                                                             <p className="text-sm text-gray-600">
-                                                                {item.description || "Sin descripciÃ³n"}
+                                                                {item.description || "Sin descripcion"}
                                                             </p>
                                                             <p className="text-sm text-green-600 mt-1">
                                                                 En stock
@@ -339,7 +339,7 @@ export function Cart() {
                                                                 className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
                                                                 disabled={item.stock !== undefined && item.quantity >= item.stock}
                                                                 aria-label="Aumentar cantidad"
-                                                                title={item.stock !== undefined && item.quantity >= item.stock ? `Stock mÃ¡ximo: ${item.stock}` : ""}
+                                                                title={item.stock !== undefined && item.quantity >= item.stock ? `Stock maximo: ${item.stock}` : ""}
                                                             >
                                                                 <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                                                     <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -382,7 +382,7 @@ export function Cart() {
                                             <span className="font-bold">S/ {Number(totalPrice).toFixed(2)}</span>
                                         </div>
                                         
-                                        {/* Progreso de envÃ­o gratis */}
+                                        {/* Progreso de envio gratis */}
                                         <div className="pt-2">
                                             <div className="w-full bg-gray-200 rounded-full h-1.5 mb-2">
                                                 <div 
@@ -399,11 +399,11 @@ export function Cart() {
                                                             <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"></path>
                                                             <path d="M3 12h6m6 0h6"></path>
                                                         </svg>
-                                                        Tu pedido califica para envÃ­o gratis y priorizado
+                                                        Tu pedido califica para envio gratis y priorizado
                                                     </span>
                                                 ) : (
                                                     <span>
-                                                        Agrega <span className="font-semibold">S/ {(200 - totalPrice).toFixed(2)}</span> más para <span className="text-green-600 font-medium">envÃ­o gratis y priorizado</span>
+                                                        Agrega <span className="font-semibold">S/ {(200 - totalPrice).toFixed(2)}</span> mas para <span className="text-green-600 font-medium">envio gratis y priorizado</span>
                                                     </span>
                                                 )}
                                             </p>
@@ -419,7 +419,7 @@ export function Cart() {
                                     </div>
                                 </div>
 
-                                {/* PromociÃ³n EnvÃ­o Gratis */}
+                                {/* Promocion Envio Gratis */}
                                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                                     <div className="flex items-start gap-3">
                                         <div className="bg-green-500 text-white p-2 rounded-lg">
@@ -429,14 +429,14 @@ export function Cart() {
                                         </div>
                                         <div className="flex-1">
                                             <h3 className="font-medium text-gray-900 mb-1">
-                                                ðŸšš EnvÃ­o Gratis y Priorizado
+                                                Envio Gratis y Priorizado
                                             </h3>
                                             <p className="text-sm text-gray-600 mb-2">
-                                                Por compras mayores de <span className="font-semibold text-green-700">S/ 200</span>, obtÃ©n envÃ­o completamente gratis y con prioridad en la entrega.
+                                                Por compras mayores de <span className="font-semibold text-green-700">S/ 200</span>, obten envio completamente gratis y con prioridad en la entrega.
                                             </p>
                                             <div className="text-xs text-gray-500">
                                                 {totalPrice >= 200 ? (
-                                                    <span className="text-green-600 font-medium">âœ“ Â¡Felicitaciones! Tu pedido califica para envÃ­o gratis y priorizado</span>
+                                                    <span className="text-green-600 font-medium">OK Felicitaciones! Tu pedido califica para envio gratis y priorizado</span>
                                                 ) : (
                                                     <span>Te faltan <span className="font-semibold text-green-700">S/ {(200 - totalPrice).toFixed(2)}</span> para calificar</span>
                                                 )}
@@ -533,7 +533,7 @@ export function Cart() {
 
                                     <div className="grid grid-cols-3 gap-3">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700">ExpiraciÃ³n (MM/AA)</label>
+                                            <label className="block text-sm font-medium text-gray-700">Expiracion (MM/AA)</label>
                                             <input
                                                 ref={expiryInputRef}
                                                     value={expiry}

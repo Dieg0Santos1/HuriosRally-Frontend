@@ -124,7 +124,7 @@ const CartSidebar: React.FC = () => {
                   </span>
                 </div>
 
-                {/* EnvÃ­o gratis */}
+                {/* Envio gratis */}
                 <div className="mb-3">
                   <div className="w-full bg-gray-200 rounded-full h-1 mb-1">
                     <div 
