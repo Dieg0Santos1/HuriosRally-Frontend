@@ -84,7 +84,7 @@ export function Register() {
     setClicked(true); // activar animaciÃ³n del botÃ³n (si tu componente lo usa)
 
     try {
-      await registerUser({
+      const response = await registerUser({
         fullName: nombre,
         email: correo,
         password: clave,
@@ -93,7 +93,9 @@ export function Register() {
 
       // respuesta OK -> redirigir al formulario de verificaciÃ³n
       // pasamos el email por query para autocompletar el campo en VerifyEmail
-      navigate(`/verify-email?email=${encodeURIComponent(correo)}`);
+      navigate(`/verify-email?email=${encodeURIComponent(correo)}`, {
+        state: { demoCode: response.verificationCode },
+      });
 
     } catch (err: unknown) {
       // error de red u otro
@@ -151,7 +153,7 @@ export function Register() {
               {/* Input para correo */}
               <div className="sm:col-span-2">
                 <Input 
-                  label="Correo electrÃ³nico" 
+                  label="Correo electronico" 
                   type="email" 
                   value={correo}
                   onChange={(e) => setCorreo(e.target.value)} 
@@ -161,7 +163,7 @@ export function Register() {
                 {correo.length > 0 && (
                   <div className="mt-1 text-xs">
                     <p className={`${isEmailValid ? 'text-green-600' : 'text-red-500'}`}>
-                      VÃ¡lido (gmail, yahoo, hotmail, outlook, etc.) {isEmailValid ? 'âœ“' : 'âœ—'}
+                      Valido (gmail, yahoo, hotmail, outlook, etc.) {isEmailValid ? "OK" : "X"}
                     </p>
                     {!isEmailValid && correo.includes('@') && correo.includes('.') && (
                       <p className="text-amber-600 text-xs mt-1">
@@ -175,7 +177,7 @@ export function Register() {
               {/* Input para celular */}
               <div className="sm:col-span-2">
                 <Input 
-                  label="NÃºmero de celular" 
+                  label="Numero de celular" 
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
@@ -200,10 +202,10 @@ export function Register() {
                 {celular.length > 0 && (
                   <div className="mt-1 text-xs">
                     <p className={`${isCelularValid ? 'text-green-600' : 'text-red-500'}`}>
-                      {isCelularValid ? 'âœ“ NÃºmero vÃ¡lido' : 
-                        celular.length !== 9 ? `${celular.length}/9 dÃ­gitos - NÃºmero incompleto` :
+                      {isCelularValid ? "OK Numero valido" : 
+                        celular.length !== 9 ? `${celular.length}/9 digitos - Numero incompleto` :
                         !celular.startsWith('9') ? 'Debe iniciar con 9 (celulares peruanos)' :
-                        'Formato invÃ¡lido'
+                        'Formato invalido'
                       }
                     </p>
                     {!isCelularValid && (
@@ -218,7 +220,7 @@ export function Register() {
               {/* Input para clave */}
               <div className="sm:col-span-1">
                 <Input 
-                  label="ContraseÃ±a" 
+                  label="Contraseña" 
                   type="password" 
                   onChange={(e) => setClave(e.target.value)} 
                   placeholder="********" 
@@ -229,7 +231,7 @@ export function Register() {
               {/* Input para repetir clave */}
               <div className="sm:col-span-1">
                 <Input 
-                  label="Confirmar contraseÃ±a" 
+                  label="Confirmar contraseña" 
                   type="password" 
                   onChange={(e) => setRepetirClave(e.target.value)} 
                   placeholder="********" 
@@ -238,15 +240,15 @@ export function Register() {
               </div>
             </div>
 
-            {/* Indicador de validez de contraseÃ±a */}
+            {/* Indicador de validez de contraseña */}
             {clave.length > 0 && (
               <div className="text-xs text-[var(--Primary_5)] bg-[var(--Primary_0)] p-3 rounded-lg">
                 <p className={`${clave.length >= 8 ? 'text-green-600' : 'text-red-500'}`}>
-                  â€¢ MÃ­nimo 8 caracteres {clave.length >= 8 ? 'âœ“' : 'âœ—'}
+                  - Minimo 8 caracteres {clave.length >= 8 ? "OK" : "X"}
                 </p>
                 {repetirClave.length > 0 && (
                   <p className={`${clave === repetirClave ? 'text-green-600' : 'text-red-500'}`}>
-                    â€¢ Las contraseÃ±as coinciden {clave === repetirClave ? 'âœ“' : 'âœ—'}
+                    - Las contrasenas coinciden {clave === repetirClave ? "OK" : "X"}
                   </p>
                 )}
               </div>
@@ -272,13 +274,13 @@ export function Register() {
             {/* Enlaces adicionales */}
             <div className="text-center pt-4 space-y-3">
               <p className="text-sm text-[var(--Primary_5)]">
-                Â¿Ya tienes una cuenta?
+                ¿Ya tienes una cuenta?
               </p>
               <a 
                 href="/login" 
                 className="block w-full text-center border-2 border-[var(--Primary_4)] text-[var(--Primary_4)] py-3 rounded-lg hover:bg-[var(--Primary_4)] hover:text-white transition-all duration-300 transform hover:scale-[1.02] font-medium"
               >
-                Iniciar sesiÃ³n
+                Iniciar sesión
               </a>
             </div>
           </form>
@@ -287,7 +289,7 @@ export function Register() {
         {/* Footer */}
         <div className="text-center mt-6">
           <p className="text-[var(--Primary_5)] text-sm">
-            Al registrarte aceptas nuestros tÃ©rminos y condiciones
+            Al registrarte aceptas nuestros terminos y condiciones
           </p>
         </div>
       </div>

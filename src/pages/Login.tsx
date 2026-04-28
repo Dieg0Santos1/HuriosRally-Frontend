@@ -31,7 +31,7 @@ export function Login() {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("Error al iniciar sesiÃ³n");
+        setError("Error al iniciar sesión");
       }
     } finally {
       setClicked(false);
@@ -69,7 +69,7 @@ export function Login() {
               Bienvenido de vuelta
             </h1>
             <p className="text-[var(--Primary_5)] text-sm">
-              Inicia sesiÃ³n en tu cuenta
+              Inicia sesión en tu cuenta
             </p>
           </div>
 
@@ -147,13 +147,13 @@ export function Login() {
                 </div>
                 <div className="space-y-4">
                   <Input 
-                    label="Correo electrÃ³nico" 
+                    label="Correo electronico" 
                     type="email" 
                     placeholder="ejemplo@gmail.com" 
                     onChange={(e) => setCorreo(e.target.value)} 
                   />
                    <Input 
-                    label="ContraseÃ±a" 
+                    label="Contraseña" 
                     type="password" 
                     placeholder="********" 
                     onChange={(e) => setClave(e.target.value)} 
@@ -170,7 +170,7 @@ export function Login() {
                 {/* BotÃ³n principal */}
                 <div className="space-y-4">
                   <ButtonState 
-                    initialText="Iniciar sesiÃ³n" 
+                    initialText="Iniciar sesión" 
                     successText="Â¡Ingreso exitoso!" 
                     disabled={!isFormValid || !selectedRole} 
                     clicked={clicked} 
@@ -185,13 +185,13 @@ export function Login() {
                   </a>
                 </div>
 
-                {/* Enlace de recuperaciÃ³n */}
+                {/* Enlace de recuperación */}
                 <div className="text-center">
                   <Link 
                     to="/reset-password" 
                     className="text-[var(--Primary_5)] hover:text-[var(--Primary_6)] text-sm font-medium transition-colors duration-200 hover:underline"
                   >
-                    Â¿Olvidaste tu contraseÃ±a?
+                    ¿Olvidaste tu contraseña?
                   </Link>
                 </div>
               </div>

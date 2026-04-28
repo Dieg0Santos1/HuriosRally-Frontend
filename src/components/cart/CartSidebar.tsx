@@ -14,7 +14,7 @@ const CartSidebar: React.FC = () => {
     // updateQuantity
   } = useCart();
 
-  // Auto-cierre del sidebar despuÃ©s de 5 segundos
+  // Auto-cierre del sidebar después de 5 segundos
   useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => {
@@ -59,7 +59,7 @@ const CartSidebar: React.FC = () => {
                 <circle cx={20} cy={21} r={1}></circle>
                 <path d="m1 1 4 4 14 1-1 7H6"></path>
               </svg>
-              <h3 className="text-lg font-medium text-gray-600 mb-2">Tu carrito estÃ¡ vacÃ­o</h3>
+              <h3 className="text-lg font-medium text-gray-600 mb-2">Tu carrito está vacío</h3>
               <p className="text-gray-500 mb-4">AÃ±ade algunos productos para empezar</p>
               <button
                 onClick={toggleCart}
@@ -94,7 +94,7 @@ const CartSidebar: React.FC = () => {
                         />
                       </div>
 
-                      {/* InformaciÃ³n del producto */}
+                      {/* Información del producto */}
                       <div className="flex-1 min-w-0">
                         <h3 className="text-xs font-medium text-gray-900 line-clamp-2 mb-1">
                           {item.name}
@@ -137,7 +137,7 @@ const CartSidebar: React.FC = () => {
                       <span className="text-green-600 font-medium">âœ“ Tu pedido califica para envÃ­o gratis y priorizado</span>
                     ) : (
                       <span>
-                        Agrega S/ {(200 - totalPrice).toFixed(2)} mÃ¡s para <span className="text-green-600 font-medium">envÃ­o gratis</span>
+                        Agrega S/ {(200 - totalPrice).toFixed(2)} más para <span className="text-green-600 font-medium">envÃ­o gratis</span>
                       </span>
                     )}
                   </p>

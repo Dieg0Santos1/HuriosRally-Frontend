@@ -7,7 +7,7 @@ function App() {
   const [hasShownLoading, setHasShownLoading] = useState(false);
 
   useEffect(() => {
-    // Verificar si ya se mostrÃ³ la pantalla de carga en esta sesiÃ³n
+    // Verificar si ya se mostrÃ³ la pantalla de carga en esta sesión
     const loadingShown = sessionStorage.getItem('loadingShown');
     if (loadingShown === 'true') {
       setShowLoading(false);
@@ -18,7 +18,7 @@ function App() {
   const handleLoadingComplete = () => {
     setShowLoading(false);
     setHasShownLoading(true);
-    // Guardar que ya se mostrÃ³ en esta sesiÃ³n
+    // Guardar que ya se mostrÃ³ en esta sesión
     sessionStorage.setItem('loadingShown', 'true');
   };
 

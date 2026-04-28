@@ -68,7 +68,7 @@ export function AdminProfile() {
             // Recargar perfil
             await loadProfile();
 
-            // Ocultar mensaje despuÃ©s de 3 segundos
+            // Ocultar mensaje después de 3 segundos
             setTimeout(() => setSuccessMessage(null), 3000);
         } catch (err: unknown) {
             if (err instanceof Error) {
@@ -272,13 +272,13 @@ export function AdminProfile() {
 
                     {/* Formulario */}
                     <div className="bg-white rounded-lg shadow-md p-6">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-6">InformaciÃ³n personal</h2>
+                        <h2 className="text-xl font-semibold text-gray-900 mb-6">Información personal</h2>
 
                         <form onSubmit={handleSave} className="space-y-6">
                             {/* Email (solo lectura) */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Correo electrÃ³nico
+                                    Correo electronico
                                 </label>
                                 <input
                                     type="email"

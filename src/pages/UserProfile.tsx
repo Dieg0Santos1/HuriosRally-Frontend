@@ -68,7 +68,7 @@ export function UserProfile() {
       setEditing(false);
       // Recargar perfil
       await loadProfile();
-      // Ocultar mensaje despuÃ©s de 3 segundos
+      // Ocultar mensaje después de 3 segundos
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -170,12 +170,12 @@ export function UserProfile() {
 
           {/* Formulario */}
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-6">InformaciÃ³n personal</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">Información personal</h2>
             <form onSubmit={handleSave} className="space-y-6">
               {/* Email (solo lectura) */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Correo electrÃ³nico
+                  Correo electronico
                 </label>
                 <input
                   type="email"
@@ -201,10 +201,10 @@ export function UserProfile() {
                 />
               </div>
 
-              {/* TelÃ©fono */}
+              {/* Telefono */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  TelÃ©fono
+                  Telefono
                 </label>
                 <input
                   type="tel"
@@ -216,16 +216,16 @@ export function UserProfile() {
                 />
               </div>
 
-              {/* DirecciÃ³n */}
+              {/* Dirección */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  DirecciÃ³n
+                  Dirección
                 </label>
                 <textarea
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   disabled={!editing}
-                  placeholder="Ingresa tu direcciÃ³n"
+                  placeholder="Ingresa tu dirección"
                   rows={3}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--Primary_5)] focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500 resize-none"
                 />

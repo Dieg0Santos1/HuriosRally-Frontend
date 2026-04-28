@@ -156,8 +156,8 @@ export function Cart() {
     const validatePayment = () => {
         const e: Record<string, string> = {};
         const numSan = sanitizeNumber(cardNumber);
-        if (!numSan) e.cardNumber = 'NÃºmero de tarjeta requerido';
-        else if (!luhnCheck(numSan)) e.cardNumber = 'NÃºmero de tarjeta invÃ¡lido';
+        if (!numSan) e.cardNumber = 'Numerode tarjeta requerido';
+        else if (!luhnCheck(numSan)) e.cardNumber = 'Numerode tarjeta invÃ¡lido';
         if (!cardName.trim()) e.cardName = 'Nombre del titular requerido';
         // expiry MM/YY or MM/YYYY
         const expMatch = expiry.match(/^(0[1-9]|1[0-2])\/(?:(\d{2})|(\d{4}))$/);
@@ -178,7 +178,7 @@ export function Cart() {
         }
     if (!/^[0-9]{3,4}$/.test(cvc)) e.cvc = 'CVC invÃ¡lido';
     // email validation
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Correo electrÃ³nico invÃ¡lido';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Correo electronico invÃ¡lido';
 
         setErrors(e);
         return Object.keys(e).length === 0;
@@ -217,8 +217,8 @@ export function Cart() {
                                 <circle cx={20} cy={21} r={1}></circle>
                                 <path d="m1 1 4 4 14 1-1 7H6"></path>
                             </svg>
-                            <h1 className="text-3xl font-bold text-gray-800 mb-4">Tu carrito estÃ¡ vacÃ­o</h1>
-                            <p className="text-gray-600 mb-8 max-w-md mx-auto">Parece que no has agregado ningÃºn producto a tu carrito aÃºn. Explora nuestros productos y encuentra lo que necesitas.</p>
+                            <h1 className="text-3xl font-bold text-gray-800 mb-4">Tu carrito está vacío</h1>
+                            <p className="text-gray-600 mb-8 max-w-md mx-auto">Parece que no has agregado ningún producto a tu carrito aún. Explora nuestros productos y encuentra lo que necesitas.</p>
                             <Link 
                                 to="/products" 
                                 className="inline-block bg-[var(--Primary_5)] text-white px-8 py-3 rounded-md font-medium hover:bg-[#1e4a6f] transition-colors"
@@ -296,7 +296,7 @@ export function Cart() {
                                                     />
                                                 </div>
 
-                                                {/* InformaciÃ³n del producto */}
+                                                {/* Información del producto */}
                                                 <div className="flex-1 space-y-3">
                                                     <div className="flex justify-between">
                                                         <div>
@@ -359,7 +359,7 @@ export function Cart() {
                                                         </button>
 
                                                         <button className="text-sm text-[var(--Primary_5)] hover:text-[#1e4a6f] font-medium">
-                                                            Guardar para mÃ¡s tarde
+                                                            Guardar para más tarde
                                                         </button>
                                                     </div>
                                                 </div>
@@ -403,7 +403,7 @@ export function Cart() {
                                                     </span>
                                                 ) : (
                                                     <span>
-                                                        Agrega <span className="font-semibold">S/ {(200 - totalPrice).toFixed(2)}</span> mÃ¡s para <span className="text-green-600 font-medium">envÃ­o gratis y priorizado</span>
+                                                        Agrega <span className="font-semibold">S/ {(200 - totalPrice).toFixed(2)}</span> más para <span className="text-green-600 font-medium">envÃ­o gratis y priorizado</span>
                                                     </span>
                                                 )}
                                             </p>
@@ -454,7 +454,7 @@ export function Cart() {
                     <div className="bg-white rounded-lg max-w-md w-full mx-4 overflow-hidden shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
                         <div className="p-6">
                             <div className="flex items-start justify-between">
-                                <h3 className="text-xl font-semibold">Inicia sesiÃ³n para continuar</h3>
+                                <h3 className="text-xl font-semibold">Inicia sesión para continuar</h3>
                                 <button onClick={() => setShowLoginModal(false)} className="text-gray-600 hover:text-gray-800 p-2 rounded-full">
                                     <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                                 </button>
@@ -465,7 +465,7 @@ export function Cart() {
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                     <circle cx={12} cy={7} r={4}></circle>
                                 </svg>
-                                <p className="text-gray-600 mb-6">Debes iniciar sesiÃ³n para proceder al pago</p>
+                                <p className="text-gray-600 mb-6">Debes iniciar sesión para proceder al pago</p>
                                 <Link 
                                     to="/login" 
                                     state={{ from: "/cart" }}
@@ -498,7 +498,7 @@ export function Cart() {
                             {!paymentSuccess ? (
                                 <form className="mt-4 space-y-4" onSubmit={onSubmitPayment}>
                                     <div className="relative">
-                                        <label className="block text-sm font-medium text-gray-700">NÃºmero de tarjeta</label>
+                                        <label className="block text-sm font-medium text-gray-700">Numerode tarjeta</label>
                                         <div className="mt-1 relative">
                                             <input
                                                 ref={cardInputRef}
@@ -560,7 +560,7 @@ export function Cart() {
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">Correo electrÃ³nico</label>
+                                        <label className="block text-sm font-medium text-gray-700">Correo electronico</label>
                                         <input
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}

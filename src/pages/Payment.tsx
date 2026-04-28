@@ -172,13 +172,13 @@ export function Payment() {
         
         // ValidaciÃ³n estricta: solo nÃºmeros, exactamente 16 dÃ­gitos
         if (!numSan) {
-            errors.cardNumber = "NÃºmero de tarjeta requerido";
+            errors.cardNumber = "Numerode tarjeta requerido";
         } else if (!/^\d+$/.test(numSan)) {
             errors.cardNumber = "El nÃºmero de tarjeta solo debe contener dÃ­gitos";
         } else if (numSan.length !== 16) {
             errors.cardNumber = "El nÃºmero de tarjeta debe tener 16 dÃ­gitos";
         } else if (!luhnCheck(numSan)) {
-            errors.cardNumber = "NÃºmero de tarjeta invÃ¡lido";
+            errors.cardNumber = "Numerode tarjeta invÃ¡lido";
         }
         
         if (!cardData.cardName.trim()) errors.cardName = "Nombre del titular requerido";
@@ -210,7 +210,7 @@ export function Payment() {
         
         // Validar telÃ©fono
         if (!yapeData.phone.trim()) {
-            errors.phone = "NÃºmero de celular requerido";
+            errors.phone = "Numerode celular requerido";
         } else if (!/^\d{9}$/.test(yapeData.phone)) {
             errors.phone = "El nÃºmero debe tener 9 dÃ­gitos";
         }
@@ -471,12 +471,12 @@ export function Payment() {
                                 {paymentMethod === "card" && (
                                     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                                         <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                                            InformaciÃ³n de Pago
+                                            Información de Pago
                                         </h2>
                                         <div className="space-y-4">
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                    NÃºmero de tarjeta *
+                                                    Numerode tarjeta *
                                                 </label>
                                                 <div className="relative">
                                                     <input
@@ -589,12 +589,12 @@ export function Payment() {
                                 {paymentMethod === "yape" && (
                                     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                                         <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                                            InformaciÃ³n de Pago
+                                            Información de Pago
                                         </h2>
                                         <div className="space-y-4">
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                    NÃºmero de Celular *
+                                                    Numerode Celular *
                                                 </label>
                                                 <input
                                                     type="tel"
@@ -771,7 +771,7 @@ export function Payment() {
                                     {orderId && (
                                         <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-3">
                                             <p className="text-xs text-blue-600 font-medium">
-                                                NÃºmero de orden
+                                                Numerode orden
                                             </p>
                                             <p className="text-lg font-bold text-blue-700">
                                                 #{orderId}

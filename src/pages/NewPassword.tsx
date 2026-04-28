@@ -5,9 +5,9 @@ import Navbar from "../components/layout/Navbar";
 
 /*
  NewPassword.tsx
- - PÃ¡gina para establecer nueva contraseÃ±a usando token del email
+ - PÃ¡gina para establecer nueva contraseña usando token del email
  - Recibe token y email por URL params
- - Permite al usuario establecer nueva contraseÃ±a
+ - Permite al usuario establecer nueva contraseña
 */
 
 export const NewPassword: React.FC = () => {
@@ -35,12 +35,12 @@ export const NewPassword: React.FC = () => {
     setError(null);
 
     if (newPassword !== confirmPassword) {
-      setError("Las contraseÃ±as no coinciden");
+      setError("Las contraseñas no coinciden");
       return;
     }
 
     if (newPassword.length < 8) {
-      setError("La contraseÃ±a debe tener al menos 8 caracteres");
+      setError("La contraseña debe tener al menos 8 caracteres");
       return;
     }
 
@@ -50,12 +50,12 @@ export const NewPassword: React.FC = () => {
       await resetPassword(email!, token!, newPassword);
       setSuccess(true);
       
-      // Redirigir al login despuÃ©s de 3 segundos
+      // Redirigir al login después de 3 segundos
       setTimeout(() => {
         navigate("/login");
       }, 3000);
     } catch (err: any) {
-      setError(err.message || "Error al actualizar la contraseÃ±a");
+      setError(err.message || "Error al actualizar la contraseña");
     } finally {
       setIsLoading(false);
     }
@@ -93,10 +93,10 @@ export const NewPassword: React.FC = () => {
                     </svg>
                   </div>
                   <h1 className="text-2xl font-bold text-[var(--Primary_7)] mb-2">
-                    Nueva ContraseÃ±a
+                    Nueva Contraseña
                   </h1>
                   <p className="text-[var(--Primary_5)] text-sm">
-                    Establece una nueva contraseÃ±a para tu cuenta
+                    Establece una nueva contraseña para tu cuenta
                   </p>
                 </div>
 
@@ -104,7 +104,7 @@ export const NewPassword: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-[var(--Primary_6)] mb-2">
-                      Nueva contraseÃ±a
+                      Nueva contraseña
                     </label>
                     <input
                       type="password"
@@ -115,24 +115,24 @@ export const NewPassword: React.FC = () => {
                       required
                     />
                     {newPassword.length > 0 && !isPasswordValid && (
-                      <p className="text-red-500 text-xs mt-1">La contraseÃ±a debe tener al menos 8 caracteres</p>
+                      <p className="text-red-500 text-xs mt-1">La contraseña debe tener al menos 8 caracteres</p>
                     )}
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-[var(--Primary_6)] mb-2">
-                      Confirmar contraseÃ±a
+                      Confirmar contraseña
                     </label>
                     <input
                       type="password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      placeholder="Repite la contraseÃ±a"
+                      placeholder="Repite la contraseña"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--Primary_4)] focus:border-transparent transition-all duration-200 bg-white/90"
                       required
                     />
                     {confirmPassword.length > 0 && !isConfirmValid && (
-                      <p className="text-red-500 text-xs mt-1">Las contraseÃ±as no coinciden</p>
+                      <p className="text-red-500 text-xs mt-1">Las contraseñas no coinciden</p>
                     )}
                   </div>
 
@@ -154,7 +154,7 @@ export const NewPassword: React.FC = () => {
                         Actualizando...
                       </div>
                     ) : (
-                      "Actualizar contraseÃ±a"
+                      "Actualizar contraseña"
                     )}
                   </button>
                 </form>
@@ -168,7 +168,7 @@ export const NewPassword: React.FC = () => {
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
-                    Volver al inicio de sesiÃ³n
+                    Volver al inicio de sesión
                   </a>
                 </div>
               </>
@@ -181,10 +181,10 @@ export const NewPassword: React.FC = () => {
                   </svg>
                 </div>
                 <h2 className="text-xl font-bold text-[var(--Primary_7)] mb-2">
-                  Â¡ContraseÃ±a actualizada!
+                  Â¡Contraseña actualizada!
                 </h2>
                 <p className="text-[var(--Primary_5)] text-sm mb-6">
-                  Tu contraseÃ±a ha sido cambiada exitosamente. SerÃ¡s redirigido al login en unos segundos.
+                  Tu contraseña ha sido cambiada exitosamente. SerÃ¡s redirigido al login en unos segundos.
                 </p>
                 <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
                   <div className="w-4 h-4 border-2 border-[var(--Primary_5)] border-t-transparent rounded-full animate-spin"></div>

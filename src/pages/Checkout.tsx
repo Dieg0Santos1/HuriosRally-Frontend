@@ -54,7 +54,7 @@ export function Checkout() {
         }
     }, [navigate]);
 
-    // Verificar si el carrito estÃ¡ vacÃ­o
+    // Verificar si el carrito está vacío
     useEffect(() => {
         if (items.length === 0) {
             navigate("/cart");
@@ -84,7 +84,7 @@ export function Checkout() {
             newValue = value.replace(/[^0-9]/g, "");
         }
         
-        // Campos de direcciÃ³n permiten letras, nÃºmeros y caracteres especiales
+        // Campos de dirección permiten letras, nÃºmeros y caracteres especiales
         // (deliveryAddress, companyAddress, deliveryReference) - no requieren validaciÃ³n adicional
         
         setFormData((prev) => ({ ...prev, [name]: newValue }));
@@ -128,14 +128,14 @@ export function Checkout() {
                 newErrors.ruc = "El RUC debe tener 11 dÃ­gitos";
             }
             if (!formData.companyAddress.trim()) {
-                newErrors.companyAddress = "La direcciÃ³n de la empresa es requerida";
+                newErrors.companyAddress = "La dirección de la empresa es requerida";
             }
         }
 
         // Validaciones de entrega a domicilio
         if (formData.deliveryMethod === "delivery") {
             if (!formData.deliveryAddress.trim()) {
-                newErrors.deliveryAddress = "La direcciÃ³n de entrega es requerida";
+                newErrors.deliveryAddress = "La dirección de entrega es requerida";
             }
             if (!formData.deliveryDistrict.trim()) {
                 newErrors.deliveryDistrict = "El distrito es requerido";
@@ -175,10 +175,10 @@ export function Checkout() {
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             {/* Formulario principal */}
                             <div className="lg:col-span-2 space-y-6">
-                                {/* InformaciÃ³n personal */}
+                                {/* Información personal */}
                                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                                     <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                                        InformaciÃ³n Personal
+                                        Información Personal
                                     </h2>
                                     <div className="space-y-4">
                                         <div>
@@ -200,7 +200,7 @@ export function Checkout() {
 
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                NÃºmero de Celular *
+                                                Numerode Celular *
                                             </label>
                                             <input
                                                 type="tel"
@@ -306,7 +306,7 @@ export function Checkout() {
                                                 </div>
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        DirecciÃ³n Fiscal *
+                                                        Dirección Fiscal *
                                                     </label>
                                                     <input
                                                         type="text"
@@ -366,7 +366,7 @@ export function Checkout() {
                                                     {formData.deliveryMethod === "pickup" && (
                                                         <div className="mt-3 bg-white rounded-md p-3 border border-gray-200">
                                                             <p className="text-sm font-medium text-gray-900">
-                                                                ðŸ“ DirecciÃ³n de recojo:
+                                                                ðŸ“ Dirección de recojo:
                                                             </p>
                                                             <p className="text-sm text-gray-700 mt-1">
                                                                 Av. 22 de Agosto 1012, Comas 15312
@@ -417,7 +417,7 @@ export function Checkout() {
                                                         <div className="mt-3 space-y-3">
                                                             <div>
                                                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                                    DirecciÃ³n de Entrega *
+                                                                    Dirección de Entrega *
                                                                 </label>
                                                                 <input
                                                                     type="text"

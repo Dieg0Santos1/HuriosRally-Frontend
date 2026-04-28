@@ -108,7 +108,14 @@ export async function verifyCode(email: string, code: string) {
     verificationCode: undefined,
   };
   saveUsers(users);
-  return { ok: true, message: "Correo verificado correctamente" };
+  const token = createLocalToken(normalized);
+  setCurrentEmail(normalized);
+  return {
+    ok: true,
+    message: "Correo verificado correctamente",
+    token,
+    role: users[index].role,
+  };
 }
 
 export async function requestPasswordReset(email: string) {

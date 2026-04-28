@@ -17,7 +17,7 @@ export function About() {
                     <div data-reveal className="opacity-0 transform translate-y-6 mb-8">
                         <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">Sobre Nosotros</h1>
                         <p className="text-lg text-gray-600 text-center max-w-3xl mx-auto">
-                            Conoce mÃ¡s sobre Hurios Rally, tu tienda de confianza para repuestos y accesorios de motocicletas
+                            Conoce más sobre Hurios Rally, tu tienda de confianza para repuestos y accesorios de motocicletas
                         </p>
                     </div>
                     
@@ -35,19 +35,19 @@ export function About() {
                         <div className="text-center max-w-4xl mx-auto">
                             <p className="text-lg text-gray-700 leading-relaxed mb-6">
                                 En <strong>Hurios Rally</strong> nos especializamos en ofrecer repuestos y accesorios de alta calidad 
-                                para motocicletas de todas las marcas. Con aÃ±os de experiencia en el sector, nos hemos consolidado 
-                                como la tienda de confianza para motociclistas que buscan calidad y garantÃ­a.
+                                para motocicletas de todas las marcas. Con años de experiencia en el sector, nos hemos consolidado 
+                                como la tienda de confianza para motociclistas que buscan calidad y garantia.
                             </p>
                             <p className="text-lg text-gray-700 leading-relaxed">
-                                Nuestro compromiso es brindar productos originales y de primera calidad, acompaÃ±ados de un 
-                                servicio al cliente excepcional que garantiza la satisfacciÃ³n de nuestros usuarios.
+                                Nuestro compromiso es brindar productos originales y de primera calidad, acompañados de un 
+                                servicio al cliente excepcional que garantiza la satisfaccion de nuestros usuarios.
                             </p>
                         </div>
                     </div>
 
                     {/* Secciones con contenido */}
                     <div className="w-full space-y-16 md:space-y-20">
-                        {/* Nuestra MisiÃ³n - imagen izquierda, texto derecha */}
+                        {/* Nuestra Misión - imagen izquierda, texto derecha */}
                         <section data-reveal className="opacity-0 transform translate-y-6">
                             <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
                                 <div className="w-full md:w-1/2 flex-shrink-0">
@@ -58,15 +58,15 @@ export function About() {
                                     />
                                 </div>
                                 <div className="w-full md:w-1/2">
-                                    <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800">Nuestra MisiÃ³n</h2>
+                                    <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800">Nuestra Misión</h2>
                                     <p className="text-gray-700 leading-relaxed mb-4">
-                                        Proveer a los motociclistas repuestos y accesorios de la mÃ¡s alta calidad, 
+                                        Proveer a los motociclistas repuestos y accesorios de la más alta calidad, 
                                         garantizando seguridad, rendimiento y durabilidad en cada uno de nuestros productos.
                                     </p>
                                     <p className="text-gray-700 leading-relaxed">
                                         Nos enfocamos en mantener un inventario completo de las mejores marcas del mercado, 
                                         asegurando que nuestros clientes encuentren exactamente lo que necesitan para 
-                                        mantener sus motocicletas en Ã³ptimas condiciones.
+                                        mantener sus motocicletas en optimas condiciones.
                                     </p>
                                 </div>
                             </div>
@@ -85,12 +85,12 @@ export function About() {
                                 <div className="w-full md:w-1/2">
                                     <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800">Nuestra Experiencia</h2>
                                     <p className="text-gray-700 leading-relaxed mb-4">
-                                        Con mÃ¡s de una dÃ©cada en el mercado de repuestos para motocicletas, hemos construido 
-                                        una sÃ³lida reputaciÃ³n basada en la confianza, calidad y servicio excepcional.
+                                        Con más de una decada en el mercado de repuestos para motocicletas, hemos construido 
+                                        una solida reputación basada en la confianza, calidad y servicio excepcional.
                                     </p>
                                     <p className="text-gray-700 leading-relaxed">
                                         Nuestro equipo de expertos conoce a fondo cada producto que ofrecemos, 
-                                        lo que nos permite brindar asesorÃ­a especializada y garantizar que cada 
+                                        lo que nos permite brindar asesoría especializada y garantizar que cada 
                                         cliente obtenga el repuesto correcto para su motocicleta.
                                     </p>
                                 </div>
@@ -117,8 +117,8 @@ export function About() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                             </svg>
                                         </div>
-                                        <h3 className="text-xl font-semibold mb-2">Entrega RÃ¡pida</h3>
-                                        <p className="text-gray-600">EnvÃ­os rÃ¡pidos y seguros a todo el paÃ­s</p>
+                                        <h3 className="text-xl font-semibold mb-2">Entrega Rapida</h3>
+                                        <p className="text-gray-600">Envios rapidos y seguros a todo el país</p>
                                     </div>
                                     <div className="text-center">
                                         <div className="w-16 h-16 mx-auto mb-4 bg-purple-100 rounded-full flex items-center justify-center">
@@ -126,8 +126,8 @@ export function About() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 1 0 0 19.5 9.75 9.75 0 0 0 0-19.5Z" />
                                             </svg>
                                         </div>
-                                        <h3 className="text-xl font-semibold mb-2">Soporte TÃ©cnico</h3>
-                                        <p className="text-gray-600">AsesorÃ­a especializada antes y despuÃ©s de la compra</p>
+                                        <h3 className="text-xl font-semibold mb-2">Soporte Técnico</h3>
+                                        <p className="text-gray-600">Asesoría especializada antes y después de la compra</p>
                                     </div>
                                 </div>
                             </div>
