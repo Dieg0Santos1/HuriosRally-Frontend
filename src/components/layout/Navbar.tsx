@@ -97,17 +97,8 @@ const Navbar: React.FC = () => {
           <Link to="/about" className="hover:underline">Nosotros</Link>
         </nav>
 
-        {/* acciones (search, cart, login, hamburger) */}
+        {/* acciones (cart, login, hamburger) */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* search: visible en lg+; diseÃ±o para destacarlo (fondo blanco) */}
-          <div className="hidden lg:block">
-            <input
-              aria-label="Buscar"
-              placeholder="Buscar repuestos..."
-              className="px-3 py-2 rounded-md w-48 xl:w-64 bg-white text-gray-800 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#ffe08a] transition text-sm"
-            />
-          </div>
-
           {/* carrito - oculto para admin */}
           {!isAdmin && (
             <Link 
@@ -235,15 +226,6 @@ const Navbar: React.FC = () => {
 
           <Link to="/about" className="py-2 border-b border-white/10">Nosotros</Link>
           <Link to="/user" className="py-2">Usuario</Link>
-
-          {/* mobile search visible en mobile/tablet */}
-          <div className="mt-3">
-            <input
-              aria-label="Buscar"
-              placeholder="Buscar..."
-              className="px-3 py-2.5 rounded-md w-full bg-white text-gray-800 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#ffe08a] text-sm"
-            />
-          </div>
         </nav>
         </div>
       </div>
