@@ -7,10 +7,9 @@ import { getToken, clearToken, getRole } from "../../utils/token";
 
 const categories = [
   { id: 1, name: "Motor" },
-  { id: 2, name: "Suspension" },
-  { id: 3, name: "Frenos" },
-  { id: 4, name: "Electricos" },
-  { id: 5, name: "Accesorios" },
+  { id: 2, name: "Neumaticos" },
+  { id: 3, name: "Carroceria" },
+  { id: 4, name: "Filtros" },
 ];
 
 const Navbar: React.FC = () => {
