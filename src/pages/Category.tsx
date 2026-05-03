@@ -5,24 +5,17 @@ import ShopCard, { type Product } from "../components/product/ShopCard";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 
-// Definición de categorías (debe coincidir con el backend)
 const CATEGORIES: { [key: string]: string } = {
   "1": "Motor",
-  "2": "Suspensión",
-  "3": "Frenos",
-  "4": "Eléctrico",
-  "5": "Accesorios",
-  "6": "Transmisión",
-  "7": "Carrocería",
-  "8": "Neumáticos",
-  "9": "Lubricantes",
-  "10": "Filtros",
+  "2": "Neumaticos",
+  "3": "Carroceria",
+  "4": "Filtros",
 };
 
 export function Category() {
   const { categoryId } = useParams<{ categoryId: string }>();
   const navigate = useNavigate();
-  
+
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,25 +24,18 @@ export function Category() {
 
   useEffect(() => {
     if (!categoryName) {
-      navigate('/products');
+      navigate("/products");
       return;
     }
 
     (async () => {
       try {
         setLoading(true);
-        // Filtrar productos por categoría
         const allProducts = await getAllProducts();
-        
-        // Filtrar productos que contengan la categoría en su nombre o descripción
-        const filtered = allProducts.filter((product) => {
-          const searchText = `${product.name} ${product.description || ""}`.toLowerCase();
-          const category = categoryName.toLowerCase();
-          
-          // Búsqueda simple por palabras clave de la categoría
-          return searchText.includes(category);
-        });
-
+        const filtered = allProducts.filter(
+          (product) =>
+            (product.category || "").toLowerCase() === categoryName.toLowerCase()
+        );
         setProducts(filtered);
       } catch (err: any) {
         setError(err.message || "Error al cargar productos");
@@ -57,7 +43,7 @@ export function Category() {
         setLoading(false);
       }
     })();
-  }, [categoryId, categoryName, navigate]);
+  }, [categoryName, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -65,20 +51,27 @@ export function Category() {
 
       <main className="flex-grow">
         <div className="max-w-7xl mx-auto px-4 py-10">
-          {/* Header */}
           <div className="mb-8">
             <button
-              onClick={() => navigate('/products')}
+              onClick={() => navigate("/products")}
               className="text-[var(--Primary_5)] hover:underline mb-4 flex items-center gap-2"
             >
-              <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+              <svg
+                width={20}
+                height={20}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
                 <path d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
               Volver a productos
             </button>
             <h1 className="text-3xl font-bold text-gray-900">{categoryName}</h1>
             <p className="text-gray-600 mt-2">
-              {products.length} {products.length === 1 ? 'producto' : 'productos'} encontrado{products.length === 1 ? '' : 's'}
+              {products.length} {products.length === 1 ? "producto" : "productos"} encontrado
+              {products.length === 1 ? "" : "s"}
             </p>
           </div>
 
@@ -95,9 +88,9 @@ export function Category() {
             </div>
           ) : products.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">No se encontraron productos en esta categoría</p>
+              <p className="text-gray-600 text-lg">No se encontraron productos en esta categoria</p>
               <button
-                onClick={() => navigate('/products')}
+                onClick={() => navigate("/products")}
                 className="mt-4 px-6 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors"
               >
                 Ver todos los productos

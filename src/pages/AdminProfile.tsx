@@ -6,6 +6,8 @@ import { getUserProfile, updateUserProfile, type UserProfile as UserProfileType 
 import { getToken } from "../utils/token";
 import { useAdminSessionTimeout } from "../hooks/useAdminSessionTimeout";
 import { ProfileAvatar } from "../components/user/ProfileAvatar";
+import { getOrders, getProducts, getUsers } from "../api/localStorageDb";
+import * as XLSX from "xlsx";
 
 export function AdminProfile() {
     const navigate = useNavigate();
@@ -21,7 +23,7 @@ export function AdminProfile() {
     const [fullName, setFullName] = useState("");
 
     useEffect(() => {
-        // Verificar autenticación
+        // Verificar autenticaciÃ³n
         if (!getToken()) {
             navigate("/login");
             return;
@@ -89,39 +91,47 @@ export function AdminProfile() {
     const handleExport = async (type: 'clients' | 'sales' | 'products') => {
         try {
             setLoading(true);
-            const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
-            const endpoint = `${API_BASE}/export/${type}`;
-            
-            // Realizar petición fetch para obtener el archivo
-            const response = await fetch(endpoint);
-            
-            if (!response.ok) {
-                throw new Error('Error al exportar el archivo');
+
+            const timestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, -5);
+            const filenameBase =
+                type === "clients" ? "Clientes" : type === "sales" ? "Ventas" : "Productos";
+
+            let rows: Record<string, string | number>[] = [];
+            if (type === "clients") {
+                const users = getUsers().filter((u) => u.role === "CLIENTE");
+                rows = users.map((u) => ({
+                    Email: u.email,
+                    Nombre: u.fullName || "",
+                    Telefono: u.phone || "",
+                    FechaRegistro: u.createdAt || "",
+                }));
+            } else if (type === "products") {
+                const products = getProducts();
+                rows = products.map((p) => ({
+                    ID: p.id,
+                    Nombre: p.name,
+                    Categoria: p.category || "",
+                    Precio: p.price,
+                    Stock: p.stock ?? 0,
+                    FechaCreacion: p.createdAt || "",
+                }));
+            } else {
+                const orders = getOrders();
+                rows = orders.map((o) => ({
+                    Orden: o.orderId,
+                    Fecha: o.createdAt,
+                    Pago: o.paymentMethod,
+                    Total: o.finalTotal,
+                    Cliente: o.customerEmail || "",
+                }));
             }
-            
-            // Obtener el blob del archivo
-            const blob = await response.blob();
-            
-            // Crear URL temporal para el blob
-            const url = window.URL.createObjectURL(blob);
-            
-            // Crear enlace temporal y hacer clic automáticamente
-            const link = document.createElement('a');
-            link.href = url;
-            
-            // Nombre del archivo
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
-            const fileName = `${type === 'clients' ? 'Clientes' : type === 'sales' ? 'Ventas' : 'Productos'}_${timestamp}.xlsx`;
-            link.download = fileName;
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Liberar la URL del blob
-            window.URL.revokeObjectURL(url);
-            
-            setSuccessMessage(`Â¡Archivo exportado correctamente!`);
+
+            const worksheet = XLSX.utils.json_to_sheet(rows);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, filenameBase);
+            XLSX.writeFile(workbook, `${filenameBase}_${timestamp}.xlsx`);
+
+            setSuccessMessage("Archivo Excel exportado correctamente");
             setTimeout(() => setSuccessMessage(null), 3000);
         } catch (err: unknown) {
             if (err instanceof Error) {
@@ -201,7 +211,7 @@ export function AdminProfile() {
                         <ButtonAdmin label="PROVEEDORES" route="/proveedores" />
                     </section>
 
-                    {/* Botones de exportación */}
+                    {/* Botones de exportaciÃ³n */}
                     <section className="bg-white rounded-lg shadow-md p-6 mb-6">
                         <h2 className="text-xl font-semibold text-gray-900 mb-4">Exportar Reportes</h2>
                         <div className="flex gap-4 flex-wrap">
@@ -269,7 +279,7 @@ export function AdminProfile() {
                             {/* Email (solo lectura) */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Correo electrónico
+                                    Correo electronico
                                 </label>
                                 <input
                                     type="email"

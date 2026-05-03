@@ -75,7 +75,7 @@ export function Login() {
 
           {/* Formulario */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Selección de rol */}
+            {/* SelecciÃ³n de rol */}
             {!selectedRole ? (
               <div className="space-y-4">
                 <h2 className="text-center text-lg font-semibold text-[var(--Primary_6)] mb-4">
@@ -147,7 +147,7 @@ export function Login() {
                 </div>
                 <div className="space-y-4">
                   <Input 
-                    label="Correo electrónico" 
+                    label="Correo electronico" 
                     type="email" 
                     placeholder="ejemplo@gmail.com" 
                     onChange={(e) => setCorreo(e.target.value)} 
@@ -167,7 +167,7 @@ export function Login() {
                   </div>
                 )}
 
-                {/* Botón principal */}
+                {/* BotÃ³n principal */}
                 <div className="space-y-4">
                   <ButtonState 
                     initialText="Iniciar sesión" 

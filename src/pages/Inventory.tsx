@@ -598,7 +598,13 @@ export function Inventory() {
                                     <div className="space-y-3">
                                         {(selectedDate && productsByArrivalDate[selectedDate] ? productsByArrivalDate[selectedDate] : []).map(p => {
                                             const imgUrl = p.imageUrl 
-                                                ? (p.imageUrl.startsWith('http') ? p.imageUrl : `${API_BASE}${p.imageUrl}`)
+                                                ? (
+                                                    p.imageUrl.startsWith('http') ||
+                                                    p.imageUrl.startsWith('/assets') ||
+                                                    p.imageUrl.startsWith('blob:')
+                                                        ? p.imageUrl
+                                                        : `${API_BASE}${p.imageUrl}`
+                                                  )
                                                 : "/assets/imgs/placeholder.png";
                                             return (
                                             <div key={p.id} className="flex items-center gap-3 border rounded p-2">
@@ -619,7 +625,13 @@ export function Inventory() {
                                     <div className="space-y-2">
                                         {newestArrivals.map(p => {
                                             const imgUrl = p.imageUrl 
-                                                ? (p.imageUrl.startsWith('http') ? p.imageUrl : `${API_BASE}${p.imageUrl}`)
+                                                ? (
+                                                    p.imageUrl.startsWith('http') ||
+                                                    p.imageUrl.startsWith('/assets') ||
+                                                    p.imageUrl.startsWith('blob:')
+                                                        ? p.imageUrl
+                                                        : `${API_BASE}${p.imageUrl}`
+                                                  )
                                                 : "/assets/imgs/placeholder.png";
                                             return (
                                             <div key={p.id} className="flex items-center gap-3 border rounded p-2">
@@ -693,7 +705,13 @@ export function Inventory() {
                                         {editPreview && (
                                             <div className="mt-2">
                                                 <img 
-                                                    src={editPreview.startsWith('blob:') ? editPreview : `${API_BASE}${editPreview}`} 
+                                                    src={
+                                                        editPreview.startsWith('blob:') ||
+                                                        editPreview.startsWith('/assets') ||
+                                                        editPreview.startsWith('http')
+                                                            ? editPreview
+                                                            : `${API_BASE}${editPreview}`
+                                                    } 
                                                     alt="preview" 
                                                     className="h-32 object-contain border rounded" 
                                                 />

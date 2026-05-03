@@ -1,3 +1,5 @@
+import { clearCurrentEmail } from "../api/localStorageDb";
+
 // src/utils/token.tsx
 /*Sirve para que el localStorage guarde el Token del usuario autorizado */
 export function saveToken(token: string) {
@@ -17,6 +19,7 @@ export function clearToken() {
   if (typeof window !== 'undefined' && window.localStorage) {
     localStorage.removeItem("hurios_token");
     localStorage.removeItem("hurios_role");
+    clearCurrentEmail();
   }
 }
 /*Sirve para que el localStorage guarde el nuevo rol que tiene el usuario */

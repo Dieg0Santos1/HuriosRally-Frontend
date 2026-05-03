@@ -5,8 +5,8 @@ import { clearToken } from '../utils/token';
 const TIMEOUT_DURATION = 2 * 60 * 1000// 2 minutos en milisegundos
 
 /**
- * Hook para cerrar sesión automáticamente después de 2 minutos de inactividad
- * Solo debe usarse en páginas del administrador
+ * Hook para cerrar sesión automÃ¡ticamente después de 2 minutos de inactividad
+ * Solo debe usarse en pÃ¡ginas del administrador
  */
 export function useAdminSessionTimeout() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export function useAdminSessionTimeout() {
       timeoutRef.current = window.setTimeout(() => {
         // Cerrar sesión y redirigir
         clearToken();
-        navigate('/login', { state: { message: 'Sesión cerrada por inactividad' } });
+        navigate('/login', { state: { message: 'SesiÃ³n cerrada por inactividad' } });
       }, TIMEOUT_DURATION);
     };
 

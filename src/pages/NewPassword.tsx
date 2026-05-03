@@ -5,7 +5,7 @@ import Navbar from "../components/layout/Navbar";
 
 /*
  NewPassword.tsx
- - Página para establecer nueva contraseña usando token del email
+ - PÃ¡gina para establecer nueva contraseña usando token del email
  - Recibe token y email por URL params
  - Permite al usuario establecer nueva contraseña
 */
@@ -110,7 +110,7 @@ export const NewPassword: React.FC = () => {
                       type="password"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      placeholder="Mí­nimo 8 caracteres"
+                      placeholder="MÃ­nimo 8 caracteres"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--Primary_4)] focus:border-transparent transition-all duration-200 bg-white/90"
                       required
                     />
@@ -173,7 +173,7 @@ export const NewPassword: React.FC = () => {
                 </div>
               </>
             ) : (
-              /* Estado de éxito */
+              /* Estado de Ã©xito */
               <div className="text-center">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -184,7 +184,7 @@ export const NewPassword: React.FC = () => {
                   Â¡Contraseña actualizada!
                 </h2>
                 <p className="text-[var(--Primary_5)] text-sm mb-6">
-                  Tu contraseña ha sido cambiada exitosamente. Serás redirigido al login en unos segundos.
+                  Tu contraseña ha sido cambiada exitosamente. SerÃ¡s redirigido al login en unos segundos.
                 </p>
                 <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
                   <div className="w-4 h-4 border-2 border-[var(--Primary_5)] border-t-transparent rounded-full animate-spin"></div>

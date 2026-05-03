@@ -7,16 +7,15 @@ import { getToken, clearToken, getRole } from "../../utils/token";
 
 const categories = [
   { id: 1, name: "Motor" },
-  { id: 2, name: "Suspensión" },
-  { id: 3, name: "Frenos" },
-  { id: 4, name: "Eléctrico" },
-  { id: 5, name: "Accesorios" },
+  { id: 2, name: "Neumaticos" },
+  { id: 3, name: "Carroceria" },
+  { id: 4, name: "Filtros" },
 ];
 
 const Navbar: React.FC = () => {
-  // menuOpen controla si el menú móvil está visible
+  // menuOpen controla si el menÃº mÃ³vil estÃ¡ visible
   const [menuOpen, setMenuOpen] = useState(false);
-  // catsOpen controla dropdown de categorí­as en desktop
+  // catsOpen controla dropdown de Categorias en desktop
   const [catsOpen, setCatsOpen] = useState(false);
   // userDropdownOpen controla dropdown de usuario
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -41,9 +40,9 @@ const Navbar: React.FC = () => {
   
   const handleLogout = () => {
     clearToken();
-    localStorage.removeItem('huriosRally_cart'); // Limpiar carrito también
+    localStorage.removeItem('huriosRally_cart'); // Limpiar carrito tambiÃ©n
     setUserDropdownOpen(false);
-    window.location.href = '/'; // Recargar página
+    window.location.href = '/'; // Recargar pÃ¡gina
   };
 
   return (
@@ -60,9 +59,9 @@ const Navbar: React.FC = () => {
           <Link to="/" className="hover:underline">Inicio</Link>
           <Link to="/products" className="hover:underline">Productos</Link>
 
-          {/* dropdown categorí­as (desktop) */}
+          {/* dropdown Categorias (desktop) */}
           <div className="relative">
-            {/* botón que abre el dropdown */}
+            {/* botÃ³n que abre el dropdown */}
             <button
               onClick={() => setCatsOpen(v => !v)}
               onMouseEnter={() => setCatsOpen(true)}
@@ -70,7 +69,7 @@ const Navbar: React.FC = () => {
               className="flex items-center gap-1"
               aria-expanded={catsOpen}
             >
-              Categorí­as
+              Categorias
               <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
                 <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06-.02L10 10.67l3.71-3.48a.75.75 0 111.04 1.08l-4.25 4a.75.75 0 01-1.04 0l-4.25-4a.75.75 0 01-.02-1.06z" clipRule="evenodd" />
               </svg>
@@ -97,17 +96,8 @@ const Navbar: React.FC = () => {
           <Link to="/about" className="hover:underline">Nosotros</Link>
         </nav>
 
-        {/* acciones (search, cart, login, hamburger) */}
+        {/* acciones (cart, login, hamburger) */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* search: visible en lg+; diseño para destacarlo (fondo blanco) */}
-          <div className="hidden lg:block">
-            <input
-              aria-label="Buscar"
-              placeholder="Buscar repuestos..."
-              className="px-3 py-2 rounded-md w-48 xl:w-64 bg-white text-gray-800 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#ffe08a] transition text-sm"
-            />
-          </div>
-
           {/* carrito - oculto para admin */}
           {!isAdmin && (
             <Link 
@@ -134,7 +124,7 @@ const Navbar: React.FC = () => {
           <div className="relative" ref={userDropdownRef}>
             <button
               onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-              aria-label={isAuthenticated ? "Menú de usuario" : "Iniciar sesión"}
+              aria-label={isAuthenticated ? "MenÃº de usuario" : "Iniciar sesión"}
               className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white text-[#27557a] hover:scale-105 transition flex-shrink-0"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -223,7 +213,7 @@ const Navbar: React.FC = () => {
 
           {/* details permite expandir categorias y seguir siendo accesible/clickable */}
           <details className="py-2 border-b border-white/10">
-            <summary className="cursor-pointer">Categorí­as</summary>
+            <summary className="cursor-pointer">Categorias</summary>
             <ul className="pl-4 mt-2">
               {categories.map(c => (
                 <li key={c.id} className="py-1">
@@ -235,15 +225,6 @@ const Navbar: React.FC = () => {
 
           <Link to="/about" className="py-2 border-b border-white/10">Nosotros</Link>
           <Link to="/user" className="py-2">Usuario</Link>
-
-          {/* mobile search visible en mobile/tablet */}
-          <div className="mt-3">
-            <input
-              aria-label="Buscar"
-              placeholder="Buscar..."
-              className="px-3 py-2.5 rounded-md w-full bg-white text-gray-800 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#ffe08a] text-sm"
-            />
-          </div>
         </nav>
         </div>
       </div>

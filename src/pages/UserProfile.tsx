@@ -20,7 +20,7 @@ export function UserProfile() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   useEffect(() => {
-    // Verificar autenticación
+    // Verificar autenticaciÃ³n
     if (!getToken()) {
       navigate("/login");
       return;
@@ -52,7 +52,7 @@ export function UserProfile() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    /*En caso de que se cree de forma exitosa,se muestra un mensaje de que esto ocurrió */
+    /*En caso de que se cree de forma exitosa,se muestra un mensaje de que esto ocurriÃ³ */
     try {
       setSaving(true);
       setError(null);
@@ -80,7 +80,7 @@ export function UserProfile() {
       setSaving(false);
     }
   };
-  /*Sirve para cancelar los cambios que el usuario querí­a hacer a su perfil */
+  /*Sirve para cancelar los cambios que el usuario querÃ­a hacer a su perfil */
   const handleCancel = () => {
     setEditing(false);
     setFullName(profile?.fullName || "");
@@ -135,7 +135,7 @@ export function UserProfile() {
                   )}
                 </div>
               </div>
-              {/*Botón para cambiar deatos del perfil*/}
+              {/*BotÃ³n para cambiar deatos del perfil*/}
               {!editing && (
                 <button
                   onClick={() => setEditing(true)}
@@ -151,7 +151,7 @@ export function UserProfile() {
             </div>
           </div>
 
-          {/* Mensajes de Éxito o de error*/}
+          {/* Mensajes de Ã©xito o de error*/}
           {successMessage && (
             <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
               <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -175,7 +175,7 @@ export function UserProfile() {
               {/* Email (solo lectura) */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Correo electrónico
+                  Correo electronico
                 </label>
                 <input
                   type="email"
@@ -201,17 +201,17 @@ export function UserProfile() {
                 />
               </div>
 
-              {/* Teléfono */}
+              {/* Telefono */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Teléfono
+                  Telefono
                 </label>
                 <input
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   disabled={!editing}
-                  placeholder="Ingresa tu número de teléfono"
+                  placeholder="Ingresa tu nÃºmero de telÃ©fono"
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--Primary_5)] focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500"
                 />
               </div>

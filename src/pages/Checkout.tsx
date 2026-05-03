@@ -46,7 +46,7 @@ export function Checkout() {
     });
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    // Verificar autenticación
+    // Verificar autenticacion
     useEffect(() => {
         const token = getToken();
         if (!token) {
@@ -54,7 +54,7 @@ export function Checkout() {
         }
     }, [navigate]);
 
-    // Verificar si el carrito está vací­o
+    // Verificar si el carrito está vacío
     useEffect(() => {
         if (items.length === 0) {
             navigate("/cart");
@@ -69,23 +69,23 @@ export function Checkout() {
     ) => {
         const { name, value } = e.target;
         
-        // Validaciones de entrada según el tipo de campo
+        // Validaciones de entrada segun el tipo de campo
         let newValue = value;
         
         // Campos que solo permiten letras (nombres)
         if (name === "fullName" || name === "companyName" || name === "deliveryDistrict") {
-            // Permitir solo letras, espacios, tildes y caracteres especiales del español
-            newValue = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, "");
+            // Permitir solo letras, espacios, tildes y caracteres especiales del espanol
+            newValue = value.replace(/[^a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ±Ã‘Ã¼Ãœ\s]/g, "");
         }
         
-        // Campos que solo permiten números
+        // Campos que solo permiten numeros
         if (name === "phone" || name === "dni" || name === "ruc") {
-            // Permitir solo números
+            // Permitir solo numeros
             newValue = value.replace(/[^0-9]/g, "");
         }
         
-        // Campos de dirección permiten letras, números y caracteres especiales
-        // (deliveryAddress, companyAddress, deliveryReference) - no requieren validación adicional
+        // Campos de direccion permiten letras, numeros y caracteres especiales
+        // (deliveryAddress, companyAddress, deliveryReference) - no requieren validacion adicional
         
         setFormData((prev) => ({ ...prev, [name]: newValue }));
         // Limpiar error del campo
@@ -106,17 +106,17 @@ export function Checkout() {
             newErrors.fullName = "El nombre completo es requerido";
         }
         if (!formData.phone.trim()) {
-            newErrors.phone = "El número de celular es requerido";
+            newErrors.phone = "El numero de celular es requerido";
         } else if (!/^\d{9}$/.test(formData.phone)) {
-            newErrors.phone = "El número debe tener 9 dí­gitos";
+            newErrors.phone = "El numero debe tener 9 digitos";
         }
 
-        // Validaciones según tipo de documento
+        // Validaciones segun tipo de documento
         if (formData.documentType === "dni") {
             if (!formData.dni.trim()) {
                 newErrors.dni = "El DNI es requerido";
             } else if (!/^\d{8}$/.test(formData.dni)) {
-                newErrors.dni = "El DNI debe tener 8 dí­gitos";
+                newErrors.dni = "El DNI debe tener 8 digitos";
             }
         } else {
             if (!formData.companyName.trim()) {
@@ -125,7 +125,7 @@ export function Checkout() {
             if (!formData.ruc.trim()) {
                 newErrors.ruc = "El RUC es requerido";
             } else if (!/^\d{11}$/.test(formData.ruc)) {
-                newErrors.ruc = "El RUC debe tener 11 dí­gitos";
+                newErrors.ruc = "El RUC debe tener 11 digitos";
             }
             if (!formData.companyAddress.trim()) {
                 newErrors.companyAddress = "La dirección de la empresa es requerida";
@@ -149,7 +149,7 @@ export function Checkout() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (validateForm()) {
-            // Guardar datos en sessionStorage para usar en la página de pago
+            // Guardar datos en sessionStorage para usar en la pagina de pago
             sessionStorage.setItem("checkoutData", JSON.stringify(formData));
             navigate("/payment");
         }
@@ -167,7 +167,7 @@ export function Checkout() {
                             onClick={() => navigate("/cart")}
                             className="text-[var(--Primary_5)] hover:underline text-sm"
                         >
-                            â† Volver al carrito
+                            ← Volver al carrito
                         </button>
                     </div>
 
@@ -191,7 +191,7 @@ export function Checkout() {
                                                 value={formData.fullName}
                                                 onChange={handleInputChange}
                                                 className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--Primary_5)]"
-                                                placeholder="Juan Pérez García"
+                                                placeholder="Juan Perez Garcia"
                                             />
                                             {errors.fullName && (
                                                 <p className="text-xs text-red-600 mt-1">{errors.fullName}</p>
@@ -200,7 +200,7 @@ export function Checkout() {
 
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Número de Celular *
+                                                Numero de Celular *
                                             </label>
                                             <input
                                                 type="tel"
@@ -327,10 +327,10 @@ export function Checkout() {
                                     </div>
                                 </div>
 
-                                {/* Método de entrega */}
+                                {/* Metodo de entrega */}
                                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                                     <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                                        Método de Entrega
+                                        Metodo de Entrega
                                     </h2>
                                     <div className="space-y-4">
                                         {/* Retiro en tienda */}
@@ -361,18 +361,18 @@ export function Checkout() {
                                                         Retiro en Tienda
                                                     </h3>
                                                     <p className="text-sm text-gray-600 mt-1">
-                                                        Gratis - Disponible desde mañana
+                                                        Gratis - Disponible desde manana
                                                     </p>
                                                     {formData.deliveryMethod === "pickup" && (
                                                         <div className="mt-3 bg-white rounded-md p-3 border border-gray-200">
                                                             <p className="text-sm font-medium text-gray-900">
-                                                                Dirección de recojo:
+                                                                Direccion de recojo:
                                                             </p>
                                                             <p className="text-sm text-gray-700 mt-1">
                                                                 Av. 22 de Agosto 1012, Comas 15312
                                                             </p>
                                                             <p className="text-xs text-gray-500 mt-2">
-                                                                Tu pedido estará listo para recoger desde el dí­a
+                                                                Tu pedido estara listo para recoger desde el dia
                                                                 siguiente
                                                             </p>
                                                         </div>
@@ -410,8 +410,8 @@ export function Checkout() {
                                                     </h3>
                                                     <p className="text-sm text-gray-600 mt-1">
                                                         {totalPrice >= 200
-                                                            ? "Gratis - Enví­o priorizado"
-                                                            : "S/ 10.00 - 3-5 dí­as hábiles"}
+                                                            ? "Gratis - Envio priorizado"
+                                                            : "S/ 10.00 - 3-5 dias habiles"}
                                                     </p>
                                                     {formData.deliveryMethod === "delivery" && (
                                                         <div className="mt-3 space-y-3">
@@ -492,7 +492,7 @@ export function Checkout() {
                                             </span>
                                         </div>
                                         <div className="flex justify-between text-sm">
-                                            <span className="text-gray-600">Enví­o</span>
+                                            <span className="text-gray-600">Envio</span>
                                             <span
                                                 className={`font-medium ${
                                                     shippingCost === 0 ? "text-green-600" : ""
@@ -528,7 +528,7 @@ export function Checkout() {
                                                         <path d="m9 12 2 2 4-4"></path>
                                                         <circle cx={12} cy={12} r={10}></circle>
                                                     </svg>
-                                                    ¡Enví­o gratis y priorizado!
+                                                    Envio gratis y priorizado!
                                                 </p>
                                             </div>
                                         )}
@@ -541,7 +541,7 @@ export function Checkout() {
                                         </button>
 
                                         <p className="text-xs text-gray-500 text-center mt-3">
-                                            Al continuar, aceptas nuestros términos y condiciones
+                                            Al continuar, aceptas nuestros terminos y condiciones
                                         </p>
                                     </div>
 
@@ -552,8 +552,14 @@ export function Checkout() {
                                         </h3>
                                         <div className="space-y-3">
                                             {items.map((item) => {
-                                                const imgUrl = item.imageUrl 
-                                                  ? (item.imageUrl.startsWith('http') ? item.imageUrl : `${API_BASE}${item.imageUrl}`)
+                                              const imgUrl = item.imageUrl 
+                                                  ? (
+                                                      item.imageUrl.startsWith('http') ||
+                                                      item.imageUrl.startsWith('/assets') ||
+                                                      item.imageUrl.startsWith('blob:')
+                                                        ? item.imageUrl
+                                                        : `${API_BASE}${item.imageUrl}`
+                                                    )
                                                   : "/assets/imgs/placeholder.png";
                                                 return (
                                                 <div key={item.id} className="flex gap-3">
