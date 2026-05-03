@@ -24,7 +24,7 @@ import { Category } from "../pages/Category";
 /*
   AppRoutes instrumentado:
    - muestra en pantalla (y en consola) la location actual
-   - incluye ruta catch-all para ver quÃ© path estÃ¡n pidiendo exactamente
+   - incluye ruta catch-all para ver qué path están pidiendo exactamente
 */
 
 function LocationDebugger() {
@@ -74,13 +74,13 @@ const AppRoutes: React.FC = () => (
             <div style={{ padding: 24 }}>
               <h2>Ruta no encontrada</h2>
               <p>La ruta solicitada no coincide con ninguna ruta definida.</p>
-              <p>Abre la consola (F12) y pega aquÃ­ lo que veas en el log <code>[Router] location changed</code>.</p>
+              <p>Abre la consola (F12) y pega aquí­ lo que veas en el log <code>[Router] location changed</code>.</p>
             </div>
           }
         />
       </Routes>
 
-      {/* CartSidebar global - se muestra en toda la aplicaciÃ³n */}
+      {/* CartSidebar global - se muestra en toda la aplicación */}
       <CartSidebar />
     </Router>
   </CartProvider>

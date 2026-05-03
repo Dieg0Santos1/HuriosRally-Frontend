@@ -4,7 +4,7 @@ import { getToken, getRole } from '../utils/token';
 import { getUserProfile } from '../api/user';
 
 /**
- * Hook para proteger rutas segÃºn el rol del usuario
+ * Hook para proteger rutas según el rol del usuario
  * Redirige a admins que intenten acceder a rutas de compra
  */
 export function useRoleProtection(protectedRoute: 'products' | 'cart' | 'checkout' | 'payment') {
@@ -14,7 +14,7 @@ export function useRoleProtection(protectedRoute: 'products' | 'cart' | 'checkou
     const checkAccess = async () => {
       const token = getToken();
       
-      // Si no hay token, permitir acceso (el usuario no estÃ¡ logueado)
+      // Si no hay token, permitir acceso (el usuario no está logueado)
       if (!token) {
         return;
       }

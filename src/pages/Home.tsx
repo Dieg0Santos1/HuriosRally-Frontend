@@ -69,7 +69,7 @@ const Home: React.FC = () => {
             <div className="text-center text-red-600 py-8">{error}</div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {/* Mostramos los Ãºltimos 4 productos (diferentes a los de nuevos repuestos) */}
+              {/* Mostramos los últimos 4 productos (diferentes a los de nuevos repuestos) */}
               {products.slice(-4).map((product) => (
                 <ShopCard key={product.id} product={product} />
               ))}
