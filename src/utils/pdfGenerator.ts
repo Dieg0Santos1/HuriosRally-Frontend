@@ -1,5 +1,84 @@
 import jsPDF from "jspdf";
 
+const PAGE = {
+    margin: 10,
+    contentX: 15,
+    contentRight: 195,
+    contentWidth: 180,
+    footerY: 275,
+};
+
+function drawPageFrame(doc: jsPDF) {
+    doc.setDrawColor(30, 30, 30);
+    doc.setLineWidth(0.8);
+    doc.rect(PAGE.margin, PAGE.margin, 190, 277);
+}
+
+function getWrappedLines(doc: jsPDF, text: string, maxWidth: number): string[] {
+    const value = text?.toString().trim() || "---";
+    return doc.splitTextToSize(value, maxWidth) as string[];
+}
+
+function drawWrappedText(
+    doc: jsPDF,
+    text: string,
+    x: number,
+    y: number,
+    maxWidth: number,
+    lineHeight = 4.5,
+    options: { align?: "left" | "center" | "right"; maxLines?: number } = {}
+) {
+    const lines = getWrappedLines(doc, text, maxWidth).slice(0, options.maxLines);
+    lines.forEach((line, index) => {
+        doc.text(line, x, y + index * lineHeight, { align: options.align || "left" });
+    });
+    return Math.max(lines.length, 1) * lineHeight;
+}
+
+function drawCenteredFitText(
+    doc: jsPDF,
+    text: string,
+    centerX: number,
+    y: number,
+    maxWidth: number,
+    maxLines: number,
+    fontSize: number,
+    minFontSize = 7,
+    lineHeight = 4.2
+) {
+    let size = fontSize;
+    let lines: string[] = [];
+
+    do {
+        doc.setFontSize(size);
+        lines = getWrappedLines(doc, text, maxWidth);
+        size -= 0.5;
+    } while (lines.length > maxLines && size >= minFontSize);
+
+    lines.slice(0, maxLines).forEach((line, index) => {
+        doc.text(line, centerX, y + index * lineHeight, { align: "center" });
+    });
+}
+
+function drawLabelValue(
+    doc: jsPDF,
+    label: string,
+    value: string,
+    y: number,
+    labelX = 18,
+    valueX = 48,
+    valueWidth = 142
+) {
+    doc.setFont("helvetica", "bold");
+    doc.text(label, labelX, y);
+    doc.setFont("helvetica", "normal");
+    return drawWrappedText(doc, value || "---", valueX, y, valueWidth, 4.6);
+}
+
+function safePdfFilename(value: string) {
+    return value.replace(/[\\/:*?"<>|]/g, "_");
+}
+
 interface SaleItem {
     name: string;
     quantity: number;
@@ -91,8 +170,7 @@ export async function generateBoletaPDF(data: BoletaData) {
     const doc = new jsPDF();
     
     // Borde exterior del documento
-    doc.setLineWidth(1);
-    doc.rect(10, 10, 190, 277);
+    drawPageFrame(doc);
     
     // Agregar logo
     const logoBase64 = await getLogoBase64();
@@ -107,101 +185,122 @@ export async function generateBoletaPDF(data: BoletaData) {
     // Encabezado principal
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
-    doc.text("HURIOS RALLY E.I.R.L.", 105, 25, { align: "center" });
+    doc.text("HURIOS RALLY E.I.R.L.", 82, 24, { align: "center" });
     
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
-    doc.text("Av. 22 de Agosto 1012, Comas 15312", 105, 31, { align: "center" });
-    doc.text("Telf: 978 451 154", 105, 36, { align: "center" });
+    doc.text("Av. 22 de Agosto 1012, Comas 15312", 82, 31, { align: "center" });
+    doc.text("Telf: 978 451 154", 82, 36, { align: "center" });
     
     // Cuadro RUC y Boleta (más grande y destacado)
-    doc.setLineWidth(1.5);
-    doc.rect(145, 15, 50, 30);
+    const voucherBox = { x: 138, y: 15, w: 57, h: 34 };
+    doc.setLineWidth(1.1);
+    doc.rect(voucherBox.x, voucherBox.y, voucherBox.w, voucherBox.h);
+    doc.line(voucherBox.x, voucherBox.y + 9, voucherBox.x + voucherBox.w, voucherBox.y + 9);
+    doc.line(voucherBox.x, voucherBox.y + 23, voucherBox.x + voucherBox.w, voucherBox.y + 23);
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
-    doc.text("RUC: 20492248933", 170, 22, { align: "center" });
+    doc.text("RUC: 20492248933", voucherBox.x + voucherBox.w / 2, 21, { align: "center" });
     doc.setFontSize(9);
-    doc.text("BOLETA DE VENTA", 170, 28, { align: "center" });
-    doc.text("ELECTRÓNICA", 170, 33, { align: "center" });
-    doc.setFontSize(11);
-    doc.text(`N° ${data.boletaNumber}`, 170, 41, { align: "center" });
+    doc.text("BOLETA DE VENTA", voucherBox.x + voucherBox.w / 2, 29, { align: "center" });
+    doc.text("ELECTRÓNICA", voucherBox.x + voucherBox.w / 2, 34, { align: "center" });
+    doc.setFont("helvetica", "bold");
+    drawCenteredFitText(
+        doc,
+        `N° ${data.boletaNumber}`,
+        voucherBox.x + voucherBox.w / 2,
+        43,
+        voucherBox.w - 8,
+        2,
+        9
+    );
     
     // Línea separadora
     doc.setLineWidth(0.5);
-    doc.line(15, 50, 195, 50);
+    doc.line(PAGE.contentX, 54, PAGE.contentRight, 54);
     
     // Información del cliente
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
-    doc.text("DATOS DEL CLIENTE:", 15, 58);
-    
-    doc.setFont("helvetica", "normal");
-    doc.text("Cliente:", 15, 65);
-    doc.text(data.clientName || "---", 45, 65);
-    
-    doc.text("DNI:", 15, 71);
-    doc.text(data.clientDNI, 45, 71);
+    doc.text("DATOS DEL CLIENTE", PAGE.contentX, 62);
+
+    doc.setFontSize(9);
+    let detailsY = 69;
+    detailsY += drawLabelValue(doc, "Cliente:", data.clientName || "---", detailsY, 18, 48, 142);
+    detailsY += 1;
+    detailsY += drawLabelValue(doc, "DNI:", data.clientDNI, detailsY, 18, 48, 70);
     
     // Línea separadora
-    doc.line(15, 76, 195, 76);
+    detailsY += 1;
+    doc.line(PAGE.contentX, detailsY, PAGE.contentRight, detailsY);
     
     // Observaciones
     doc.setFont("helvetica", "bold");
-    doc.text("OBSERVACIONES:", 15, 83);
+    doc.setFontSize(10);
+    doc.text("OBSERVACIONES", PAGE.contentX, detailsY + 8);
     
     doc.setFont("helvetica", "normal");
     doc.setFontSize(9);
-    doc.text(`Fecha de emisión: ${data.date}`, 20, 89);
-    doc.text(`Método de pago: ${data.paymentMethod}`, 20, 94);
-    doc.text(`Método de entrega: ${data.deliveryMethod}`, 20, 99);
+    let obsY = detailsY + 15;
+    obsY += drawLabelValue(doc, "Fecha:", data.date, obsY, 20, 50, 55);
+    obsY += drawLabelValue(doc, "Pago:", data.paymentMethod, obsY, 20, 50, 55);
+    obsY += drawLabelValue(doc, "Entrega:", data.deliveryMethod, obsY, 20, 50, 125);
     
     // Línea separadora
     doc.setLineWidth(0.5);
-    doc.line(15, 103, 195, 103);
+    obsY += 1;
+    doc.line(PAGE.contentX, obsY, PAGE.contentRight, obsY);
     
     // Tabla de productos - Cabecera
-    const startY = 110;
+    const startY = obsY + 9;
     doc.setFillColor(240, 240, 240);
-    doc.rect(15, startY - 5, 180, 8, 'F');
+    doc.rect(PAGE.contentX, startY - 5, PAGE.contentWidth, 8, 'F');
     
     doc.setFontSize(9);
     doc.setFont("helvetica", "bold");
-    doc.text("Cantidad", 20, startY);
-    doc.text("U.M.", 45, startY);
-    doc.text("Descripción", 80, startY, { align: "center" });
-    doc.text("Precio unit.", 145, startY, { align: "center" });
-    doc.text("Importe (IGV)", 178, startY, { align: "right" });
+    doc.text("Cant.", 20, startY);
+    doc.text("U.M.", 39, startY);
+    doc.text("Descripción", 61, startY);
+    doc.text("P. unit.", 153, startY, { align: "right" });
+    doc.text("Importe", 190, startY, { align: "right" });
     
     doc.setLineWidth(0.3);
-    doc.line(15, startY + 2, 195, startY + 2);
+    doc.line(PAGE.contentX, startY + 2, PAGE.contentRight, startY + 2);
     
     // Items de productos
     doc.setFont("helvetica", "normal");
+    doc.setFontSize(8.5);
     let currentY = startY + 10;
     data.items.forEach((item, index) => {
-        if (currentY > 230) {
+        const descriptionLines = getWrappedLines(doc, item.name, 82).slice(0, 3);
+        const rowHeight = Math.max(8, descriptionLines.length * 4.4 + 3);
+
+        if (currentY + rowHeight > 230) {
             doc.addPage();
-            currentY = 20;
+            drawPageFrame(doc);
+            currentY = 24;
         }
         
         // Fondo alternado para mejor legibilidad
         if (index % 2 === 1) {
             doc.setFillColor(250, 250, 250);
-            doc.rect(15, currentY - 4, 180, 7, 'F');
+            doc.rect(PAGE.contentX, currentY - 5, PAGE.contentWidth, rowHeight, 'F');
         }
         
         doc.text(item.quantity.toString(), 20, currentY);
-        doc.text("UND", 45, currentY);
-        doc.text(item.name.substring(0, 35), 65, currentY);
-        doc.text(`S/ ${item.unitPrice.toFixed(2)}`, 145, currentY, { align: "center" });
-        doc.text(`S/ ${item.total.toFixed(2)}`, 178, currentY, { align: "right" });
-        currentY += 7;
+        doc.text("UND", 39, currentY);
+        descriptionLines.forEach((line, lineIndex) => {
+            doc.text(line, 61, currentY + lineIndex * 4.4);
+        });
+        doc.text(`S/ ${item.unitPrice.toFixed(2)}`, 153, currentY, { align: "right" });
+        doc.text(`S/ ${item.total.toFixed(2)}`, 190, currentY, { align: "right" });
+        currentY += rowHeight;
     });
     
     // Línea separadora antes de totales
     currentY += 5;
     doc.setLineWidth(0.5);
-    doc.line(15, currentY, 195, currentY);
+    doc.line(PAGE.contentX, currentY, PAGE.contentRight, currentY);
     
     // Totales
     currentY += 10;
@@ -211,10 +310,10 @@ export async function generateBoletaPDF(data: BoletaData) {
     // SON en letras
     doc.setFontSize(9);
     doc.setFont("helvetica", "bold");
-    doc.text("SON:", 15, currentY);
+    doc.text("SON:", PAGE.contentX, currentY);
     doc.setFont("helvetica", "normal");
     const sonTexto = numeroALetras(data.total);
-    doc.text(sonTexto, 28, currentY);
+    drawWrappedText(doc, sonTexto, 28, currentY, 95, 4.4, { maxLines: 2 });
     
     // Cuadro de totales
     const totalsStartY = currentY + 5;
@@ -240,18 +339,17 @@ export async function generateBoletaPDF(data: BoletaData) {
     // Pie de página
     doc.setFontSize(8);
     doc.setFont("helvetica", "italic");
-    doc.text("Gracias por su preferencia", 105, 275, { align: "center" });
+    doc.text("Gracias por su preferencia", 105, PAGE.footerY, { align: "center" });
     
     // Descargar
-    doc.save(`Boleta_${data.boletaNumber}.pdf`);
+    doc.save(`Boleta_${safePdfFilename(data.boletaNumber)}.pdf`);
 }
 
 export async function generateFacturaPDF(data: FacturaData) {
     const doc = new jsPDF();
     
     // Borde exterior del documento
-    doc.setLineWidth(1);
-    doc.rect(10, 10, 190, 277);
+    drawPageFrame(doc);
     
     // Agregar logo
     const logoBase64 = await getLogoBase64();
@@ -274,15 +372,26 @@ export async function generateFacturaPDF(data: FacturaData) {
     doc.text("Telf: 978 451 154", 15, 36);
     
     // Cuadro RUC y Factura (más grande y destacado)
-    doc.setLineWidth(1.5);
-    doc.rect(145, 15, 50, 30);
+    const voucherBox = { x: 138, y: 15, w: 57, h: 34 };
+    doc.setLineWidth(1.1);
+    doc.rect(voucherBox.x, voucherBox.y, voucherBox.w, voucherBox.h);
+    doc.line(voucherBox.x, voucherBox.y + 9, voucherBox.x + voucherBox.w, voucherBox.y + 9);
+    doc.line(voucherBox.x, voucherBox.y + 23, voucherBox.x + voucherBox.w, voucherBox.y + 23);
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
-    doc.text("FACTURA ELECTRÓNICA", 170, 22, { align: "center" });
+    doc.text("FACTURA ELECTRÓNICA", voucherBox.x + voucherBox.w / 2, 21, { align: "center" });
     doc.setFontSize(9);
-    doc.text("RUC: 20492248933", 170, 29, { align: "center" });
-    doc.setFontSize(11);
-    doc.text(data.facturaNumber, 170, 41, { align: "center" });
+    doc.text("RUC: 20492248933", voucherBox.x + voucherBox.w / 2, 29, { align: "center" });
+    doc.setFont("helvetica", "bold");
+    drawCenteredFitText(
+        doc,
+        data.facturaNumber,
+        voucherBox.x + voucherBox.w / 2,
+        41,
+        voucherBox.w - 8,
+        2,
+        9
+    );
     
     // Línea separadora
     doc.setLineWidth(0.5);
@@ -360,6 +469,7 @@ export async function generateFacturaPDF(data: FacturaData) {
     data.items.forEach((item, index) => {
         if (currentY > 215) {
             doc.addPage();
+            drawPageFrame(doc);
             currentY = 20;
         }
         
@@ -446,5 +556,5 @@ export async function generateFacturaPDF(data: FacturaData) {
     doc.text("Gracias por su preferencia", 105, 275, { align: "center" });
     
     // Descargar
-    doc.save(`Factura_${data.facturaNumber}.pdf`);
+    doc.save(`Factura_${safePdfFilename(data.facturaNumber)}.pdf`);
 }
