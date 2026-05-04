@@ -169,21 +169,21 @@ export function Login() {
 
                 {/* BotÃ³n principal */}
                 <div className="space-y-4">
-                  <ButtonState 
-                    initialText="Iniciar sesión" 
-                    successText="Â¡Ingreso exitoso!" 
-                    disabled={!isFormValid || !selectedRole} 
-                    clicked={clicked} 
-                  />
-                  
-                  {/* Enlace de registro */}
-                  <a 
-                    href="/register" 
-                    className="block w-full text-center bg-gradient-to-r from-[var(--Primary_4)] to-[var(--Primary_5)] text-white py-3 rounded-lg hover:from-[var(--Primary_5)] hover:to-[var(--Primary_6)] transition-all duration-300 transform hover:scale-[1.02] shadow-lg"
-                  >
-                    Crear cuenta nueva
-                  </a>
-                </div>
+  <ButtonState 
+    initialText="Iniciar sesión" 
+    successText="¡Ingreso exitoso!" 
+    disabled={!isFormValid || !selectedRole} 
+    clicked={clicked} 
+  />
+
+  {/* Crear cuenta - color más notorio */}
+  <a 
+    href="/register" 
+    className="block w-full text-center bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition-all duration-300 font-semibold shadow-md"
+  >
+    Crear cuenta nueva
+  </a>
+</div>
 
                 {/* Enlace de recuperación */}
                 <div className="text-center">
