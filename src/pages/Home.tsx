@@ -1,5 +1,4 @@
-﻿
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import Navbar from "../components/layout/Navbar";
 import Hero from "../components/layout/Hero";
 import BrandsCarousel from "../components/product/BrandsCarousel";
@@ -16,10 +15,9 @@ const Home: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Cargar productos al montar el componente
     (async () => {
       try {
-      const data = await getAllProducts();
+        const data = await getAllProducts();
         setProducts(data);
       } catch (err: any) {
         setError(err.message || "Error al cargar productos");
@@ -28,25 +26,29 @@ const Home: React.FC = () => {
       }
     })();
   }, []);
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
 
       <main className="flex-grow">
         <Hero />
 
-        {/* nuevos repuestos */}
+        {/* Sección: Nuevos repuestos - Pegada al banner pero sin subir encima */}
         <section
           data-reveal
-          className="max-w-7xl mx-auto px-4 py-10 opacity-0 transform translate-y-6"
+          className="max-w-7xl mx-auto px-4 pt-6 pb-10 opacity-0 transform translate-y-6"
         >
-          <h2 className="text-2xl font-bold mb-4">Nuevos repuestos</h2>
+          <h2 className="text-3xl font-bold mb-6 text-gray-800">
+            Nuevos repuestos
+          </h2>
+          
           {loading ? (
-            <div className="text-center py-8">Cargando productos...</div>
+            <div className="text-center py-10 text-gray-500">Cargando productos...</div>
           ) : error ? (
-            <div className="text-center text-red-600 py-8">{error}</div>
+            <div className="text-center text-red-600 py-10">{error}</div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {products.slice(0, 4).map((product) => (
                 <ShopCard key={product.id} product={product} />
               ))}
@@ -54,22 +56,24 @@ const Home: React.FC = () => {
           )}
         </section>
 
-        {/* marcas (slider) */}
-        <BrandsCarousel />
+        {/* Marcas (slider) - Reducimos el padding para que todo esté más compacto */}
+        <div className="bg-gray-50 py-8">
+          <BrandsCarousel />
+        </div>
 
-        {/* más vendidos */}
+        {/* Sección: Los más vendidos */}
         <section
           data-reveal
           className="max-w-7xl mx-auto px-4 py-10 opacity-0 transform translate-y-6"
         >
-          <h2 className="text-2xl font-bold mb-4">Los más vendidos</h2>
+          <h2 className="text-3xl font-bold mb-6 text-gray-800">Los más vendidos</h2>
+          
           {loading ? (
-            <div className="text-center py-8">Cargando productos...</div>
+            <div className="text-center py-10 text-gray-500">Cargando productos...</div>
           ) : error ? (
-            <div className="text-center text-red-600 py-8">{error}</div>
+            <div className="text-center text-red-600 py-10">{error}</div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {/* Mostramos los últimos 4 productos (diferentes a los de nuevos repuestos) */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {products.slice(-4).map((product) => (
                 <ShopCard key={product.id} product={product} />
               ))}
