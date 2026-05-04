@@ -262,14 +262,14 @@ export function Register() {
             )}
 
             {/* BotÃ³n principal */}
-            <div className="pt-2">
-              <ButtonState
-                initialText="Crear cuenta"
-                successText="Creando cuenta..."
-                disabled={!isFormValid || loading}
-                clicked={clicked}
-              />
-            </div>
+           <div className="pt-2 [&_button]:bg-orange-500 [&_button]:hover:bg-orange-600">
+  <ButtonState
+    initialText="Crear cuenta"
+    successText="Creando cuenta..."
+    disabled={!isFormValid || loading}
+    clicked={clicked}
+  />
+</div>
 
             {/* Enlaces adicionales */}
             <div className="text-center pt-4 space-y-3">
