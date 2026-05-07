@@ -9,12 +9,11 @@ import { registerUser } from "../api/auth";
   - formulario de registro (nombre, correo, celular, clave)
   - al registrar exitosamente: redirige a /verify-email?email=<email>
   - llama al endpoint POST /auth/register en el backend
-  - usa import.meta.env.VITE_API_URL si estÃ¡ definido, sino http://localhost:8080
+  - usa import.meta.env.VITE_API_URL si está definido, sino http://localhost:8080
 */
 
 export function Register() {
-  const navigate = useNavigate(); // hook para navegar programÃ¡ticamente
-
+  const navigate = useNavigate(); // hook para navegar programáticamente
   // campos del formulario
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
@@ -23,13 +22,13 @@ export function Register() {
   const [repetirClave, setRepetirClave] = useState("");
 
   // estados UI
-  const [clicked, setClicked] = useState(false); // para ButtonState (animaciÃ³n)
+  const [clicked, setClicked] = useState(false); // para ButtonState (animación)
   const [loading, setLoading] = useState(false);  // para bloquear UI mientras se hace la llamada
   const [error, setError] = useState<string | null>(null); // mostrar errores al usuario
 
   // validaciones locales
   const isEmailValid = (() => {
-    // Lista de dominios vÃ¡lidos conocidos
+    // Lista de dominios válidos conocidos
     const validDomains = [
       'gmail', 'yahoo', 'hotmail', 'outlook', 'live', 'msn', 'icloud', 'me',
       'aol', 'protonmail', 'tutanota', 'zoho', 'yandex', 'mail', 'gmx',
@@ -41,7 +40,7 @@ export function Register() {
       'empresa', 'company', 'corp', 'business', 'work', 'office'
     ];
     
-    // ExpresiÃ³n regular para extraer el dominio
+    // Expresión regular para extraer el dominio
     const emailPattern = /^[^\s@]+@([^\s@]+)\.([a-z]{2,})$/i;
     const match = correo.match(emailPattern);
     
@@ -50,18 +49,18 @@ export function Register() {
     const domain = match[1].toLowerCase();
     const extension = match[2].toLowerCase();
     
-    // Verificar extensiÃ³n vÃ¡lida
+    // Verificar extensión válida
     const validExtensions = ['com', 'org', 'net', 'edu', 'gov', 'mil', 'co', 'es', 'pe', 'cl', 'ar', 'mx'];
     const isValidExtension = validExtensions.includes(extension);
     
-    // Verificar dominio vÃ¡lido
+    // Verificar dominio válido
     const isValidDomain = validDomains.includes(domain);
     
     return isValidExtension && isValidDomain;
   })();
   
   const isPasswordMatch = clave.length >= 8 && clave === repetirClave;
-  // ValidaciÃ³n para nÃºmeros de celular peruanos (inician con 9 y tienen 9 dÃ­gitos)
+  // Validación para números de celular peruanos (inician con 9 y tienen 9 dígitos)
   const isCelularValid = celular.length === 9 && /^9[0-9]{8}$/.test(celular);
   const isFormValid =
     nombre.trim() !== "" &&
@@ -74,14 +73,14 @@ export function Register() {
     e.preventDefault();
     setError(null);
 
-    // si el formulario no es vÃ¡lido, no intentar
+    // si el formulario no es válido, no intentar
     if (!isFormValid) {
       setError("Completa correctamente todos los campos.");
       return;
     }
 
     setLoading(true);
-    setClicked(true); // activar animaciÃ³n del botÃ³n (si tu componente lo usa)
+    setClicked(true); // activar animación del botón (si tu componente lo usa)
 
     try {
       const response = await registerUser({
@@ -91,7 +90,7 @@ export function Register() {
         phone: celular,
       });
 
-      // respuesta OK -> redirigir al formulario de verificaciÃ³n
+      // respuesta OK -> redirigir al formulario de verificación
       // pasamos el email por query para autocompletar el campo en VerifyEmail
       navigate(`/verify-email?email=${encodeURIComponent(correo)}`, {
         state: { demoCode: response.verificationCode },
@@ -100,9 +99,9 @@ export function Register() {
     } catch (err: unknown) {
       // error de red u otro
       if (err instanceof Error) {
-        setError(err.message || "Error de conexiÃ³n al registrar");
+        setError(err.message || "Error de conexión al registrar");
       } else {
-        setError("Error de conexiÃ³n al registrar");
+        setError("Error de conexión al registrar");
       }
       setClicked(false);
     } finally {
@@ -159,7 +158,7 @@ export function Register() {
                   onChange={(e) => setCorreo(e.target.value)} 
                   placeholder="ejemplo@gmail.com" 
                 />
-                {/* ValidaciÃ³n visual del correo */}
+                {/* Validación visual del correo */}
                 {correo.length > 0 && (
                   <div className="mt-1 text-xs">
                     <p className={`${isEmailValid ? 'text-green-600' : 'text-red-500'}`}>
@@ -183,22 +182,22 @@ export function Register() {
                   pattern="[0-9]*"
                   value={celular}
                   onChange={(e) => {
-                    // Solo permitir nÃºmeros, eliminar cualquier caracter que no sea nÃºmero
+                    // Solo permitir números, eliminar cualquier caracter que no sea número
                     const value = e.target.value.replace(/[^0-9]/g, '');
-                    // Limitar a mÃ¡ximo 9 dÃ­gitos
+                    // Limitar a máximo 9 dígitos
                     if (value.length <= 9) {
                       setCelular(value);
                     }
                   }}
                   onKeyPress={(e) => {
-                    // Prevenir entrada de caracteres no numÃ©ricos
+                    // Prevenir entrada de caracteres no numéricos
                     if (!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
                       e.preventDefault();
                     }
                   }}
                   placeholder="Ej: 987654321"
                 />
-                {/* ValidaciÃ³n visual del celular */}
+                {/* Validación visual del celular */}
                 {celular.length > 0 && (
                   <div className="mt-1 text-xs">
                     <p className={`${isCelularValid ? 'text-green-600' : 'text-red-500'}`}>
@@ -261,7 +260,7 @@ export function Register() {
               </div>
             )}
 
-            {/* BotÃ³n principal */}
+            {/* Botón principal */}
            <div className="pt-2 [&_button]:bg-orange-500 [&_button]:hover:bg-orange-600">
   <ButtonState
     initialText="Crear cuenta"

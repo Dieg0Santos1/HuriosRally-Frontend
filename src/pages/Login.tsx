@@ -75,7 +75,7 @@ export function Login() {
 
           {/* Formulario */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* SelecciÃ³n de rol */}
+            {/* Selección de rol */}
             {!selectedRole ? (
               <div className="space-y-4">
                 <h2 className="text-center text-lg font-semibold text-[var(--Primary_6)] mb-4">
@@ -167,7 +167,7 @@ export function Login() {
                   </div>
                 )}
 
-                {/* BotÃ³n principal */}
+                {/* Botón principal */}
                 <div className="space-y-4">
   <ButtonState 
     initialText="Iniciar sesión" 

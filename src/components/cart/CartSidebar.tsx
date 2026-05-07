@@ -30,7 +30,7 @@ const CartSidebar: React.FC = () => {
   return (
     <>
       {/* Panel del carrito - estilo Amazon sin overlay de fondo */}
-      <div className="fixed top-16 right-2 sm:right-4 w-72 sm:w-80 max-w-sm bg-white shadow-2xl border border-gray-200 rounded-lg z-50 transform transition-all duration-300 ease-in-out max-h-[calc(100vh-5rem)] overflow-hidden">{/* Responsive: ajuste de posiciÃ³n y tamaÃ±o */}
+      <div className="fixed top-16 right-2 sm:right-4 w-72 sm:w-80 max-w-sm bg-white shadow-2xl border border-gray-200 rounded-lg z-50 transform transition-all duration-300 ease-in-out max-h-[calc(100vh-5rem)] overflow-hidden">{/* Responsive: ajuste de posición y tamaño */}
         {/* Header del carrito */}
         <div className="flex items-center justify-between p-3 border-b border-gray-200 bg-green-50">
           <div className="flex items-center gap-2">
@@ -52,7 +52,7 @@ const CartSidebar: React.FC = () => {
         {/* Contenido del carrito */}
         <div className="flex flex-col h-full">
           {items.length === 0 ? (
-            /* Carrito vacÃ­o */
+            /* Carrito vací­o */
             <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
               <svg width={64} height={64} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1} className="text-gray-300 mb-4">
                 <circle cx={9} cy={21} r={1}></circle>
@@ -60,7 +60,7 @@ const CartSidebar: React.FC = () => {
                 <path d="m1 1 4 4 14 1-1 7H6"></path>
               </svg>
               <h3 className="text-lg font-medium text-gray-600 mb-2">Tu carrito está vacío</h3>
-              <p className="text-gray-500 mb-4">AÃ±ade algunos productos para empezar</p>
+              <p className="text-gray-500 mb-4">Añade algunos productos para empezar</p>
               <button
                 onClick={toggleCart}
                 className="px-6 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors"
@@ -134,16 +134,16 @@ const CartSidebar: React.FC = () => {
                   </div>
                   <p className="text-xs text-gray-600 text-center">
                     {totalPrice >= 200 ? (
-                      <span className="text-green-600 font-medium">âœ“ Tu pedido califica para envÃ­o gratis y priorizado</span>
+                      <span className="text-green-600 font-medium">âœ“ Tu pedido califica para envío gratis y priorizado</span>
                     ) : (
                       <span>
-                        Agrega S/ {(200 - totalPrice).toFixed(2)} más para <span className="text-green-600 font-medium">envÃ­o gratis</span>
+                        Agrega S/ {(200 - totalPrice).toFixed(2)} más para <span className="text-green-600 font-medium">enví­o gratis</span>
                       </span>
                     )}
                   </p>
                 </div>
 
-                {/* BotÃ³n Ir al carrito */}
+                {/* Botón Ir al carrito */}
                 <Link 
                   to="/cart" 
                   onClick={toggleCart}

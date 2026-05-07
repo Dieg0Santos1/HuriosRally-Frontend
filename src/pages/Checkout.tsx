@@ -75,7 +75,7 @@ export function Checkout() {
         // Campos que solo permiten letras (nombres)
         if (name === "fullName" || name === "companyName" || name === "deliveryDistrict") {
             // Permitir solo letras, espacios, tildes y caracteres especiales del espanol
-            newValue = value.replace(/[^a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ±Ã‘Ã¼Ãœ\s]/g, "");
+            newValue = value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, "");
         }
         
         // Campos que solo permiten numeros
