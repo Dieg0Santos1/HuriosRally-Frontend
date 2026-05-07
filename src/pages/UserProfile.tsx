@@ -20,7 +20,7 @@ export function UserProfile() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   useEffect(() => {
-    // Verificar autenticaciÃ³n
+    // Verificar autenticación
     if (!getToken()) {
       navigate("/login");
       return;
@@ -52,7 +52,7 @@ export function UserProfile() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    /*En caso de que se cree de forma exitosa,se muestra un mensaje de que esto ocurriÃ³ */
+    /*En caso de que se cree de forma exitosa,se muestra un mensaje de que esto ocurría */
     try {
       setSaving(true);
       setError(null);
@@ -80,7 +80,7 @@ export function UserProfile() {
       setSaving(false);
     }
   };
-  /*Sirve para cancelar los cambios que el usuario querÃ­a hacer a su perfil */
+  /*Sirve para cancelar los cambios que el usuario quería hacer a su perfil */
   const handleCancel = () => {
     setEditing(false);
     setFullName(profile?.fullName || "");
@@ -135,7 +135,7 @@ export function UserProfile() {
                   )}
                 </div>
               </div>
-              {/*BotÃ³n para cambiar deatos del perfil*/}
+              {/*Botón para cambiar datos del perfil*/}
               {!editing && (
                 <button
                   onClick={() => setEditing(true)}
@@ -151,7 +151,7 @@ export function UserProfile() {
             </div>
           </div>
 
-          {/* Mensajes de Ã©xito o de error*/}
+          {/* Mensajes de Éxito o de error*/}
           {successMessage && (
             <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
               <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -201,7 +201,7 @@ export function UserProfile() {
                 />
               </div>
 
-              {/* Telefono */}
+              {/* Teléfono */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Telefono
@@ -211,7 +211,7 @@ export function UserProfile() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   disabled={!editing}
-                  placeholder="Ingresa tu nÃºmero de telÃ©fono"
+                  placeholder="Ingresa tu número de teléfono"
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[var(--Primary_5)] focus:border-transparent disabled:bg-gray-50 disabled:text-gray-500"
                 />
               </div>

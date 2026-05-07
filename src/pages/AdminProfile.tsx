@@ -23,7 +23,7 @@ export function AdminProfile() {
     const [fullName, setFullName] = useState("");
 
     useEffect(() => {
-        // Verificar autenticaciÃ³n
+        // Verificar autenticación
         if (!getToken()) {
             navigate("/login");
             return;
@@ -211,7 +211,7 @@ export function AdminProfile() {
                         <ButtonAdmin label="PROVEEDORES" route="/proveedores" />
                     </section>
 
-                    {/* Botones de exportaciÃ³n */}
+                    {/* Botones de exportación */}
                     <section className="bg-white rounded-lg shadow-md p-6 mb-6">
                         <h2 className="text-xl font-semibold text-gray-900 mb-4">Exportar Reportes</h2>
                         <div className="flex gap-4 flex-wrap">

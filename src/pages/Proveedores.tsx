@@ -152,14 +152,14 @@ export default function Proveedores() {
           </div>
 
           <div className="mt-3 flex items-center justify-center gap-2">
-            <button onClick={() => setPage(1)} className="px-2 py-1 border rounded">Â«</button>
-            <button onClick={() => setPage(p => Math.max(1, p-1))} className="px-2 py-1 border rounded">â€¹</button>
+            <button onClick={() => setPage(1)} className="px-2 py-1 border rounded">«</button>
+            <button onClick={() => setPage(p => Math.max(1, p-1))} className="px-2 py-1 border rounded">‹</button>
             {/* simple numeric pages */}
             {Array.from({ length: totalPages }).map((_, i) => (
               <button key={i} onClick={() => setPage(i+1)} className={`px-2 py-1 border rounded ${page===i+1 ? 'bg-[var(--Primary_3)] text-white' : ''}`}>{i+1}</button>
             ))}
-            <button onClick={() => setPage(p => Math.min(totalPages, p+1))} className="px-2 py-1 border rounded">â€º</button>
-            <button onClick={() => setPage(totalPages)} className="px-2 py-1 border rounded">Â»</button>
+            <button onClick={() => setPage(p => Math.min(totalPages, p+1))} className="px-2 py-1 border rounded">›</button>
+            <button onClick={() => setPage(totalPages)} className="px-2 py-1 border rounded">»</button>
           </div>
 
           {/* Add modal */}
@@ -168,7 +168,7 @@ export default function Proveedores() {
               <div className="bg-white rounded-md w-full max-w-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-medium">Agregar Proveedor</h3>
-                  <button onClick={() => setShowAddModal(false)} className="text-gray-600">âœ•</button>
+                  <button onClick={() => setShowAddModal(false)} className="text-gray-600">×</button>
                 </div>
                 <form onSubmit={saveNew} className="grid grid-cols-1 gap-3">
                   <label className="text-sm">Proveedor</label>

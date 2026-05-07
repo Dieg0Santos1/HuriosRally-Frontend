@@ -51,7 +51,7 @@ export function Payment() {
     });
     const [yapeErrors, setYapeErrors] = useState<Record<string, string>>({});
 
-    // Verificar autenticaciÃ³n y datos de checkout
+    // Verificar autenticación y datos de checkout
     useEffect(() => {
         const token = getToken();
         if (!token) {
@@ -170,22 +170,22 @@ export function Payment() {
         const errors: Record<string, string> = {};
         const numSan = sanitizeNumber(cardData.cardNumber);
         
-        // ValidaciÃ³n estricta: solo nÃºmeros, exactamente 16 dÃ­gitos
+        // Validación estricta: solo números, exactamente 16 dígitos
         if (!numSan) {
-            errors.cardNumber = "Numerode tarjeta requerido";
+            errors.cardNumber = "Número de tarjeta requerido";
         } else if (!/^\d+$/.test(numSan)) {
-            errors.cardNumber = "El nÃºmero de tarjeta solo debe contener dÃ­gitos";
+            errors.cardNumber = "El número de tarjeta solo debe contener dígitos";
         } else if (numSan.length !== 16) {
-            errors.cardNumber = "El nÃºmero de tarjeta debe tener 16 dÃ­gitos";
+            errors.cardNumber = "El número de tarjeta debe tener 16 dígitos";
         } else if (!luhnCheck(numSan)) {
-            errors.cardNumber = "Numerode tarjeta invÃ¡lido";
+            errors.cardNumber = "Número de tarjeta inválido";
         }
         
         if (!cardData.cardName.trim()) errors.cardName = "Nombre del titular requerido";
 
         const expMatch = cardData.expiry.match(/^(0[1-9]|1[0-2])\/(?:(\d{2})|(\d{4}))$/);
         if (!expMatch) {
-            errors.expiry = "Fecha invÃ¡lida (MM/AA)";
+            errors.expiry = "Fecha inválida (MM/AA)";
         } else {
             const month = parseInt(expMatch[1], 10);
             const yearRaw = expMatch[2] || expMatch[3];
@@ -199,7 +199,7 @@ export function Payment() {
             if (expDate < new Date()) errors.expiry = "Tarjeta expirada";
         }
 
-        if (!/^[0-9]{3,4}$/.test(cardData.cvc)) errors.cvc = "CVC invÃ¡lido";
+        if (!/^[0-9]{3,4}$/.test(cardData.cvc)) errors.cvc = "CVC inválido";
 
         setCardErrors(errors);
         return Object.keys(errors).length === 0;
@@ -208,20 +208,20 @@ export function Payment() {
     const validateYapePayment = (): boolean => {
         const errors: Record<string, string> = {};
         
-        // Validar telÃ©fono
+        // Validar teléfono
         if (!yapeData.phone.trim()) {
-            errors.phone = "Numerode celular requerido";
+            errors.phone = "Número de celular requerido";
         } else if (!/^\d{9}$/.test(yapeData.phone)) {
-            errors.phone = "El nÃºmero debe tener 9 dÃ­gitos";
+            errors.phone = "El número debe tener 9 dígitos";
         }
         
-        // ValidaciÃ³n estricta del cÃ³digo Yape: solo 6 nÃºmeros
+        // Validación estricta del código Yape: solo 6 números
         if (!yapeData.approvalCode.trim()) {
-            errors.approvalCode = "CÃ³digo de aprobaciÃ³n requerido";
+            errors.approvalCode = "Código de aprobación requerido";
         } else if (!/^\d+$/.test(yapeData.approvalCode)) {
-            errors.approvalCode = "El cÃ³digo solo debe contener nÃºmeros";
+            errors.approvalCode = "El código solo debe contener números";
         } else if (yapeData.approvalCode.length !== 6) {
-            errors.approvalCode = "El cÃ³digo debe tener exactamente 6 dÃ­gitos";
+            errors.approvalCode = "El código debe tener exactamente 6 dígitos";
         }
 
         setYapeErrors(errors);
@@ -231,7 +231,7 @@ export function Payment() {
     const handleSubmitPayment = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validar segÃºn mÃ©todo de pago
+        // Validar según método de pago
         let isValid = false;
         if (paymentMethod === "card") {
             isValid = validateCardPayment();
@@ -290,7 +290,7 @@ export function Payment() {
             });
             saveOrders(currentOrders);
 
-            // Generar PDF segÃºn tipo de documento
+            // Generar PDF según tipo de documento
             const documentType = checkoutData.documentType;
             const currentDate = new Date().toLocaleDateString('es-PE');
             const paymentMethodLabel = paymentMethod === "card" ? "Tarjeta" : "Yape";
@@ -307,7 +307,7 @@ export function Payment() {
             const igvCalculado = finalTotal - baseImponible;
             
             if (documentType === "dni") {
-                // Generar Boleta (asÃ­ncrono)
+                // Generar Boleta (así­ncrono)
                 await generateBoletaPDF({
                     boletaNumber: `B001-${result.orderId || '00001'}`,
                     date: currentDate,
@@ -321,7 +321,7 @@ export function Payment() {
                     deliveryMethod: deliveryMethodLabel
                 });
             } else {
-                // Generar Factura (asÃ­ncrono)
+                // Generar Factura (así­ncrono)
                 await generateFacturaPDF({
                     facturaNumber: `F001-${result.orderId || '00001'}`,
                     date: currentDate,
@@ -382,7 +382,7 @@ export function Payment() {
                         {/* Formulario de pago */}
                         <div className="lg:col-span-2">
                             <form onSubmit={handleSubmitPayment}>
-                                {/* SelecciÃ³n de mÃ©todo de pago */}
+                                {/* Selección de método de pago */}
                                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
                                     <h2 className="text-xl font-semibold text-gray-900 mb-4">
                                         Seleccionar Metodo de Pago
@@ -617,7 +617,7 @@ export function Payment() {
 
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                    CÃ³digo de AprobaciÃ³n *
+                                                    Código de Aprobación *
                                                 </label>
                                                 <input
                                                     type="text"
@@ -639,8 +639,8 @@ export function Payment() {
                                                     </p>
                                                 )}
                                                 <p className="text-xs text-gray-500 mt-1">
-                                                    Realiza el pago por Yape e ingresa el cÃ³digo de aprobaciÃ³n que
-                                                    aparece en tu aplicaciÃ³n
+                                                    Realiza el pago por Yape e ingresa el código de aprobación que
+                                                    aparece en tu aplicación
                                                 </p>
                                             </div>
                                         </div>
@@ -733,7 +733,7 @@ export function Payment() {
                     style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}
                 >
                             <div className="bg-white rounded-2xl max-w-md w-full mx-4 p-8 shadow-2xl transform animate-scaleIn">
-                                {/* Icono de Ã©xito */}
+                                {/* Icono de Éxito */}
                                 <div className="flex justify-center mb-6">
                                     <div className="relative">
                                         <div className="absolute inset-0 bg-green-400 rounded-full blur-xl opacity-50 animate-pulse"></div>
@@ -755,7 +755,7 @@ export function Payment() {
                                     </div>
                                 </div>
 
-                                {/* TÃ­tulo */}
+                                {/* Título */}
                                 <h3 className="text-3xl font-bold text-gray-900 text-center mb-3">
                                     Â¡Gracias por tu compra!
                                 </h3>
@@ -780,7 +780,7 @@ export function Payment() {
                                     )}
                                 </div>
 
-                                {/* BotÃ³n */}
+                                {/* Botón */}
                                 <button
                                     onClick={() => {
                                         // Limpiar carrito y sessionStorage al hacer clic en Aceptar
@@ -794,7 +794,7 @@ export function Payment() {
                                     Aceptar
                                 </button>
 
-                                {/* DecoraciÃ³n */}
+                                {/* Decoración */}
                                 <div className="mt-6 flex justify-center gap-2">
                                     <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
                                     <div className="w-2 h-2 bg-green-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>

@@ -13,7 +13,7 @@ const categories = [
 ];
 
 const Navbar: React.FC = () => {
-  // menuOpen controla si el menÃº mÃ³vil estÃ¡ visible
+  // menuOpen controla si el menú móvil está visible
   const [menuOpen, setMenuOpen] = useState(false);
   // catsOpen controla dropdown de Categorias en desktop
   const [catsOpen, setCatsOpen] = useState(false);
@@ -40,9 +40,9 @@ const Navbar: React.FC = () => {
   
   const handleLogout = () => {
     clearToken();
-    localStorage.removeItem('huriosRally_cart'); // Limpiar carrito tambiÃ©n
+    localStorage.removeItem('huriosRally_cart'); // Limpiar carrito también
     setUserDropdownOpen(false);
-    window.location.href = '/'; // Recargar pÃ¡gina
+    window.location.href = '/'; // Recargar página
   };
 
   return (
@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
 
           {/* dropdown Categorias (desktop) */}
           <div className="relative">
-            {/* botÃ³n que abre el dropdown */}
+            {/* botón que abre el dropdown */}
             <button
               onClick={() => setCatsOpen(v => !v)}
               onMouseEnter={() => setCatsOpen(true)}
@@ -124,7 +124,7 @@ const Navbar: React.FC = () => {
           <div className="relative" ref={userDropdownRef}>
             <button
               onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-              aria-label={isAuthenticated ? "MenÃº de usuario" : "Iniciar sesión"}
+              aria-label={isAuthenticated ? "Menú de usuario" : "Iniciar sesión"}
               className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white text-[#27557a] hover:scale-105 transition flex-shrink-0"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>

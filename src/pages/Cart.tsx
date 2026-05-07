@@ -350,7 +350,7 @@ export function Cart() {
 
                                                         <div className="h-4 w-px bg-gray-300"></div>
 
-                                                        {/* Botones de acciÃ³n */}
+                                                        {/* Botones de acción */}
                                                         <button
                                                             onClick={() => removeFromCart(item.id)}
                                                             className="text-sm text-red-600 hover:text-red-800 font-medium"

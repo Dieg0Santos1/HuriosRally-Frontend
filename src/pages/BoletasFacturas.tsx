@@ -83,8 +83,8 @@ export default function BoletasFacturas() {
                   <div className="text-xs text-gray-500">{visibleMonth.toLocaleString(undefined, { month: 'long', year: 'numeric' }).toUpperCase()}</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button onClick={goPrev} className="px-2 py-1 border rounded">â—€</button>
-                  <button onClick={goNext} className="px-2 py-1 border rounded">â–¶</button>
+                  <button onClick={goPrev} className="px-2 py-1 border rounded">‹</button>
+                  <button onClick={goNext} className="px-2 py-1 border rounded">›</button>
                 </div>
               </div>
 
@@ -135,7 +135,7 @@ export default function BoletasFacturas() {
                         <td className="py-2">S/ {inv.amount}</td>
                         <td className="py-2">{inv.type}</td>
                         <td className="py-2">{new Date(inv.date).toLocaleDateString()}</td>
-                        <td className="py-2"><a className="text-blue-600" href={inv.file}>link</a></td>
+                        <td className="py-2"><a className="text-blue-600" href={inv.file}>Descargar</a></td>
                       </tr>
                     ))}
                   </tbody>
@@ -145,8 +145,8 @@ export default function BoletasFacturas() {
               <div className="mt-4 flex items-center justify-between">
                 <div className="text-xs text-gray-500">Página {page}</div>
                 <div className="flex items-center gap-2">
-                  <button onClick={() => setPage(p => Math.max(1, p-1))} className="px-2 py-1 border rounded">â€¹</button>
-                  <button onClick={() => setPage(p => p+1)} className="px-2 py-1 border rounded">â€º</button>
+                  <button onClick={() => setPage(p => Math.max(1, p-1))} className="px-2 py-1 border rounded">‹</button>
+                  <button onClick={() => setPage(p => p+1)} className="px-2 py-1 border rounded">›</button>
                 </div>
               </div>
             </div>
@@ -161,7 +161,7 @@ export default function BoletasFacturas() {
               </div>
               <ul className="text-sm">
                 {(invoicesByDate[selectedDate] || []).map(it => (
-                  <li key={it.id} className="py-1 border-b">{it.client} â€” S/ {it.amount} â€” {it.type}</li>
+                  <li key={it.id} className="py-1 border-b">{it.client} — S/ {it.amount} — {it.type}</li>
                 ))}
                 {(invoicesByDate[selectedDate] || []).length === 0 && <li className="text-gray-500">No hay llegadas para esta fecha.</li>}
               </ul>

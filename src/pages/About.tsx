@@ -13,7 +13,7 @@ export function About() {
             
             <main className="flex-grow">
                 <div className="max-w-7xl mx-auto px-4 py-10">
-                    {/* TÃ­tulo principal */}
+                    {/* Tí­tulo principal */}
                     <div data-reveal className="opacity-0 transform translate-y-6 mb-8">
                         <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">Sobre Nosotros</h1>
                         <p className="text-lg text-gray-600 text-center max-w-3xl mx-auto">
@@ -30,7 +30,7 @@ export function About() {
                         />
                     </div>
                     
-                    {/* IntroducciÃ³n */}
+                    {/* Introducción */}
                     <div data-reveal className="opacity-0 transform translate-y-6 mb-16">
                         <div className="text-center max-w-4xl mx-auto">
                             <p className="text-lg text-gray-700 leading-relaxed mb-6">
@@ -53,7 +53,7 @@ export function About() {
                                 <div className="w-full md:w-1/2 flex-shrink-0">
                                     <img 
                                         src="./assets/imgs/banner3.jpg" 
-                                        alt="Nuestra misiÃ³n en Hurios Rally"
+                                        alt="Nuestra misión en Hurios Rally"
                                         className="w-full h-64 md:h-72 lg:h-80 object-cover rounded-lg shadow-lg"
                                     />
                                 </div>
