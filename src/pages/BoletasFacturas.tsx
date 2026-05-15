@@ -157,7 +157,7 @@ export default function BoletasFacturas() {
             <div className="mt-6 bg-gray-50 p-4 rounded">
               <div className="flex items-center justify-between mb-2">
                 <h4 className="font-medium">Llegadas para {selectedDate}</h4>
-                <button onClick={() => setSelectedDate(null)} className="text-sm text-blue-600">CANCEL</button>
+                <button onClick={() => setSelectedDate(null)} className="text-sm text-blue-600">Cancelar</button>
               </div>
               <ul className="text-sm">
                 {(invoicesByDate[selectedDate] || []).map(it => (

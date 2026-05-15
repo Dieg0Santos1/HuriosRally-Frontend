@@ -102,25 +102,25 @@ export function AdminProfile() {
                 rows = users.map((u) => ({
                     Email: u.email,
                     Nombre: u.fullName || "",
-                    Telefono: u.phone || "",
-                    FechaRegistro: u.createdAt || "",
+                    Teléfono: u.phone || "",
+                    "Fecha de Registro": u.createdAt || "",
                 }));
             } else if (type === "products") {
                 const products = getProducts();
                 rows = products.map((p) => ({
                     ID: p.id,
                     Nombre: p.name,
-                    Categoria: p.category || "",
+                    Categoría: p.category || "",
                     Precio: p.price,
                     Stock: p.stock ?? 0,
-                    FechaCreacion: p.createdAt || "",
+                    "Fecha de Creación": p.createdAt || "",
                 }));
             } else {
                 const orders = getOrders();
                 rows = orders.map((o) => ({
                     Orden: o.orderId,
                     Fecha: o.createdAt,
-                    Pago: o.paymentMethod,
+                    "Método de Pago": o.paymentMethod,
                     Total: o.finalTotal,
                     Cliente: o.customerEmail || "",
                 }));

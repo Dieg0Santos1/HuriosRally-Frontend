@@ -200,7 +200,7 @@ export function Checkout() {
 
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Numero de Celular *
+                                                Número de Celular *
                                             </label>
                                             <input
                                                 type="tel"
@@ -361,18 +361,18 @@ export function Checkout() {
                                                         Retiro en Tienda
                                                     </h3>
                                                     <p className="text-sm text-gray-600 mt-1">
-                                                        Gratis - Disponible desde manana
+                                                        Gratis - Disponible desde mañana
                                                     </p>
                                                     {formData.deliveryMethod === "pickup" && (
                                                         <div className="mt-3 bg-white rounded-md p-3 border border-gray-200">
                                                             <p className="text-sm font-medium text-gray-900">
-                                                                Direccion de recojo:
+                                                                Dirección de recojo:
                                                             </p>
                                                             <p className="text-sm text-gray-700 mt-1">
                                                                 Av. 22 de Agosto 1012, Comas 15312
                                                             </p>
                                                             <p className="text-xs text-gray-500 mt-2">
-                                                                Tu pedido estara listo para recoger desde el dia
+                                                                Tu pedido estará listo para recoger desde el día
                                                                 siguiente
                                                             </p>
                                                         </div>
@@ -410,8 +410,8 @@ export function Checkout() {
                                                     </h3>
                                                     <p className="text-sm text-gray-600 mt-1">
                                                         {totalPrice >= 200
-                                                            ? "Gratis - Envio priorizado"
-                                                            : "S/ 10.00 - 3-5 dias habiles"}
+                                                            ? "Gratis - Envío priorizado"
+                                                            : "S/ 10.00 - 3-5 días hábiles"}
                                                     </p>
                                                     {formData.deliveryMethod === "delivery" && (
                                                         <div className="mt-3 space-y-3">
@@ -492,7 +492,7 @@ export function Checkout() {
                                             </span>
                                         </div>
                                         <div className="flex justify-between text-sm">
-                                            <span className="text-gray-600">Envio</span>
+                                            <span className="text-gray-600">Envío</span>
                                             <span
                                                 className={`font-medium ${
                                                     shippingCost === 0 ? "text-green-600" : ""
@@ -528,7 +528,7 @@ export function Checkout() {
                                                         <path d="m9 12 2 2 4-4"></path>
                                                         <circle cx={12} cy={12} r={10}></circle>
                                                     </svg>
-                                                    Envio gratis y priorizado!
+                                                    !Envío gratis y priorizado!
                                                 </p>
                                             </div>
                                         )}
@@ -541,7 +541,7 @@ export function Checkout() {
                                         </button>
 
                                         <p className="text-xs text-gray-500 text-center mt-3">
-                                            Al continuar, aceptas nuestros terminos y condiciones
+                                            Al continuar, aceptas nuestros términos y condiciones
                                         </p>
                                     </div>
 

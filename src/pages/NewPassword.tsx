@@ -181,7 +181,7 @@ export const NewPassword: React.FC = () => {
                   </svg>
                 </div>
                 <h2 className="text-xl font-bold text-[var(--Primary_7)] mb-2">
-                  Â¡Contraseña actualizada!
+                  ¡Contraseña actualizada!
                 </h2>
                 <p className="text-[var(--Primary_5)] text-sm mb-6">
                   Tu contraseña ha sido cambiada exitosamente. Serás redirigido al login en unos segundos.

@@ -539,7 +539,7 @@ export function Payment() {
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        Fecha de expiracion *
+                                                        Fecha de expiración *
                                                     </label>
                                                     <input
                                                         ref={expiryInputRef}
@@ -594,7 +594,7 @@ export function Payment() {
                                         <div className="space-y-4">
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                    Numerode Celular *
+                                                    Número de Celular *
                                                 </label>
                                                 <input
                                                     type="tel"
@@ -665,7 +665,7 @@ export function Payment() {
                                         <span className="font-medium">S/ {totalPrice.toFixed(2)}</span>
                                     </div>
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-gray-600">Envio</span>
+                                        <span className="text-gray-600">Envío</span>
                                         <span
                                             className={`font-medium ${
                                                 shippingCost === 0 ? "text-green-600" : ""
@@ -757,7 +757,7 @@ export function Payment() {
 
                                 {/* Título */}
                                 <h3 className="text-3xl font-bold text-gray-900 text-center mb-3">
-                                    Â¡Gracias por tu compra!
+                                    ¡Gracias por tu compra!
                                 </h3>
 
                                 {/* Mensaje */}
@@ -771,7 +771,7 @@ export function Payment() {
                                     {orderId && (
                                         <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-3">
                                             <p className="text-xs text-blue-600 font-medium">
-                                                Numerode orden
+                                                Número de orden
                                             </p>
                                             <p className="text-lg font-bold text-blue-700">
                                                 #{orderId}
