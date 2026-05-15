@@ -171,7 +171,7 @@ const Navbar: React.FC = () => {
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                       </svg>
-                      <span>Cambiar contraseña</span>
+                      <span>Restablecer contraseña</span>
                     </Link>
                     
                     <hr className="my-2 border-gray-200" />
@@ -213,7 +213,7 @@ const Navbar: React.FC = () => {
 
           {/* details permite expandir categorias y seguir siendo accesible/clickable */}
           <details className="py-2 border-b border-white/10">
-            <summary className="cursor-pointer">Categorias</summary>
+            <summary className="cursor-pointer">Categorías</summary>
             <ul className="pl-4 mt-2">
               {categories.map(c => (
                 <li key={c.id} className="py-1">

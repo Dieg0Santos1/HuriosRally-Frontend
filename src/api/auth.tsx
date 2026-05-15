@@ -3,8 +3,7 @@ import {
   getUsers,
   nextUserId,
   saveUsers,
-  setCurrentEmail,
-  type UserRole,
+  setCurrentEmail
 } from "./localStorageDb";
 
 type RegisterReq = {
@@ -14,7 +13,7 @@ type RegisterReq = {
   password: string;
 };
 
-type LoginReq = { email: string; password: string; role: UserRole };
+type LoginReq = { email: string; password: string };
 
 function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
@@ -60,9 +59,6 @@ export async function loginUser(data: LoginReq) {
 
   if (!user || user.password !== data.password) {
     throw new Error("Credenciales inv\u00e1lidas");
-  }
-  if (user.role !== data.role) {
-    throw new Error("El rol seleccionado no coincide con el usuario");
   }
   if (!user.isVerified) {
     throw new Error("Debes verificar tu correo antes de iniciar sesi\u00f3n");
