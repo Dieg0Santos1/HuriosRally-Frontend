@@ -279,7 +279,7 @@ export function AdminProfile() {
                             {/* Email (solo lectura) */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Correo electronico
+                                    Correo electrónico
                                 </label>
                                 <input
                                     type="email"
