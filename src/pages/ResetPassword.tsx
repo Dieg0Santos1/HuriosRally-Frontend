@@ -119,7 +119,7 @@ export const ResetPassword: React.FC = () => {
                 </svg>
               </div>
               <h2 className="text-xl font-bold text-[var(--Primary_7)] mb-2">
-                Â¡Enlace enviado!
+                ¡Enlace enviado!
               </h2>
               <p className="text-[var(--Primary_5)] text-sm mb-6">
                 Revisa tu correo electronico para continuar con la recuperación de tu contraseña.

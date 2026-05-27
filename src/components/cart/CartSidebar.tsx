@@ -52,7 +52,7 @@ const CartSidebar: React.FC = () => {
         {/* Contenido del carrito */}
         <div className="flex flex-col h-full">
           {items.length === 0 ? (
-            /* Carrito vací­o */
+            /* Carrito vacío */
             <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
               <svg width={64} height={64} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1} className="text-gray-300 mb-4">
                 <circle cx={9} cy={21} r={1}></circle>
@@ -134,10 +134,10 @@ const CartSidebar: React.FC = () => {
                   </div>
                   <p className="text-xs text-gray-600 text-center">
                     {totalPrice >= 200 ? (
-                      <span className="text-green-600 font-medium">âœ“ Tu pedido califica para envío gratis y priorizado</span>
+                      <span className="text-green-600 font-medium">✓ Tu pedido califica para envío gratis y priorizado</span>
                     ) : (
                       <span>
-                        Agrega S/ {(200 - totalPrice).toFixed(2)} más para <span className="text-green-600 font-medium">enví­o gratis</span>
+                        Agrega S/ {(200 - totalPrice).toFixed(2)} más para <span className="text-green-600 font-medium">envío gratis</span>
                       </span>
                     )}
                   </p>

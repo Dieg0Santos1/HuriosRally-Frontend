@@ -307,7 +307,7 @@ export function Payment() {
             const igvCalculado = finalTotal - baseImponible;
             
             if (documentType === "dni") {
-                // Generar Boleta (así­ncrono)
+                // Generar Boleta (asíncrono)
                 await generateBoletaPDF({
                     boletaNumber: `B001-${result.orderId || '00001'}`,
                     date: currentDate,
@@ -321,7 +321,7 @@ export function Payment() {
                     deliveryMethod: deliveryMethodLabel
                 });
             } else {
-                // Generar Factura (así­ncrono)
+                // Generar Factura (asíncrono)
                 await generateFacturaPDF({
                     facturaNumber: `F001-${result.orderId || '00001'}`,
                     date: currentDate,
@@ -757,7 +757,7 @@ export function Payment() {
 
                                 {/* Título */}
                                 <h3 className="text-3xl font-bold text-gray-900 text-center mb-3">
-                                    Â¡Gracias por tu compra!
+                                    ¡Gracias por tu compra!
                                 </h3>
 
                                 {/* Mensaje */}
@@ -771,7 +771,7 @@ export function Payment() {
                                     {orderId && (
                                         <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-3">
                                             <p className="text-xs text-blue-600 font-medium">
-                                                Numerode orden
+                                                Número de orden
                                             </p>
                                             <p className="text-lg font-bold text-blue-700">
                                                 #{orderId}
