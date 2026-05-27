@@ -1,5 +1,6 @@
-import { getCurrentEmail, getUsers, saveUsers } from "./localStorageDb";
 import { getToken } from "../utils/token";
+
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
 export interface UserProfile {
   email: string;
@@ -11,58 +12,88 @@ export interface UserProfile {
   profileImage?: string;
 }
 
-function normalizeEmail(email: string) {
-  return email.trim().toLowerCase();
+function requireToken() {
+  const token = getToken();
+  if (!token) {
+    throw new Error("No hay sesión activa");
+  }
+  return token;
 }
 
-function requireCurrentUserIndex() {
-  const token = getToken();
-  if (!token) throw new Error("No hay sesi\u00f3n activa");
-
-  const email = getCurrentEmail();
-  if (!email) throw new Error("No se encontr\u00f3 el usuario de la sesi\u00f3n");
-
-  const users = getUsers();
-  const index = users.findIndex((u) => normalizeEmail(u.email) === normalizeEmail(email));
-  if (index < 0) throw new Error("Usuario no encontrado");
-
-  return { users, index };
+function asNetworkError(error: unknown): never {
+  if (error instanceof TypeError && error.message.includes("fetch")) {
+    throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
+  }
+  throw error;
 }
 
 export async function getUserProfile(): Promise<UserProfile> {
-  const { users, index } = requireCurrentUserIndex();
-  const user = users[index];
-  return {
-    email: user.email,
-    fullName: user.fullName,
-    phone: user.phone,
-    address: user.address,
-    role: user.role,
-    createdAt: user.createdAt,
-    profileImage: user.profileImage,
-  };
+  const token = requireToken();
+
+  try {
+    const res = await fetch(`${API_BASE}/user/profile`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || body.message || "Error al obtener perfil");
+    }
+
+    return await res.json();
+  } catch (error) {
+    asNetworkError(error);
+  }
 }
 
 export async function updateUserProfile(updates: Partial<UserProfile>): Promise<void> {
-  const { users, index } = requireCurrentUserIndex();
-  users[index] = {
-    ...users[index],
-    fullName: updates.fullName ?? users[index].fullName,
-    phone: updates.phone ?? users[index].phone,
-    address: updates.address ?? users[index].address,
-    profileImage: updates.profileImage ?? users[index].profileImage,
-  };
-  saveUsers(users);
+  const token = requireToken();
+
+  try {
+    const res = await fetch(`${API_BASE}/user/profile`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updates),
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || body.message || "Error al actualizar perfil");
+    }
+  } catch (error) {
+    asNetworkError(error);
+  }
 }
 
 export async function uploadProfileImage(file: File): Promise<{ imageUrl: string }> {
-  const { users, index } = requireCurrentUserIndex();
-  const imageUrl = URL.createObjectURL(file);
-  users[index] = {
-    ...users[index],
-    profileImage: imageUrl,
-  };
-  saveUsers(users);
-  return { imageUrl };
-}
+  const token = requireToken();
 
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch(`${API_BASE}/user/profile-image`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || body.message || "Error al subir imagen");
+    }
+
+    return await res.json();
+  } catch (error) {
+    asNetworkError(error);
+  }
+}

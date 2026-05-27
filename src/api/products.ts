@@ -1,5 +1,6 @@
-import { getProducts, nextProductId, saveProducts, type LocalProduct } from "./localStorageDb";
 import { getToken } from "../utils/token";
+
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
 
 export interface Product {
   id: number;
@@ -12,104 +13,188 @@ export interface Product {
   createdAt?: string;
 }
 
-function normalizeText(value: string) {
-  return value.trim().toLowerCase();
-}
-
-function requireSession() {
-  const token = getToken();
-  if (!token) throw new Error("No hay sesi\u00f3n activa");
-}
-
-function sortByDateDesc<T extends { createdAt?: string }>(items: T[]) {
-  return [...items].sort((a, b) => {
-    const ta = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-    const tb = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-    return tb - ta;
-  });
-}
-
-function toProduct(product: LocalProduct): Product {
-  return { ...product };
+function asNetworkError(error: unknown): never {
+  if (error instanceof TypeError && error.message.includes("fetch")) {
+    throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
+  }
+  throw error;
 }
 
 export async function getAllProducts(category?: string): Promise<Product[]> {
-  let items = getProducts();
-  if (category?.trim()) {
-    const normalized = normalizeText(category);
-    items = items.filter((p) => normalizeText(p.category || "").includes(normalized));
+  try {
+    const url = category?.trim()
+      ? `${API_BASE}/products?category=${encodeURIComponent(category)}`
+      : `${API_BASE}/products`;
+
+    const res = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || body.message || "Error al obtener productos");
+    }
+
+    return await res.json();
+  } catch (error) {
+    asNetworkError(error);
   }
-  return sortByDateDesc(items).map(toProduct);
 }
 
 export async function searchProducts(query: string): Promise<Product[]> {
-  const normalized = normalizeText(query || "");
-  const items = getProducts();
-  if (!normalized) return sortByDateDesc(items).map(toProduct);
+  try {
+    const url = query.trim()
+      ? `${API_BASE}/products/search?q=${encodeURIComponent(query)}`
+      : `${API_BASE}/products/search`;
 
-  return sortByDateDesc(
-    items.filter((p) => {
-      const content = `${p.name} ${p.description || ""} ${p.category || ""}`.toLowerCase();
-      return content.includes(normalized);
-    })
-  ).map(toProduct);
+    const res = await fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || body.message || "Error al buscar productos");
+    }
+
+    return await res.json();
+  } catch (error) {
+    asNetworkError(error);
+  }
 }
 
 export async function addStockToProduct(
   productId: number,
   quantity: number
 ): Promise<{ message: string; newStock: number }> {
-  requireSession();
-  if (quantity <= 0) throw new Error("La cantidad debe ser mayor a 0");
+  const token = getToken();
+  if (!token) {
+    throw new Error("No hay sesión activa");
+  }
 
-  const items = getProducts();
-  const index = items.findIndex((p) => p.id === productId);
-  if (index < 0) throw new Error("Producto no encontrado");
+  try {
+    const res = await fetch(`${API_BASE}/products/${productId}/add-stock`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ quantity }),
+    });
 
-  const currentStock = items[index].stock || 0;
-  const newStock = currentStock + quantity;
-  items[index] = { ...items[index], stock: newStock };
-  saveProducts(items);
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || body.message || "Error al agregar stock");
+    }
 
-  return { message: "Stock agregado correctamente", newStock };
+    return await res.json();
+  } catch (error) {
+    asNetworkError(error);
+  }
 }
 
 export async function getProductById(id: number): Promise<Product> {
-  const item = getProducts().find((p) => p.id === id);
-  if (!item) throw new Error("Producto no encontrado");
-  return toProduct(item);
+  try {
+    const res = await fetch(`${API_BASE}/products/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || body.message || "Error al obtener producto");
+    }
+
+    return await res.json();
+  } catch (error) {
+    asNetworkError(error);
+  }
 }
 
 export async function uploadImage(file: File): Promise<{ imageUrl: string; filename: string }> {
-  requireSession();
-  const imageUrl = URL.createObjectURL(file);
-  return { imageUrl, filename: file.name };
+  const token = getToken();
+  if (!token) {
+    throw new Error("No hay sesión activa");
+  }
+
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch(`${API_BASE}/api/images/upload`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || body.message || "Error al subir imagen");
+    }
+
+    return await res.json();
+  } catch (error) {
+    asNetworkError(error);
+  }
 }
 
 export async function updateProduct(
   productId: number,
   productData: { name?: string; description?: string; price?: number; imageUrl?: string }
 ): Promise<Product> {
-  requireSession();
-  const items = getProducts();
-  const index = items.findIndex((p) => p.id === productId);
-  if (index < 0) throw new Error("Producto no encontrado");
+  const token = getToken();
+  if (!token) {
+    throw new Error("No hay sesión activa");
+  }
 
-  const updated = { ...items[index], ...productData };
-  items[index] = updated;
-  saveProducts(items);
-  return toProduct(updated);
+  try {
+    const res = await fetch(`${API_BASE}/products/${productId}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productData),
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || body.message || "Error al actualizar producto");
+    }
+
+    return await res.json();
+  } catch (error) {
+    asNetworkError(error);
+  }
 }
 
 export async function deleteProduct(productId: number): Promise<{ message: string; id: number }> {
-  requireSession();
-  const items = getProducts();
-  const index = items.findIndex((p) => p.id === productId);
-  if (index < 0) throw new Error("Producto no encontrado");
+  const token = getToken();
+  if (!token) {
+    throw new Error("No hay sesión activa");
+  }
 
-  items.splice(index, 1);
-  saveProducts(items);
-  return { message: "Producto eliminado correctamente", id: productId };
+  try {
+    const res = await fetch(`${API_BASE}/products/${productId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || body.message || "Error al eliminar producto");
+    }
+
+    return await res.json();
+  } catch (error) {
+    asNetworkError(error);
+  }
 }
 
 export async function createProduct(productData: {
@@ -119,19 +204,28 @@ export async function createProduct(productData: {
   stock?: number;
   imageUrl?: string;
 }): Promise<Product> {
-  requireSession();
-  const items = getProducts();
-  const created: LocalProduct = {
-    id: nextProductId(),
-    name: productData.name,
-    price: productData.price,
-    description: productData.description,
-    stock: productData.stock ?? 0,
-    imageUrl: productData.imageUrl,
-    createdAt: new Date().toISOString(),
-  };
-  items.unshift(created);
-  saveProducts(items);
-  return toProduct(created);
-}
+  const token = getToken();
+  if (!token) {
+    throw new Error("No hay sesión activa");
+  }
 
+  try {
+    const res = await fetch(`${API_BASE}/products`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productData),
+    });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || body.message || "Error al crear producto");
+    }
+
+    return await res.json();
+  } catch (error) {
+    asNetworkError(error);
+  }
+}

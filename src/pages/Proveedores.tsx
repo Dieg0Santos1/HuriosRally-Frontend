@@ -78,7 +78,7 @@ export default function Proveedores() {
   };
 
   const deleteProvider = (id: number) => {
-    if (!confirm('Â¿Eliminar registro? Esta acción no se puede deshacer.')) return;
+    if (!confirm('¿Eliminar registro? Esta acción no se puede deshacer.')) return;
     setProviders(prev => prev.filter(p => p.id !== id));
   };
 
@@ -212,7 +212,7 @@ export default function Proveedores() {
               <div className="bg-white rounded-md w-full max-w-lg p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-medium">Actualizar Proveedor</h3>
-                  <button onClick={() => setEditingId(null)} className="text-gray-600">✖</button>
+                  <button onClick={() => setEditingId(null)} className="text-gray-600">✕</button>
                 </div>
                 <form onSubmit={(e) => { e.preventDefault(); saveEdit(); }} className="grid grid-cols-1 gap-3">
                   <label className="text-sm">Proveedor</label>
