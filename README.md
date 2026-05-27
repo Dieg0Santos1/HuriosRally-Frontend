@@ -18,3 +18,9 @@ La idea es que cada integrante suba archivos de la carpeta que le corresponde (p
 - Cuando agregues archivos reales en una carpeta, puedes eliminar su `.gitkeep`.
 - Trabajar sobre la rama `dev` y abrir PR hacia `dev` segun el flujo del equipo.
 
+## Despliegue
+
+- El frontend solo necesita la URL publica del backend; no se conecta directo a la base de datos.
+- En Vercel configura `VITE_API_URL` con la URL del backend desplegado.
+- Ejemplo para este proyecto: `VITE_API_URL=https://huriosrally-backend.onrender.com`
+
