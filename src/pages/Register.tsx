@@ -83,7 +83,7 @@ export function Register() {
     setClicked(true); // activar animación del botón (si tu componente lo usa)
 
     try {
-      const response = await registerUser({
+      await registerUser({
         fullName: nombre,
         email: correo,
         password: clave,
@@ -92,9 +92,7 @@ export function Register() {
 
       // respuesta OK -> redirigir al formulario de verificación
       // pasamos el email por query para autocompletar el campo en VerifyEmail
-      navigate(`/verify-email?email=${encodeURIComponent(correo)}`, {
-        state: { demoCode: response.verificationCode },
-      });
+      navigate(`/verify-email?email=${encodeURIComponent(correo)}`);
 
     } catch (err: unknown) {
       // error de red u otro
