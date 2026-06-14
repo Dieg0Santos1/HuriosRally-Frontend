@@ -6,6 +6,8 @@ import { useCart } from "../context/CartContext";
 import { getToken } from "../utils/token";
 import { generateBoletaPDF, generateFacturaPDF } from "../utils/pdfGenerator";
 import { useRoleProtection } from "../hooks/useRoleProtection";
+import ButtonShowPsd from "../components/ui/ButtonShowPwd";
+import { Input } from "../components/ui/Input";
 
 type PaymentMethod = "card" | "yape";
 
@@ -32,7 +34,7 @@ export function Payment() {
     const [processingError, setProcessingError] = useState("");
     const [showThankYouModal, setShowThankYouModal] = useState(false);
     const [orderId, setOrderId] = useState<string | null>(null);
-
+    const [CVC,setVerCVC]=useState(false)
     // Card payment state
     const [cardData, setCardData] = useState<CardData>({
         cardNumber: "",
@@ -559,11 +561,8 @@ export function Payment() {
                                                     )}
                                                 </div>
                                                 <div>
-                                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        CVC *
-                                                    </label>
-                                                    <input
-                                                        type="text"
+                                                    <Input
+                                                        type={CVC ? "text" : "password"}
                                                         value={cardData.cvc}
                                                         onChange={(e) =>
                                                             setCardData((prev) => ({
@@ -571,11 +570,23 @@ export function Payment() {
                                                                 cvc: e.target.value.replace(/\D/g, "").slice(0, 4),
                                                             }))
                                                         }
+                                                        label="CVC"
                                                         placeholder="123"
                                                         inputMode="numeric"
                                                         maxLength={4}
-                                                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--Primary_5)]"
+                                                        rightIcon={
+                                                            <ButtonShowPsd
+                                                                onClick={() => setVerCVC(prev => !prev)}
+                                                                aria-label={CVC ? "Ocultar contraseña" : "Ver contraseña"}
+                                                                className="bg-transparent border-0 cursor-pointer text-inherit p-0 flex items-center"
+                                                                >
+                                                                <span className="material-symbols-outlined">
+                                                                {CVC ? "visibility" : "visibility_off"}
+                                                                </span>
+                                                            </ButtonShowPsd>
+                                                            }
                                                     />
+                                                    
                                                     {cardErrors.cvc && (
                                                         <p className="text-xs text-red-600 mt-1">
                                                             {cardErrors.cvc}

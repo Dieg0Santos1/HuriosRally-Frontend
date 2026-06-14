@@ -6,6 +6,7 @@ import { loginUser } from "../api/auth";
 import { saveToken, saveRole } from "../utils/token";
 import { useNavigate, Link } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
+import ButtonShowPsd from "../components/ui/ButtonShowPwd";
 
 export function Login() {
 
@@ -14,7 +15,7 @@ export function Login() {
   const [clicked, setClicked] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-
+  const [verContra,setVerContra]=useState(false)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -84,11 +85,22 @@ export function Login() {
                     placeholder="ejemplo@gmail.com" 
                     onChange={(e) => setCorreo(e.target.value)} 
                   />
-                   <Input 
-                    label="Contraseña" 
-                    type="password" 
-                    placeholder="********" 
-                    onChange={(e) => setClave(e.target.value)} 
+                  <Input
+                    label="Contraseña"
+                    type={verContra ? "text" : "password"}
+                    placeholder="********"
+                    onChange={(e) => setClave(e.target.value)}
+                    rightIcon={
+                      <ButtonShowPsd
+                        onClick={() => setVerContra(prev => !prev)}
+                        aria-label={verContra ? "Ocultar contraseña" : "Ver contraseña"}
+                        className="bg-transparent border-0 cursor-pointer text-inherit p-0 flex items-center"
+                        >
+                        <span className="material-symbols-outlined">
+                          {verContra ? "visibility" : "visibility_off"}
+                        </span>
+                      </ButtonShowPsd>
+                    }
                   />
                 </div>
 
@@ -101,12 +113,12 @@ export function Login() {
 
                 {/* Botón principal */}
                 <div className="space-y-4">
-  <ButtonState 
-    initialText="Iniciar sesión" 
-    successText="¡Ingreso exitoso!" 
-    disabled={!isFormValid} 
-    clicked={clicked} 
-  />
+      <ButtonState 
+        initialText="Iniciar sesión" 
+        successText="¡Ingreso exitoso!" 
+        disabled={!isFormValid} 
+        clicked={clicked} 
+      />
 
   {/* Crear cuenta - color más notorio */}
   <a 
