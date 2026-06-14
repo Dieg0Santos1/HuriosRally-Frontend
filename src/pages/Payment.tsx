@@ -580,7 +580,7 @@ export function Payment() {
                                                                 aria-label={CVC ? "Ocultar contraseña" : "Ver contraseña"}
                                                                 className="bg-transparent border-0 cursor-pointer text-inherit p-0 flex items-center"
                                                                 >
-                                                                <span className="material-symbols-outlined">
+                                                                <span className="material-symbols-outlined"  translate="no">
                                                                 {CVC ? "visibility" : "visibility_off"}
                                                                 </span>
                                                             </ButtonShowPsd>

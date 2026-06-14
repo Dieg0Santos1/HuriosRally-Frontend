@@ -117,7 +117,7 @@ export const NewPassword: React.FC = () => {
                         aria-label={verContra ? "Ocultar contraseña" : "Ver contraseña"}
                         className="bg-transparent border-0 cursor-pointer text-inherit p-0 flex items-center"
                         >
-                        <span className="material-symbols-outlined">
+                        <span className="material-symbols-outlined"  translate="no">
                           {verContra ? "visibility" : "visibility_off"}
                         </span>
                       </ButtonShowPsd>
@@ -138,7 +138,7 @@ export const NewPassword: React.FC = () => {
                           aria-label={verContraConfirm ? "Ocultar contraseña confirmada" : "Ver contraseña confirmada"}
                           className="bg-transparent border-0 cursor-pointer text-inherit p-0 flex items-center"
                           >
-                          <span className="material-symbols-outlined">
+                          <span className="material-symbols-outlined"  translate="no">
                             {verContraConfirm ? "visibility" : "visibility_off"}
                           </span>
                         </ButtonShowPsd>
