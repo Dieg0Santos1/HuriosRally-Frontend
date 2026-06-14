@@ -2,6 +2,8 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { resetPassword } from "../api/auth";
 import Navbar from "../components/layout/Navbar";
+import { Input } from "../components/ui/Input";
+import ButtonShowPsd from "../components/ui/ButtonShowPwd";
 
 /*
  NewPassword.tsx
@@ -19,7 +21,8 @@ export const NewPassword: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  
+  const [verContra,setVerContra]=useState(false)
+  const [verContraConfirm,setVerContraConfirm]=useState(false)
   const token = searchParams.get("token");
   const email = searchParams.get("email");
 
@@ -102,39 +105,48 @@ export const NewPassword: React.FC = () => {
 
                 {/* Formulario */}
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--Primary_6)] mb-2">
-                      Nueva contraseña
-                    </label>
-                    <input
-                      type="password"
+                    <Input
+                      type={verContra ? "text" : "password"}
+                      label="Nueva contraseña"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="Mínimo 8 caracteres"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--Primary_4)] focus:border-transparent transition-all duration-200 bg-white/90"
-                      required
+                      rightIcon={
+                      <ButtonShowPsd
+                        onClick={() => setVerContra(prev => !prev)}
+                        aria-label={verContra ? "Ocultar contraseña" : "Ver contraseña"}
+                        className="bg-transparent border-0 cursor-pointer text-inherit p-0 flex items-center"
+                        >
+                        <span className="material-symbols-outlined">
+                          {verContra ? "visibility" : "visibility_off"}
+                        </span>
+                      </ButtonShowPsd>
+                      }
                     />
                     {newPassword.length > 0 && !isPasswordValid && (
                       <p className="text-red-500 text-xs mt-1">La contraseña debe tener al menos 8 caracteres</p>
                     )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--Primary_6)] mb-2">
-                      Confirmar contraseña
-                    </label>
-                    <input
-                      type="password"
+                    <Input
+                      label="Confirmar contraseña"
+                      type={verContraConfirm ? "text" : "password"}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="Repite la contraseña"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--Primary_4)] focus:border-transparent transition-all duration-200 bg-white/90"
-                      required
+                      rightIcon={
+                        <ButtonShowPsd
+                          onClick={() => setVerContraConfirm(prev => !prev)}
+                          aria-label={verContraConfirm ? "Ocultar contraseña confirmada" : "Ver contraseña confirmada"}
+                          className="bg-transparent border-0 cursor-pointer text-inherit p-0 flex items-center"
+                          >
+                          <span className="material-symbols-outlined">
+                            {verContraConfirm ? "visibility" : "visibility_off"}
+                          </span>
+                        </ButtonShowPsd>
+                      }
                     />
                     {confirmPassword.length > 0 && !isConfirmValid && (
                       <p className="text-red-500 text-xs mt-1">Las contraseñas no coinciden</p>
                     )}
-                  </div>
 
                   {/* Error message */}
                   {error && (
