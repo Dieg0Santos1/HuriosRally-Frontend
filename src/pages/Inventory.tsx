@@ -18,7 +18,7 @@ export function Inventory() {
     const [error, setError] = useState<string | null>(null);
 
     const [showAddStockFor, setShowAddStockFor] = useState<number | null>(null);
-    const [addQuantity, setAddQuantity] = useState<number>(0);
+    const [addQuantity, setAddQuantity] = useState<string>("");
     const [stockLoading, setStockLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     
@@ -132,7 +132,7 @@ export function Inventory() {
 
     const openAddStock = (id: number) => {
         setShowAddStockFor(id);
-        setAddQuantity(0);
+        setAddQuantity("");
     };
 
     const confirmAddStock = async () => {
@@ -157,7 +157,7 @@ export function Inventory() {
             
             setSuccessMessage(result.message);
             setShowAddStockFor(null);
-            setAddQuantity(0);
+            setAddQuantity("");
             
             // Ocultar mensaje después de 3 segundos
             setTimeout(() => setSuccessMessage(null), 3000);
@@ -446,7 +446,7 @@ export function Inventory() {
                         <form onSubmit={handleCreateProduct} className="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium mb-1">Nombre</label>
-                                <input value={newName} onChange={(e) => setNewName(e.target.value.replace(/[0-9]/g, ""))} className="w-full px-3 py-2 border rounded-md" />
+                                <input value={newName} type="text" onChange={(e) => setNewName(e.target.value)} className="w-full px-3 py-2 border rounded-md" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium mb-1">Precio (S/)</label>
@@ -661,7 +661,8 @@ export function Inventory() {
                                             <label className="block text-sm font-medium mb-1">Nombre *</label>
                                             <input 
                                                 value={editName} 
-                                                onChange={(e) => setEditName(e.target.value.replace(/[0-9]/g, ""))} 
+                                                type="text"
+                                                onChange={(e) => setEditName(e.target.value)} 
                                                 className="w-full px-3 py-2 border rounded-md" 
                                                 placeholder="Nombre del producto"
                                                 disabled={editLoading}
@@ -788,16 +789,19 @@ export function Inventory() {
                                 <input 
                                     type="number" 
                                     value={addQuantity} 
-                                    onChange={(e) => setAddQuantity(Math.max(0, Number(e.target.value)))} 
+                                    onChange={(e) => {
+                                            const val = e.target.value;
+                                            if (val === "" || Number(val) >= 0) setAddQuantity(val);
+                                    }}
+                                    onKeyDown={(e) => ["e", "E", "+", "-", "."].includes(e.key) && e.preventDefault()} 
                                     className="w-full px-3 py-2 border rounded-md mb-4" 
                                     placeholder="Cantidad a agregar"
-                                    min="0"
                                     disabled={stockLoading}
                                 />
                                 <div className="flex gap-2 justify-end">
                                     <button 
                                         className="px-4 py-2 border rounded-md" 
-                                        onClick={() => { setShowAddStockFor(null); setAddQuantity(0); setError(null); }}
+                                        onClick={() => { setShowAddStockFor(null); setAddQuantity(""); setError(null); }}
                                         disabled={stockLoading}
                                     >
                                         Cancelar
