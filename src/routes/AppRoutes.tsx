@@ -21,6 +21,7 @@ import { Inventory } from "../pages/Inventory";
 import BoletasFacturas from "../pages/BoletasFacturas";
 import Proveedores from "../pages/Proveedores";
 import { Category } from "../pages/Category";
+import { MyOrders } from "../pages/MyOrders";
 const AppRoutes: React.FC = () => (
   <CartProvider>
     <Router>
@@ -39,6 +40,7 @@ const AppRoutes: React.FC = () => (
         <Route path="/payment" element={<Payment />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/my-orders" element={<MyOrders />} />
         <Route path="/admin-profile" element={<AdminProfile />} />
         <Route path="/inventario" element={<Inventory />} />
   <Route path="/boletas-facturas" element={<BoletasFacturas />} />

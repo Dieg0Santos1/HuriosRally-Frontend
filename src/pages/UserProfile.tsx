@@ -137,16 +137,32 @@ export function UserProfile() {
               </div>
               {/*Botón para cambiar datos del perfil*/}
               {!editing && (
-                <button
-                  onClick={() => setEditing(true)}
-                  className="px-4 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors flex items-center gap-2"
-                >
-                  <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                  </svg>
-                  Editar perfil
-                </button>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => navigate("/my-orders")}
+                    className="px-4 py-2 border border-[var(--Primary_5)] text-[var(--Primary_5)] rounded-md hover:bg-[var(--Primary_0)] transition-colors flex items-center gap-2"
+                  >
+                    <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                      <path d="M9 5H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2" />
+                      <path d="M9 9h6" />
+                      <path d="M9 13h6" />
+                      <path d="M9 17h4" />
+                      <path d="M15 3h6v6" />
+                      <path d="M21 3l-7 7" />
+                    </svg>
+                    Mis Pedidos
+                  </button>
+                  <button
+                    onClick={() => setEditing(true)}
+                    className="px-4 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors flex items-center gap-2"
+                  >
+                    <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                    Editar perfil
+                  </button>
+                </div>
               )}
             </div>
           </div>
