@@ -7,8 +7,8 @@ import Footer from "../components/layout/Footer";
 
 const CATEGORIES: { [key: string]: string } = {
   "1": "Motor",
-  "2": "Neumaticos",
-  "3": "Carroceria",
+  "2": "Neumáticos",
+  "3": "Carrocería",
   "4": "Filtros",
   "5":"Suspensión",
   "6":"Frenos",
