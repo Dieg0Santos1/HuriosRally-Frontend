@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { uploadProfileImage } from '../../api/user';
+import { API_BASE_URL } from '../../config/api';
 /*Clase que permite utilizar de forma más fácil las propiedades y método de ProfileAvatar */
 interface ProfileAvatarProps {
   imageUrl?: string;
@@ -11,7 +12,7 @@ export function ProfileAvatar({ imageUrl, onImageUpdate, size = 'large' }: Profi
   const [error, setError] = useState<string | null>(null);
   const [showHover, setShowHover] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+  const API_BASE = API_BASE_URL;
 
   // Construir URL completa de la imagen
   const fullImageUrl = imageUrl

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { useCart } from "../../context/CartContext";
 import { getRole } from "../../utils/token";
+import { API_BASE_URL } from "../../config/api";
 
 /**
  * Tipo/Interfaz pública del producto.
@@ -24,7 +25,7 @@ export type Product = {
  *   para que puedas importarlo de la forma que prefieras.
  */
 export const ShopCard: React.FC<{ product: Product }> = ({ product }) => {
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+  const API_BASE = API_BASE_URL;
   const { addToCart, isOpen, toggleCart } = useCart();
   const isAdmin = getRole() === 'ADMINISTRADOR';
 

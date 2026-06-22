@@ -8,6 +8,7 @@ import { generateBoletaPDF, generateFacturaPDF } from "../utils/pdfGenerator";
 import { useRoleProtection } from "../hooks/useRoleProtection";
 import ButtonShowPsd from "../components/ui/ButtonShowPwd";
 import { Input } from "../components/ui/Input";
+import { API_BASE_URL } from "../config/api";
 
 type PaymentMethod = "card" | "yape";
 
@@ -23,7 +24,7 @@ interface YapeData {
     approvalCode: string;
 }
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+const API_BASE = API_BASE_URL;
 
 export function Payment() {
     useRoleProtection('payment'); // Bloquear acceso a admins

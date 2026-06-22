@@ -1,9 +1,10 @@
 ﻿import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import { API_BASE_URL } from '../../config/api';
 
 const CartSidebar: React.FC = () => {
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+  const API_BASE = API_BASE_URL;
   const { 
     isOpen, 
     items, 
