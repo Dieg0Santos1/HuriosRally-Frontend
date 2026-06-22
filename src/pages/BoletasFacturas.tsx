@@ -116,6 +116,7 @@ export default function BoletasFacturas() {
     const start = (page - 1) * perPage;
     return invoices.slice(start, start + perPage);
   }, [invoices, page]);
+
   useEffect(() => {
     setPage(1);
   }, [selectedDate]);
@@ -287,7 +288,7 @@ export default function BoletasFacturas() {
                 })()}
               </div>
             </div>
-            {/*¿Cómo hago para que no se aplique el filtro aquí  */}
+
             <div className="border rounded-md p-4">
               <h3 className="text-lg font-medium mb-2">
                 Lista de boletas/facturas
@@ -391,26 +392,26 @@ export default function BoletasFacturas() {
               </div>
 
               <ul className="text-sm divide-y divide-gray-100">
-                {(invoicesByDate[selectedDate] || []).map((it) => (
+                {(invoicesByDate[selectedDate] || []).map((boletasDia) => (
                   <li
-                    key={it.id}
+                    key={boletasDia.id}
                     className="py-2 flex justify-between items-center gap-4"
                   >
                     <div className="min-w-0 flex-1">
                       <span className="font-medium text-gray-900 block truncate">
-                        {it.client}
+                        {boletasDia.client}
                       </span>
                       <span className="text-xs text-gray-500 capitalize">
-                        {it.type} • {it.status}
+                        {boletasDia.type} • {boletasDia.status}
                       </span>
                     </div>
                     <div className="flex items-center gap-3 shrink-0">
                       <span className="font-semibold text-gray-900">
-                        {formatCurrency(it.amount)}
+                        {formatCurrency(boletasDia.amount)}
                       </span>
                       <button
-                        onClick={() => void handleDownload(it.id)}
-                        disabled={downloadId === it.id}
+                        onClick={() => void handleDownload(boletasDia.id)}
+                        disabled={downloadId === boletasDia.id}
                         className="text-xs text-blue-600 hover:underline disabled:text-gray-400 font-medium"
                       >
                         {downloadId === boletasDia.id ? "..." : "Descargar"}
