@@ -10,6 +10,12 @@ const categories = [
   { id: 2, name: "Neumáticos" },
   { id: 3, name: "Carrocería" },
   { id: 4, name: "Filtros" },
+  {id:5,name:"Suspensión"},
+  {id:6,name:"Frenos"},
+  {id:7,name:"Eléctrico"},
+  {id:8,name:"Accesorios"},
+  {id:9,name:"Transmisión"},
+  {id:10,name:"Lubricantes"}
 ];
 
 const Navbar: React.FC = () => {
