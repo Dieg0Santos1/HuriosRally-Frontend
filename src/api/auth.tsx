@@ -1,4 +1,6 @@
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+import { API_BASE_URL } from "../config/api";
+
+const API_BASE = API_BASE_URL;
 
 type RegisterReq = {
   fullName?: string;

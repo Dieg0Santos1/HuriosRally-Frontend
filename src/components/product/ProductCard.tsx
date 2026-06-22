@@ -1,5 +1,6 @@
 // src/components/ProductCard.tsx
 import React from "react";
+import { API_BASE_URL } from "../../config/api";
 
 type Product = {
   id: number;
@@ -15,7 +16,7 @@ type ProductCardProps = {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+  const API_BASE = API_BASE_URL;
   const [imgError, setImgError] = React.useState(false);
   
   const imageUrl = product.imageUrl 

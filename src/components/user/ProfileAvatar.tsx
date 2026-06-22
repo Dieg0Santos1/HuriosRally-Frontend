@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { uploadProfileImage } from '../../api/user';
+import { API_BASE_URL } from '../../config/api';
 
 interface ProfileAvatarProps {
   imageUrl?: string;
@@ -12,7 +13,7 @@ export function ProfileAvatar({ imageUrl, onImageUpdate, size = 'large' }: Profi
   const [error, setError] = useState<string | null>(null);
   const [showHover, setShowHover] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+  const API_BASE = API_BASE_URL;
 
   // Soporta imagenes remotas, locales de /assets y blob local.
   const fullImageUrl = imageUrl

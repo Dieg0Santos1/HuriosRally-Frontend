@@ -5,6 +5,7 @@ import Navbar from "../components/layout/Navbar";
 import { useCart } from "../context/CartContext";
 import { getToken } from "../utils/token";
 import { useRoleProtection } from "../hooks/useRoleProtection";
+import { API_BASE_URL } from "../config/api";
 
 type DocumentType = "dni" | "factura";
 type DeliveryMethod = "pickup" | "delivery";
@@ -28,7 +29,7 @@ interface CheckoutFormData {
 
 export function Checkout() {
     useRoleProtection('checkout'); // Bloquear acceso a admins
-    const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+    const API_BASE = API_BASE_URL;
     const navigate = useNavigate();
     const { items, totalItems, totalPrice } = useCart();
     const [formData, setFormData] = useState<CheckoutFormData>({

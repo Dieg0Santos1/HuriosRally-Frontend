@@ -4,13 +4,14 @@ import { useState, useRef, useEffect } from "react";
 import ProductCard from "../components/product/ProductCard";
 import { useNavigate } from "react-router-dom";
 import { searchProducts, addStockToProduct, createProduct, uploadImage, deleteProduct, updateProduct, type Product as ProductType } from "../api/products";
+import { API_BASE_URL } from "../config/api";
 
 type Product = ProductType & {
     expectedArrival?: string | null;
 };
 
 export function Inventory() {
-    const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+    const API_BASE = API_BASE_URL;
     const [activeTab, setActiveTab] = useState("search");
     const [query, setQuery] = useState("");
     const [products, setProducts] = useState<Product[]>([]);
