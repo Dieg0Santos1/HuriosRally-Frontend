@@ -4,7 +4,9 @@ import ShopCard, { type Product } from "../components/product/ShopCard";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 
-const CATEGORIES = ["Motor", "Neumaticos", "Carroceria", "Filtros"];
+const CATEGORIES = ["Motor","Neumáticos",
+  "Carrocería","Filtros",
+  "Suspensión","Frenos","Eléctrico","Accesorios","Transmisión","Lubricantes"];
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
