@@ -109,14 +109,8 @@ export default function BoletasFacturas() {
     return arr;
   })();
 
-  const filteredInvoices = useMemo(() => {
-    if (!selectedDate) return invoices;
-    return invoices.filter(
-      (invoice) => invoice.date.slice(0, 10) === selectedDate,
-    );
-  }, [invoices, selectedDate]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredInvoices.length / perPage));
+  const totalPages = Math.max(1, Math.ceil(invoices.length / perPage));
 
   const paged = useMemo(() => {
     const start = (page - 1) * perPage;
@@ -420,7 +414,7 @@ export default function BoletasFacturas() {
                         disabled={downloadId === boletasDia.id}
                         className="text-xs text-blue-600 hover:underline disabled:text-gray-400 font-medium"
                       >
-                        {downloadId === it.id ? "..." : "Descargar"}
+                        {downloadId === boletasDia.id ? "..." : "Descargar"}
                       </button>
                     </div>
                   </li>
