@@ -24,7 +24,11 @@ function formatCurrency(amount: number) {
 function mapSaleToInvoice(sale: PaymentSale): InvoiceRow {
   return {
     id: sale.id,
-    client: sale.companyName || sale.fullName || sale.user?.email || `Cliente #${sale.id}`,
+    client:
+      sale.companyName ||
+      sale.fullName ||
+      sale.user?.email ||
+      `Cliente #${sale.id}`,
     amount: sale.total,
     type: getInvoiceType(sale.documentType),
     date: sale.createdAt,
@@ -73,11 +77,14 @@ export default function BoletasFacturas() {
     () =>
       sales
         .map(mapSaleToInvoice)
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
-    [sales]
+        .sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+        ),
+    [sales],
   );
 
-  const endOfMonth = (d: Date) => new Date(d.getFullYear(), d.getMonth() + 1, 0);
+  const endOfMonth = (d: Date) =>
+    new Date(d.getFullYear(), d.getMonth() + 1, 0);
   const daysInMonth = (d: Date) => endOfMonth(d).getDate();
 
   const invoicesByDate = useMemo(() => {
@@ -104,24 +111,29 @@ export default function BoletasFacturas() {
 
   const filteredInvoices = useMemo(() => {
     if (!selectedDate) return invoices;
-    return invoices.filter((invoice) => invoice.date.slice(0, 10) === selectedDate);
+    return invoices.filter(
+      (invoice) => invoice.date.slice(0, 10) === selectedDate,
+    );
   }, [invoices, selectedDate]);
 
   const totalPages = Math.max(1, Math.ceil(filteredInvoices.length / perPage));
 
   const paged = useMemo(() => {
     const start = (page - 1) * perPage;
-    return filteredInvoices.slice(start, start + perPage);
-  }, [filteredInvoices, page]);
-
+    return invoices.slice(start, start + perPage);
+  }, [invoices, page]);
   useEffect(() => {
     setPage(1);
   }, [selectedDate]);
 
   const goPrev = () =>
-    setVisibleMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+    setVisibleMonth(
+      (prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1),
+    );
   const goNext = () =>
-    setVisibleMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+    setVisibleMonth(
+      (prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1),
+    );
 
   const handleDownload = async (invoiceId: number) => {
     try {
@@ -244,40 +256,55 @@ export default function BoletasFacturas() {
                   const firstDay = new Date(
                     visibleMonth.getFullYear(),
                     visibleMonth.getMonth(),
-                    1
+                    1,
                   ).getDay();
                   const cells: React.ReactNode[] = [];
-                  for (let i = 0; i < firstDay; i++) cells.push(<div key={`e${i}`} />);
+                  for (let i = 0; i < firstDay; i++)
+                    cells.push(<div key={`e${i}`} />);
                   days.forEach((d) => {
                     const count = d.items.length;
                     const isSelected = selectedDate === d.date;
                     cells.push(
                       <button
                         key={d.date}
-                        onClick={() => setSelectedDate((current) => (current === d.date ? null : d.date))}
+                        onClick={() =>
+                          setSelectedDate((current) =>
+                            current === d.date ? null : d.date,
+                          )
+                        }
                         className={`p-2 rounded ${
-                          isSelected ? "bg-[var(--Primary_3)] text-white" : "hover:bg-gray-100"
+                          isSelected
+                            ? "bg-[var(--Primary_3)] text-white"
+                            : "hover:bg-gray-100"
                         }`}
                       >
-                        <div className="text-sm">{new Date(d.date).getDate()}</div>
+                        <div className="text-sm">
+                          {new Date(d.date).getDate()}
+                        </div>
                         {count > 0 && (
-                          <div className="text-[10px] text-gray-600">{count} comprobante{count === 1 ? "" : "s"}</div>
+                          <div className="text-[10px] text-gray-600">
+                            {count} comprobante{count === 1 ? "" : "s"}
+                          </div>
                         )}
-                      </button>
+                      </button>,
                     );
                   });
                   return cells;
                 })()}
               </div>
             </div>
-
+            {/*¿Cómo hago para que no se aplique el filtro aquí  */}
             <div className="border rounded-md p-4">
-              <h3 className="text-lg font-medium mb-2">Lista de boletas/facturas</h3>
+              <h3 className="text-lg font-medium mb-2">
+                Lista de boletas/facturas
+              </h3>
 
               {loading ? (
                 <p className="text-sm text-gray-600">Cargando ventas...</p>
               ) : paged.length === 0 ? (
-                <p className="text-sm text-gray-500">No hay comprobantes para mostrar.</p>
+                <p className="text-sm text-gray-500">
+                  No hay comprobantes para mostrar.
+                </p>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -296,14 +323,18 @@ export default function BoletasFacturas() {
                           <td className="py-2">{inv.client}</td>
                           <td className="py-2">{formatCurrency(inv.amount)}</td>
                           <td className="py-2 capitalize">{inv.type}</td>
-                          <td className="py-2">{new Date(inv.date).toLocaleDateString("es-PE")}</td>
+                          <td className="py-2">
+                            {new Date(inv.date).toLocaleDateString("es-PE")}
+                          </td>
                           <td className="py-2">
                             <button
                               onClick={() => void handleDownload(inv.id)}
                               disabled={downloadId === inv.id}
                               className="text-blue-600 hover:underline disabled:text-gray-400"
                             >
-                              {downloadId === inv.id ? "Generando..." : "Descargar"}
+                              {downloadId === inv.id
+                                ? "Generando..."
+                                : "Descargar"}
                             </button>
                           </td>
                         </tr>
@@ -314,7 +345,9 @@ export default function BoletasFacturas() {
               )}
 
               <div className="mt-4 flex items-center justify-between">
-                <div className="text-xs text-gray-500">Página {page} de {totalPages}</div>
+                <div className="text-xs text-gray-500">
+                  Página {page} de {totalPages}
+                </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
@@ -336,24 +369,66 @@ export default function BoletasFacturas() {
           </div>
 
           {selectedDate && (
-            <div className="mt-6 bg-gray-50 p-4 rounded">
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="font-medium">Comprobantes para {selectedDate}</h4>
+            <div className="mt-6 bg-gray-50 border border-gray-200 p-4 rounded-lg shadow-sm">
+              <div className="flex items-center justify-between mb-3">
+                <div>
+                  <h4 className="font-semibold text-gray-800">
+                    Comprobantes del día
+                  </h4>
+                  <p className="text-xs text-gray-500">
+                    {/* Formateo local para que no muestre el string ISO seco (AAAA-MM-DD) */}
+                    {new Date(selectedDate + "T00:00:00").toLocaleDateString(
+                      "es-PE",
+                      {
+                        weekday: "long",
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      },
+                    )}
+                  </p>
+                </div>
                 <button
                   onClick={() => setSelectedDate(null)}
-                  className="text-sm text-blue-600"
+                  className="text-xs bg-white border hover:bg-gray-50 text-gray-600 px-2 py-1 rounded shadow-sm transition"
                 >
                   Limpiar filtro
                 </button>
               </div>
-              <ul className="text-sm">
+
+              <ul className="text-sm divide-y divide-gray-100">
                 {(invoicesByDate[selectedDate] || []).map((it) => (
-                  <li key={it.id} className="py-1 border-b">
-                    {it.client} - {formatCurrency(it.amount)} - {it.type} - {it.status}
+                  <li
+                    key={it.id}
+                    className="py-2 flex justify-between items-center gap-4"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <span className="font-medium text-gray-900 block truncate">
+                        {it.client}
+                      </span>
+                      <span className="text-xs text-gray-500 capitalize">
+                        {it.type} • {it.status}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3 shrink-0">
+                      <span className="font-semibold text-gray-900">
+                        {formatCurrency(it.amount)}
+                      </span>
+                      <button
+                        onClick={() => void handleDownload(it.id)}
+                        disabled={downloadId === it.id}
+                        className="text-xs text-blue-600 hover:underline disabled:text-gray-400 font-medium"
+                      >
+                        {downloadId === it.id ? "..." : "Descargar"}
+                      </button>
+                    </div>
                   </li>
                 ))}
+
                 {(invoicesByDate[selectedDate] || []).length === 0 && (
-                  <li className="text-gray-500">No hay comprobantes para esta fecha.</li>
+                  <li className="text-gray-500 text-center py-4 bg-white rounded border border-dashed">
+                    No hay comprobantes registrados para esta fecha.
+                  </li>
                 )}
               </ul>
             </div>
