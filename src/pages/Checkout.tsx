@@ -561,7 +561,7 @@ export function Checkout() {
                                                         ? item.imageUrl
                                                         : `${API_BASE}${item.imageUrl}`
                                                     )
-                                                  : "/assets/imgs/placeholder.png";
+                                                  : "/assets/imgs/placeholder.svg";
                                                 return (
                                                 <div key={item.id} className="flex gap-3">
                                                     <img

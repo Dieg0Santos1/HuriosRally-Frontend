@@ -27,7 +27,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           ? product.imageUrl
           : `${API_BASE}${product.imageUrl}`
       )
-    : "/assets/imgs/placeholder.png";
+    : "/assets/imgs/placeholder.svg";
 
   const handleImageError = () => {
     console.error(`Error cargando imagen para producto ${product.id}:`, imageUrl);
@@ -37,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <div className="bg-white shadow rounded-lg p-4">
       <img
-        src={imgError ? "/assets/imgs/placeholder.png" : imageUrl}
+        src={imgError ? "/assets/imgs/placeholder.svg" : imageUrl}
         alt={product.name}
         className="w-full h-40 object-cover mb-3"
         onError={handleImageError}

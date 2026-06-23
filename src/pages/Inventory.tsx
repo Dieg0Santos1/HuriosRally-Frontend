@@ -606,7 +606,7 @@ export function Inventory() {
                                                         ? p.imageUrl
                                                         : `${API_BASE}${p.imageUrl}`
                                                   )
-                                                : "/assets/imgs/placeholder.png";
+                                                : "/assets/imgs/placeholder.svg";
                                             return (
                                             <div key={p.id} className="flex items-center gap-3 border rounded p-2">
                                                 <img src={imgUrl} alt={p.name} className="w-12 h-12 object-contain" />
@@ -633,7 +633,7 @@ export function Inventory() {
                                                         ? p.imageUrl
                                                         : `${API_BASE}${p.imageUrl}`
                                                   )
-                                                : "/assets/imgs/placeholder.png";
+                                                : "/assets/imgs/placeholder.svg";
                                             return (
                                             <div key={p.id} className="flex items-center gap-3 border rounded p-2">
                                                 <img src={imgUrl} alt={p.name} className="w-12 h-12 object-contain" />

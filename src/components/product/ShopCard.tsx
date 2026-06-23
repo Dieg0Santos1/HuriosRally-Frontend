@@ -40,7 +40,7 @@ export const ShopCard: React.FC<{ product: Product }> = ({ product }) => {
           ? product.imageUrl
           : `${API_BASE}${product.imageUrl}`
       )
-    : "/assets/imgs/placeholder.png";
+    : "/assets/imgs/placeholder.svg";
 
   const handleImageError = () => {
     console.error(`Error cargando imagen para producto ${product.id}:`, imageUrl);
@@ -61,7 +61,7 @@ export const ShopCard: React.FC<{ product: Product }> = ({ product }) => {
       {/* Imagen (placeholder si no hay) */}
       <div className="aspect-[4/3] w-full mb-3 overflow-hidden rounded">
         <img
-          src={imgError ? "/assets/imgs/placeholder.png" : imageUrl}
+          src={imgError ? "/assets/imgs/placeholder.svg" : imageUrl}
           alt={product.name}
           className="object-cover h-full w-full"
           onError={handleImageError}
@@ -148,7 +148,7 @@ export const ShopCard: React.FC<{ product: Product }> = ({ product }) => {
               <div className="md:flex md:gap-6 items-start">
                 <div className="md:w-2/5 w-full flex items-center justify-center bg-gray-50 p-4">
                   <img
-                    src={imgError ? "/assets/imgs/placeholder.png" : imageUrl}
+                    src={imgError ? "/assets/imgs/placeholder.svg" : imageUrl}
                     alt={product.name}
                     className="w-full h-auto max-h-[36rem] object-contain"
                     onError={handleImageError}

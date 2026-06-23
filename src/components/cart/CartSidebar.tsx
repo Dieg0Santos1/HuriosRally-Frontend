@@ -83,7 +83,7 @@ const CartSidebar: React.FC = () => {
                             ? item.imageUrl
                             : `${API_BASE}${item.imageUrl}`
                         )
-                      : "/assets/imgs/placeholder.png";
+                      : "/assets/imgs/placeholder.svg";
                     return (
                     <div key={item.id} className="flex items-start gap-3 p-2 border-b border-gray-100 last:border-b-0">
                       {/* Imagen del producto */}

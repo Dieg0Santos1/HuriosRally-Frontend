@@ -284,7 +284,7 @@ export function Cart() {
                                                 ? item.imageUrl
                                                 : `${API_BASE}${item.imageUrl}`
                                             )
-                                          : "/assets/imgs/placeholder.png";
+                                          : "/assets/imgs/placeholder.svg";
                                         return (
                                         <div key={item.id} className="p-4 sm:p-6">
                                             <div className="flex flex-col sm:flex-row gap-4">
