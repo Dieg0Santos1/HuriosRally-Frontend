@@ -200,9 +200,9 @@ export default function BoletasFacturas() {
   return (
     <>
       <Navbar />
-      <main className="px-4 py-6 sm:px-6 max-w-6xl mx-auto">
-        <section className="bg-white/90 border border-white/20 rounded-xl p-5 shadow-sm">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-5">
+      <main className="px-4 py-5 sm:px-6 max-w-5xl mx-auto">
+        <section className="bg-white/90 border border-white/20 rounded-xl p-4 shadow-sm">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
             <div className="flex items-center gap-4">
               <button
                 onClick={() => navigate("/admin-profile")}
@@ -211,7 +211,7 @@ export default function BoletasFacturas() {
                 Regresar
               </button>
               <div>
-                <h1 className="text-3xl font-semibold">Boletas/Facturas</h1>
+                <h1 className="text-2xl font-semibold">Boletas/Facturas</h1>
                 <p className="text-sm text-gray-500">
                   Revisa ventas reales registradas en el sistema.
                 </p>
@@ -225,8 +225,8 @@ export default function BoletasFacturas() {
             </div>
           )}
 
-          <div className="border rounded-xl p-5">
-            <div className="flex items-center justify-between mb-5">
+          <div className="border rounded-xl p-4">
+            <div className="flex items-center justify-between mb-3">
               <div className="text-sm font-medium text-gray-500 tracking-wide">
                 {visibleMonth
                   .toLocaleString("es-PE", { month: "long", year: "numeric" })
@@ -235,28 +235,28 @@ export default function BoletasFacturas() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={goPrevMonth}
-                  className="w-10 h-10 border rounded-md hover:bg-gray-50"
+                  className="w-9 h-9 border rounded-md hover:bg-gray-50"
                 >
                   {"<"}
                 </button>
                 <button
                   onClick={goNextMonth}
-                  className="w-10 h-10 border rounded-md hover:bg-gray-50"
+                  className="w-9 h-9 border rounded-md hover:bg-gray-50"
                 >
                   {">"}
                 </button>
               </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-2 text-center mb-3">
+            <div className="grid grid-cols-7 gap-2 text-center mb-2">
               {["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"].map((day) => (
-                <div key={day} className="text-sm font-medium text-gray-500 py-2">
+                <div key={day} className="text-sm font-medium text-gray-500 py-1">
                   {day}
                 </div>
               ))}
             </div>
 
-            <div className="grid grid-cols-7 gap-2 auto-rows-[88px] sm:auto-rows-[100px]">
+            <div className="grid grid-cols-7 gap-1.5 auto-rows-[64px] sm:auto-rows-[74px]">
               {Array.from({ length: firstWeekday }, (_, index) => (
                 <div key={`empty-${index}`} />
               ))}
@@ -267,7 +267,7 @@ export default function BoletasFacturas() {
                 const hasPurchases = count > 0;
 
                 let cellClassName =
-                  "h-full rounded-xl border p-2 text-left transition-colors ";
+                  "h-full rounded-lg border p-2 text-left transition-colors ";
 
                 if (isSelected) {
                   cellClassName +=
@@ -291,11 +291,11 @@ export default function BoletasFacturas() {
                     className={cellClassName}
                   >
                     <div className="flex h-full flex-col justify-between">
-                      <span className="text-lg font-semibold">{day.dayNumber}</span>
+                      <span className="text-base font-semibold">{day.dayNumber}</span>
 
                       {hasPurchases && (
                         <div
-                          className={`text-xs leading-tight ${isSelected ? "text-emerald-50" : "text-emerald-700"}`}
+                          className={`text-[11px] leading-tight ${isSelected ? "text-emerald-50" : "text-emerald-700"}`}
                         >
                           <div className="font-medium">
                             {count} compra{count === 1 ? "" : "s"}
@@ -310,10 +310,10 @@ export default function BoletasFacturas() {
             </div>
           </div>
 
-          <div className="mt-6 bg-gray-50 border border-gray-200 rounded-xl p-5">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-4">
+          <div className="mt-4 bg-gray-50 border border-gray-200 rounded-xl p-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-3">
               <div>
-                <h2 className="text-2xl font-semibold">Compras del dia</h2>
+                <h2 className="text-xl font-semibold">Compras del dia</h2>
                 <p className="text-sm text-gray-500">
                   {selectedDate
                     ? formatLongDate(selectedDate)
