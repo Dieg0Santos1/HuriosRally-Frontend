@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../components/layout/Footer";
 import Navbar from "../components/layout/Navbar";
 import { useCart } from "../context/CartContext";
-import { getToken } from "../utils/token";
+import { getToken, handleUnauthorizedResponse } from "../utils/token";
 import { generateBoletaPDF, generateFacturaPDF } from "../utils/pdfGenerator";
 import { useRoleProtection } from "../hooks/useRoleProtection";
 import ButtonShowPsd from "../components/ui/ButtonShowPwd";
@@ -287,6 +287,10 @@ export function Payment() {
                 },
                 body: JSON.stringify(paymentData),
             });
+
+            if (res.status === 401 || res.status === 403) {
+                handleUnauthorizedResponse();
+            }
 
             if (!res.ok) {
                 const errorData = await res.json().catch(() => ({}));

@@ -1,5 +1,5 @@
-import { getToken } from "../utils/token";
 import { API_BASE_URL } from "../config/api";
+import { getToken, handleUnauthorizedResponse } from "../utils/token";
 
 const API_BASE = API_BASE_URL;
 
@@ -47,14 +47,16 @@ export interface PaymentSale {
 function requireToken() {
   const token = getToken();
   if (!token) {
-    throw new Error("No hay sesión activa");
+    throw new Error("No hay sesion activa");
   }
   return token;
 }
 
 function asNetworkError(error: unknown): never {
   if (error instanceof TypeError && error.message.includes("fetch")) {
-    throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
+    throw new Error(
+      "No se puede conectar con el servidor. Verifica que el backend este corriendo.",
+    );
   }
   throw error;
 }
@@ -70,6 +72,10 @@ async function fetchWithAuth<T>(path: string): Promise<T> {
         "Content-Type": "application/json",
       },
     });
+
+    if (res.status === 401 || res.status === 403) {
+      handleUnauthorizedResponse();
+    }
 
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));

@@ -1,9 +1,9 @@
 ﻿
 import { Input } from "../components/ui/Input";
 import { ButtonState } from "../components/ui/ButtonState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginUser } from "../api/auth";
-import { saveToken, saveRole } from "../utils/token";
+import { clearToken, consumeAuthMessage, saveRole, saveToken } from "../utils/token";
 import { useNavigate, Link } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import ButtonShowPsd from "../components/ui/ButtonShowPwd";
@@ -16,6 +16,14 @@ export function Login() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [verContra,setVerContra]=useState(false)
+
+  useEffect(() => {
+    const authMessage = consumeAuthMessage();
+    if (authMessage) {
+      setError(authMessage);
+    }
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -23,6 +31,7 @@ export function Login() {
     try {
       const res = await loginUser({ email: correo, password: clave});
       // res: { token, role }
+      clearToken();
       saveToken(res.token);
       saveRole(res.role);
       // redirigir a home

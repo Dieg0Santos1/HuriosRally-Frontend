@@ -1,5 +1,5 @@
-import { getToken } from "../utils/token";
 import { API_BASE_URL } from "../config/api";
+import { getToken, handleUnauthorizedResponse } from "../utils/token";
 
 const API_BASE = API_BASE_URL;
 
@@ -13,7 +13,7 @@ const EXPORT_PATHS: Record<ExportType, string> = {
 
 function getFilenameFromDisposition(
   contentDisposition: string | null,
-  fallbackName: string
+  fallbackName: string,
 ) {
   if (!contentDisposition) {
     return fallbackName;
@@ -39,6 +39,10 @@ export async function downloadExportReport(type: ExportType): Promise<string> {
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
 
+  if (response.status === 401 || response.status === 403) {
+    handleUnauthorizedResponse();
+  }
+
   if (!response.ok) {
     throw new Error("No se pudo exportar el reporte solicitado");
   }
@@ -48,7 +52,7 @@ export async function downloadExportReport(type: ExportType): Promise<string> {
   const fallbackName = `Reporte-${type}-${timestamp}.xlsx`;
   const fileName = getFilenameFromDisposition(
     response.headers.get("content-disposition"),
-    fallbackName
+    fallbackName,
   );
 
   const downloadUrl = window.URL.createObjectURL(blob);

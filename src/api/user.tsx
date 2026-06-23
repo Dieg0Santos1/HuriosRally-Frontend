@@ -1,6 +1,5 @@
-﻿import { getToken } from "../utils/token";
-
 import { API_BASE_URL } from "../config/api";
+import { getToken, handleUnauthorizedResponse } from "../utils/token";
 
 const API_BASE = API_BASE_URL;
 
@@ -17,16 +16,24 @@ export interface UserProfile {
 function requireToken() {
   const token = getToken();
   if (!token) {
-    throw new Error("No hay sesión activa");
+    throw new Error("No hay sesion activa");
   }
   return token;
 }
 
 function asNetworkError(error: unknown): never {
   if (error instanceof TypeError && error.message.includes("fetch")) {
-    throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
+    throw new Error(
+      "No se puede conectar con el servidor. Verifica que el backend este corriendo.",
+    );
   }
   throw error;
+}
+
+function handleUnauthorizedStatus(status: number) {
+  if (status === 401 || status === 403) {
+    handleUnauthorizedResponse();
+  }
 }
 
 export async function getUserProfile(): Promise<UserProfile> {
@@ -41,6 +48,8 @@ export async function getUserProfile(): Promise<UserProfile> {
       },
     });
 
+    handleUnauthorizedStatus(res.status);
+
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
       throw new Error(body.error || body.message || "Error al obtener perfil");
@@ -52,7 +61,9 @@ export async function getUserProfile(): Promise<UserProfile> {
   }
 }
 
-export async function updateUserProfile(updates: Partial<UserProfile>): Promise<void> {
+export async function updateUserProfile(
+  updates: Partial<UserProfile>,
+): Promise<void> {
   const token = requireToken();
 
   try {
@@ -65,6 +76,8 @@ export async function updateUserProfile(updates: Partial<UserProfile>): Promise<
       body: JSON.stringify(updates),
     });
 
+    handleUnauthorizedStatus(res.status);
+
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
       throw new Error(body.error || body.message || "Error al actualizar perfil");
@@ -74,7 +87,9 @@ export async function updateUserProfile(updates: Partial<UserProfile>): Promise<
   }
 }
 
-export async function uploadProfileImage(file: File): Promise<{ imageUrl: string }> {
+export async function uploadProfileImage(
+  file: File,
+): Promise<{ imageUrl: string }> {
   const token = requireToken();
 
   try {
@@ -88,6 +103,8 @@ export async function uploadProfileImage(file: File): Promise<{ imageUrl: string
       },
       body: formData,
     });
+
+    handleUnauthorizedStatus(res.status);
 
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
