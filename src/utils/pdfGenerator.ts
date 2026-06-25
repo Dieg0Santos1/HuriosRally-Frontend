@@ -356,7 +356,7 @@ export async function generateFacturaPDF(data: FacturaData) {
     const logoBase64 = await getLogoBase64();
     if (logoBase64) {
         try {
-            doc.addImage(logoBase64, 'WEBP', 15, 15, 25, 25);
+            doc.addImage(logoBase64, 'PNG', 15, 15, 25, 25);
         } catch (e) {
             console.error('Error agregando logo:', e);
         }
