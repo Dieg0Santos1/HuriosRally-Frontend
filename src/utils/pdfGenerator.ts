@@ -120,7 +120,7 @@ interface FacturaData {
 // Función auxiliar para convertir imagen a base64
 async function getLogoBase64(): Promise<string | null> {
     try {
-        const response = await fetch('/assets/imgs/logo.webp');
+        const response = await fetch('/assets/imgs/Logo_Mejorado.jpg');
         const blob = await response.blob();
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -176,7 +176,7 @@ export async function generateBoletaPDF(data: BoletaData) {
     const logoBase64 = await getLogoBase64();
     if (logoBase64) {
         try {
-            doc.addImage(logoBase64, 'WEBP', 15, 15, 25, 25);
+            doc.addImage(logoBase64, 'JPEG', 15, 15, 25, 25);
         } catch (e) {
             console.error('Error agregando logo:', e);
         }
