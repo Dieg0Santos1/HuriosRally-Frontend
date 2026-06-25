@@ -19,7 +19,6 @@ import { AdminProfile } from "../pages/AdminProfile";
 import { Profile } from "../pages/Profile";
 import { Inventory } from "../pages/Inventory";
 import BoletasFacturas from "../pages/BoletasFacturas";
-import Proveedores from "../pages/Proveedores";
 import { Category } from "../pages/Category";
 import { MyOrders } from "../pages/MyOrders";
 const AppRoutes: React.FC = () => (
@@ -44,7 +43,6 @@ const AppRoutes: React.FC = () => (
         <Route path="/admin-profile" element={<AdminProfile />} />
         <Route path="/inventario" element={<Inventory />} />
   <Route path="/boletas-facturas" element={<BoletasFacturas />} />
-  <Route path="/proveedores" element={<Proveedores />} />
 
         {/* catch-all: muestra la location en la UI si no hubo match */}
         <Route
