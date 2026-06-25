@@ -225,7 +225,7 @@ export function UserProfile() {
                 <input
                   type="tel"
                   value={phone}
-                  maxLength="9"
+                  maxLength={9}
                   onChange={(e) => setPhone(e.target.value)}
                   disabled={!editing}
                   placeholder="Ingresa tu número de teléfono"
