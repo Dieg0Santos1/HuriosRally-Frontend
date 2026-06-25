@@ -121,7 +121,7 @@ interface FacturaData {
 async function getLogoBase64(): Promise<string | null> {
     try {
         const response = await fetch('/assets/imgs/Logo_Mejorado.png');
-        const blob = await response.blob();
+        const originalBlob = await response.blob();
         const pngBlob = new Blob([originalBlob], { type: 'image/png' })
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
