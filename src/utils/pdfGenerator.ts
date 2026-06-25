@@ -127,7 +127,7 @@ async function getLogoBase64(): Promise<string | null> {
             const reader = new FileReader();
             reader.onloadend = () => resolve(reader.result as string);
             reader.onerror = reject;
-            reader.readAsDataURL(blob);
+            reader.readAsDataURL(pngBlob);
         });
     } catch (e) {
         console.error('Error cargando logo:', e);
@@ -177,7 +177,7 @@ export async function generateBoletaPDF(data: BoletaData) {
     const logoBase64 = await getLogoBase64();
     if (logoBase64) {
         try {
-            doc.addImage(logoBase64, 'PNG', 15, 15, 25, 25);
+            doc.addImage(logoBase64, 'PNG', 15, 15, 25, 25, undefined, 'FAST');
         } catch (e) {
             console.error('Error agregando logo:', e);
         }
@@ -356,7 +356,7 @@ export async function generateFacturaPDF(data: FacturaData) {
     const logoBase64 = await getLogoBase64();
     if (logoBase64) {
         try {
-            doc.addImage(logoBase64, 'PNG', 15, 15, 25, 25);
+            doc.addImage(logoBase64, 'PNG', 15, 15, 25, 25, undefined, 'FAST');
         } catch (e) {
             console.error('Error agregando logo:', e);
         }
