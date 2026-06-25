@@ -403,11 +403,6 @@ export function Inventory() {
                             className={`px-3 py-1 rounded-md text-sm ${activeTab === "add" ? "bg-[var(--Primary_3)] text-white" : "bg-transparent border border-gray-200 text-gray-700"}`}>
                             Añadir stock / Producto
                         </button>
-                        <button
-                            onClick={() => setActiveTab("supply")}
-                            className={`px-3 py-1 rounded-md text-sm ${activeTab === "supply" ? "bg-[var(--Primary_3)] text-white" : "bg-transparent border border-gray-200 text-gray-700"}`}>
-                            Provisión de compras
-                        </button>
                     </div>
 
                     {/* Mensajes de éxito/error */}
