@@ -305,7 +305,7 @@ export function Cart() {
                                                                 {item.name}
                                                             </h3>
                                                             <p className="text-sm text-gray-600">
-                                                                {item.description || "Sin descripcion"}
+                                                                {item.description || "Sin descripción"}
                                                             </p>
                                                             <p className="text-sm text-green-600 mt-1">
                                                                 En stock
