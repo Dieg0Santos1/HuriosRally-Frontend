@@ -1,4 +1,3 @@
-﻿
 import { Input } from "../components/ui/Input";
 import { ButtonState } from "../components/ui/ButtonState";
 import { useEffect, useState } from "react";
@@ -12,7 +11,7 @@ export function Login() {
 
   const [correo, setCorreo] = useState("");
   const [clave, setClave] = useState("");
-  const [clicked, setClicked] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
   const [verContra,setVerContra]=useState(false)
@@ -27,7 +26,7 @@ export function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    setClicked(true);
+    setIsSubmitting(true);
     try {
       const res = await loginUser({ email: correo, password: clave});
       // res: { token, role }
@@ -43,7 +42,7 @@ export function Login() {
         setError("Error al iniciar sesión");
       }
     } finally {
-      setClicked(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -125,8 +124,9 @@ export function Login() {
       <ButtonState 
         initialText="Iniciar sesión" 
         successText="¡Ingreso exitoso!" 
-        disabled={!isFormValid} 
-        clicked={clicked} 
+        loadingText="Verificando..."
+        disabled={!isFormValid || isSubmitting} 
+        clicked={isSubmitting} 
       />
 
   {/* Crear cuenta - color más notorio */}
@@ -163,6 +163,5 @@ export function Login() {
     </>
   );
 }
-
 
 
