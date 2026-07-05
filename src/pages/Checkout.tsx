@@ -107,9 +107,9 @@ export function Checkout() {
             newErrors.fullName = "El nombre completo es requerido";
         }
         if (!formData.phone.trim()) {
-            newErrors.phone = "El numero de celular es requerido";
+            newErrors.phone = "El número de celular es requerido";
         } else if (!/^\d{9}$/.test(formData.phone)) {
-            newErrors.phone = "El numero debe tener 9 digitos";
+            newErrors.phone = "El número debe tener 9 digitos";
         }
 
         // Validaciones segun tipo de documento
@@ -117,7 +117,7 @@ export function Checkout() {
             if (!formData.dni.trim()) {
                 newErrors.dni = "El DNI es requerido";
             } else if (!/^\d{8}$/.test(formData.dni)) {
-                newErrors.dni = "El DNI debe tener 8 digitos";
+                newErrors.dni = "El DNI debe tener 8 dígitos";
             }
         } else {
             if (!formData.companyName.trim()) {
@@ -126,7 +126,7 @@ export function Checkout() {
             if (!formData.ruc.trim()) {
                 newErrors.ruc = "El RUC es requerido";
             } else if (!/^\d{11}$/.test(formData.ruc)) {
-                newErrors.ruc = "El RUC debe tener 11 digitos";
+                newErrors.ruc = "El RUC debe tener 11 dígitos";
             }
             if (!formData.companyAddress.trim()) {
                 newErrors.companyAddress = "La dirección de la empresa es requerida";

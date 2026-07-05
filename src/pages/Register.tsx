@@ -150,7 +150,7 @@ export function Register() {
               {/* Input para correo */}
               <div className="sm:col-span-2">
                 <Input 
-                  label="Correo electronico" 
+                  label="Correo electrónico" 
                   type="email" 
                   value={correo}
                   onChange={(e) => setCorreo(e.target.value)} 
@@ -160,7 +160,7 @@ export function Register() {
                 {correo.length > 0 && (
                   <div className="mt-1 text-xs">
                     <p className={`${isEmailValid ? 'text-green-600' : 'text-red-500'}`}>
-                      Valido (gmail, yahoo, hotmail, outlook, etc.) {isEmailValid ? "OK" : "X"}
+                      Válido (gmail, yahoo, hotmail, outlook, etc.) {isEmailValid ? "OK" : "X"}
                     </p>
                     {!isEmailValid && correo.includes('@') && correo.includes('.') && (
                       <p className="text-amber-600 text-xs mt-1">
@@ -174,7 +174,7 @@ export function Register() {
               {/* Input para celular */}
               <div className="sm:col-span-2">
                 <Input 
-                  label="Numero de celular" 
+                  label="Número de celular" 
                   type="text"
                   inputMode="numeric"
                   pattern="[0-9]*"
@@ -199,10 +199,10 @@ export function Register() {
                 {celular.length > 0 && (
                   <div className="mt-1 text-xs">
                     <p className={`${isCelularValid ? 'text-green-600' : 'text-red-500'}`}>
-                      {isCelularValid ? "OK Numero valido" : 
-                        celular.length !== 9 ? `${celular.length}/9 digitos - Numero incompleto` :
+                      {isCelularValid ? "OK Número válido" : 
+                        celular.length !== 9 ? `${celular.length}/9 dígitos - Número incompleto` :
                         !celular.startsWith('9') ? 'Debe iniciar con 9 (celulares peruanos)' :
-                        'Formato invalido'
+                        'Formato inválido'
                       }
                     </p>
                     {!isCelularValid && (
@@ -241,11 +241,11 @@ export function Register() {
             {clave.length > 0 && (
               <div className="text-xs text-[var(--Primary_5)] bg-[var(--Primary_0)] p-3 rounded-lg">
                 <p className={`${clave.length >= 8 ? 'text-green-600' : 'text-red-500'}`}>
-                  - Minimo 8 caracteres {clave.length >= 8 ? "OK" : "X"}
+                  - Mínimo 8 caracteres {clave.length >= 8 ? "OK" : "X"}
                 </p>
                 {repetirClave.length > 0 && (
                   <p className={`${clave === repetirClave ? 'text-green-600' : 'text-red-500'}`}>
-                    - Las contrasenas coinciden {clave === repetirClave ? "OK" : "X"}
+                    - Las contraseñas coinciden {clave === repetirClave ? "OK" : "X"}
                   </p>
                 )}
               </div>

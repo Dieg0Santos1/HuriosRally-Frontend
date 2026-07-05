@@ -313,7 +313,7 @@ export default function BoletasFacturas() {
           <div className="mt-4 bg-gray-50 border border-gray-200 rounded-xl p-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-3">
               <div>
-                <h2 className="text-xl font-semibold">Compras del dia</h2>
+                <h2 className="text-xl font-semibold">Compras del día</h2>
                 <p className="text-sm text-gray-500">
                   {selectedDate
                     ? formatLongDate(selectedDate)
@@ -335,10 +335,10 @@ export default function BoletasFacturas() {
               <p className="text-sm text-gray-600">Cargando ventas...</p>
             ) : !selectedDate ? (
               <p className="text-sm text-gray-500">
-                Elige un dia resaltado en verde para revisar las compras de esa fecha.
+                Elige un día resaltado en verde para revisar las compras de esa fecha.
               </p>
             ) : selectedInvoices.length === 0 ? (
-              <p className="text-sm text-gray-500">No hay compras registradas para este dia.</p>
+              <p className="text-sm text-gray-500">No hay compras registradas para este día.</p>
             ) : (
               <div className="space-y-4">
                 {selectedInvoices.map((invoice) => (

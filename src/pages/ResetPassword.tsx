@@ -62,7 +62,7 @@ export const ResetPassword: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-[var(--Primary_6)] mb-2">
-                    Correo electronico
+                    Correo electrónico
                   </label>
                   <input
                     type="email"
@@ -122,7 +122,7 @@ export const ResetPassword: React.FC = () => {
                 ¡Enlace enviado!
               </h2>
               <p className="text-[var(--Primary_5)] text-sm mb-6">
-                Revisa tu correo electronico para continuar con la recuperación de tu contraseña.
+                Revisa tu correo electrónico para continuar con la recuperación de tu contraseña.
               </p>
               <a 
                 href="/login" 

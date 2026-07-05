@@ -179,7 +179,7 @@ export function Cart() {
         }
     if (!/^[0-9]{3,4}$/.test(cvc)) e.cvc = 'CVC inválido';
     // email validation
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Correo electronico inválido';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Correo electrónico inválido';
 
         setErrors(e);
         return Object.keys(e).length === 0;

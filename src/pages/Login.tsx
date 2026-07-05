@@ -1,4 +1,3 @@
-
 import { Input } from "../components/ui/Input";
 import { ButtonState } from "../components/ui/ButtonState";
 import { useEffect, useState } from "react";
@@ -89,7 +88,7 @@ export function Login() {
               <div className="space-y-4">
                 <div className="space-y-4">
                   <Input 
-                    label="Correo electronico" 
+                    label="Correo electrónico" 
                     type="email" 
                     placeholder="ejemplo@gmail.com" 
                     onChange={(e) => setCorreo(e.target.value)} 
