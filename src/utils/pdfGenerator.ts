@@ -518,7 +518,7 @@ export async function generateFacturaPDF(data: FacturaData) {
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
     
-    doc.text("Sub Total Ventas", labelsX, totalsY);
+    doc.text("Sub total en ventas", labelsX, totalsY);
     doc.text(`S/ ${data.subtotal.toFixed(2)}`, valuesX, totalsY, { align: "right" });
     
     totalsY += 6;
@@ -532,7 +532,7 @@ export async function generateFacturaPDF(data: FacturaData) {
     doc.line(totalsX, totalsY + 2, totalsX + 70, totalsY + 2);
     
     totalsY += 6;
-    doc.text("Valor venta", labelsX, totalsY);
+    doc.text("Valor total de venta", labelsX, totalsY);
     doc.text(`S/ ${baseImponible.toFixed(2)}`, valuesX, totalsY, { align: "right" });
     
     totalsY += 6;

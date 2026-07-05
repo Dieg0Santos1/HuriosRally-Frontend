@@ -138,7 +138,7 @@ const CartSidebar: React.FC = () => {
                       <span className="text-green-600 font-medium">✓ Tu pedido califica para envío gratis y priorizado</span>
                     ) : (
                       <span>
-                        Agrega S/ {(200 - totalPrice).toFixed(2)} más para <span className="text-green-600 font-medium">envío gratis</span>
+                        Agrega S/ {(200 - totalPrice).toFixed(2)} más para <span className="text-green-600 font-medium">Envío gratis</span>
                       </span>
                     )}
                   </p>

@@ -36,11 +36,11 @@ export function About() {
                             <p className="text-lg text-gray-700 leading-relaxed mb-6">
                                 En <strong>Hurios Rally</strong> nos especializamos en ofrecer repuestos y accesorios de alta calidad 
                                 para motocicletas de todas las marcas. Con años de experiencia en el sector, nos hemos consolidado 
-                                como la tienda de confianza para motociclistas que buscan calidad y garantia.
+                                como la tienda de confianza para motociclistas que buscan calidad y garantía.
                             </p>
                             <p className="text-lg text-gray-700 leading-relaxed">
                                 Nuestro compromiso es brindar productos originales y de primera calidad, acompañados de un 
-                                servicio al cliente excepcional que garantiza la satisfaccion de nuestros usuarios.
+                                servicio al cliente excepcional que garantiza la satisfacción de nuestros usuarios.
                             </p>
                         </div>
                     </div>
@@ -65,7 +65,7 @@ export function About() {
                             <p className="text-gray-700 leading-relaxed">
                                 Nos enfocamos en mantener un inventario completo de las mejores marcas del mercado, 
                                 asegurando que nuestros clientes encuentren exactamente lo que necesitan para 
-                                mantener sus motocicletas en optimas condiciones.
+                                mantener sus motocicletas en óptimas condiciones.
                             </p>
                         </section>
 
@@ -81,7 +81,7 @@ export function About() {
                             <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-800">Nuestra Experiencia</h2>
                             <p className="text-gray-700 leading-relaxed mb-4">
                                 Con más de una decada en el mercado de repuestos para motocicletas, hemos construido 
-                                una solida reputación basada en la confianza, calidad y servicio excepcional.
+                                una sólida reputación basada en la confianza, calidad y servicio excepcional.
                             </p>
                             <p className="text-gray-700 leading-relaxed">
                                 Nuestro equipo de expertos conoce a fondo cada producto que ofrecemos, 
@@ -110,7 +110,7 @@ export function About() {
                                         </svg>
                                     </div>
                                     <h3 className="text-xl font-semibold mb-2">Entrega Rapida</h3>
-                                    <p className="text-gray-600">Envios rapidos y seguros a todo el país</p>
+                                    <p className="text-gray-600">Envíos rápidos y seguros a todo el país</p>
                                 </div>
                                 <div className="text-center">
                                     <div className="w-16 h-16 mx-auto mb-4 bg-purple-100 rounded-full flex items-center justify-center">

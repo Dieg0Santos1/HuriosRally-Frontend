@@ -31,7 +31,7 @@ const Hero: React.FC = () => {
           HURIOS RALLY
         </h1>
         <p className="mt-2 max-w-xl text-sm text-white/90 drop-shadow-md md:text-base lg:text-lg">
-          Bienvenido a nuestra tienda online - repuestos y accesorios con garantia.
+          Bienvenido a nuestra tienda online - repuestos y accesorios con garantía.
         </p>
       </div>
     </section>

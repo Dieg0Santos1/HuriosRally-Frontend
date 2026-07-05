@@ -97,7 +97,7 @@ export default function Products() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Categoria</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Categoría</label>
                     <select
                       value={selectedCategory}
                       onChange={(e) => setSelectedCategory(e.target.value)}
@@ -127,7 +127,7 @@ export default function Products() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Precio maximo: S/ {priceRange[1]}
+                      Precio máximo: S/ {priceRange[1]}
                     </label>
                     <input
                       type="range"
