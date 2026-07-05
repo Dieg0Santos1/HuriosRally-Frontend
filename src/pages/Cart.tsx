@@ -305,7 +305,7 @@ export function Cart() {
                                                                 {item.name}
                                                             </h3>
                                                             <p className="text-sm text-gray-600">
-                                                                {item.description || "Sin descripcion"}
+                                                                {item.description || "Sin descripción"}
                                                             </p>
                                                             <p className="text-sm text-green-600 mt-1">
                                                                 En stock
@@ -404,7 +404,7 @@ export function Cart() {
                                                     </span>
                                                 ) : (
                                                     <span>
-                                                        Agrega <span className="font-semibold">S/ {(200 - totalPrice).toFixed(2)}</span> más para <span className="text-green-600 font-medium">envío gratis y priorizado</span>
+                                                        Agrega <span className="font-semibold">S/ {(200 - totalPrice).toFixed(2)}</span> más para <span className="text-green-600 font-medium">Envío gratis y priorizado</span>
                                                     </span>
                                                 )}
                                             </p>
@@ -499,7 +499,7 @@ export function Cart() {
                             {!paymentSuccess ? (
                                 <form className="mt-4 space-y-4" onSubmit={onSubmitPayment}>
                                     <div className="relative">
-                                        <label className="block text-sm font-medium text-gray-700">Numerode tarjeta</label>
+                                        <label className="block text-sm font-medium text-gray-700">Número de tarjeta</label>
                                         <div className="mt-1 relative">
                                             <input
                                                 ref={cardInputRef}
@@ -534,7 +534,7 @@ export function Cart() {
 
                                     <div className="grid grid-cols-3 gap-3">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700">Expiracion (MM/AA)</label>
+                                            <label className="block text-sm font-medium text-gray-700">Expiración (MM/AA)</label>
                                             <input
                                                 ref={expiryInputRef}
                                                     value={expiry}
@@ -561,7 +561,7 @@ export function Cart() {
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">Correo electronico</label>
+                                        <label className="block text-sm font-medium text-gray-700">Correo electrónico</label>
                                         <input
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
