@@ -146,7 +146,7 @@ export function MyOrders() {
                       </p>
                       <button
                         onClick={() => void openOrder(order.id)}
-                        className="mt-3 px-4 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors"
+                        className="mt-3 px-4 py-2 bg-[var(--Primary_5)] cursor-pointer text-white rounded-md hover:bg-[#1e4a6f] transition-colors"
                       >
                         Ver detalle
                       </button>
@@ -173,7 +173,7 @@ export function MyOrders() {
               </div>
               <button
                 onClick={() => setSelectedOrder(null)}
-                className="text-gray-500 hover:text-gray-700 text-xl"
+                className="text-gray-500 hover:text-gray-700 text-xl cursor-pointer"
               >
                 ×
               </button>

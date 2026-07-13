@@ -100,7 +100,7 @@ export function VerifyEmail() {
             <button
               onClick={resend}
               disabled={loading || !email}
-              className="w-full bg-gradient-to-r from-[var(--Primary_2)] to-[var(--Primary_3)] text-[var(--Primary_7)] py-3 px-4 rounded-lg font-medium hover:from-[var(--Primary_3)] hover:to-[var(--Primary_4)] hover:text-white transition-all duration-300 transform hover:scale-[1.02] shadow-md disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none border border-[var(--Primary_3)]"
+              className="w-full bg-gradient-to-r from-[var(--Primary_2)] to-[var(--Primary_3)] text-[var(--Primary_7)] py-3 px-4 rounded-lg font-medium hover:from-[var(--Primary_3)] hover:to-[var(--Primary_4)] hover:text-white transition-all duration-300 transform hover:scale-[1.02] shadow-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none border border-[var(--Primary_3)]"
             >
               {loading ? "Reenviando..." : "Reenviar código"}
             </button>
@@ -121,7 +121,7 @@ export function VerifyEmail() {
             <button
               onClick={verify}
               disabled={loading || !email || !code}
-              className="w-full bg-gradient-to-r from-[var(--Primary_4)] to-[var(--Primary_5)] text-white py-3 px-4 rounded-lg font-medium hover:from-[var(--Primary_5)] hover:to-[var(--Primary_6)] transition-all duration-300 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+              className="w-full bg-gradient-to-r from-[var(--Primary_4)] to-[var(--Primary_5)] text-white py-3 px-4 rounded-lg font-medium hover:from-[var(--Primary_5)] hover:to-[var(--Primary_6)] transition-all duration-300 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed disabled:transform-none"
             >
               {loading ? "Verificando..." : "Verificar código"}
             </button>

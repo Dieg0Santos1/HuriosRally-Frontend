@@ -56,7 +56,7 @@ export function EditInput({ value = "", onSave, placeholder = "", type = "text" 
                 type="button"
                 onClick={handleToggle}
                 aria-label={editing ? "Guardar" : "Editar"}
-                className="bg-[var(--Primary_5)] p-2 rounded-md hover:bg-[#1e4a6f] transition-colors flex items-center justify-center"
+                className="bg-[var(--Primary_5)] p-2 rounded-md hover:bg-[#1e4a6f] transition-colors flex items-center justify-center cursor-pointer"
             >
                 {editing ? (
                     // check icon

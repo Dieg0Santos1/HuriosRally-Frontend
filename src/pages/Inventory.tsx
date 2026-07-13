@@ -83,20 +83,7 @@ export function Inventory() {
     };
 
     const filtered = products;
-    
-    // calendario: mes visible y fecha seleccionada
-    const [visibleMonth, setVisibleMonth] = useState(() => {
-        const d = new Date();
-        d.setDate(1);
-        return d;
-    });
-    const [selectedDate, setSelectedDate] = useState<string | null>(null); 
     const navigate = useNavigate();
-
-    // utilidades para el calendario
-    const endOfMonth = (d: Date) => new Date(d.getFullYear(), d.getMonth() + 1, 0);
-    const daysInMonth = (d: Date) => endOfMonth(d).getDate();
-
     const productsByArrivalDate: Record<string, Product[]> = {};
     products.forEach(p => {
         if (p.expectedArrival) {
@@ -105,32 +92,6 @@ export function Inventory() {
             productsByArrivalDate[iso].push(p);
         }
     });
-
-    const arrivalsForVisibleMonth = (() => {
-        const y = visibleMonth.getFullYear();
-        const m = visibleMonth.getMonth();
-        const days: { date: string; products: Product[] }[] = [];
-        const dim = daysInMonth(visibleMonth);
-        for (let day = 1; day <= dim; day++) {
-            const iso = new Date(y, m, day).toISOString().slice(0, 10);
-            days.push({ date: iso, products: productsByArrivalDate[iso] || [] });
-        }
-        return days;
-    })();
-
-    const newestArrivals = [...products].sort((a, b) => {
-        const ta = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const tb = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return tb - ta;
-    }).slice(0, 6);
-    
-    const goPrevMonth = () => {
-        setVisibleMonth(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
-    };
-    const goNextMonth = () => {
-        setVisibleMonth(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
-    };
-
     const openAddStock = (id: number) => {
         setShowAddStockFor(id);
         setAddQuantity("");
@@ -386,7 +347,7 @@ export function Inventory() {
                 <section className="bg-white/90 border border-white/20 rounded-lg p-4 shadow-sm">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-3">
-                            <button onClick={() => navigate('/admin-profile')} className="px-2 py-1 border rounded text-sm">Regresar</button>
+                            <button onClick={() => navigate('/admin-profile')} className="px-2 py-1 border rounded text-sm cursor-pointer">Regresar</button>
                             <h1 className="text-2xl font-semibold">Inventario</h1>
                         </div>
                     </div>
@@ -395,12 +356,12 @@ export function Inventory() {
                     <div className="flex gap-2 mb-4">
                         <button
                             onClick={() => setActiveTab("search")}
-                            className={`px-3 py-1 rounded-md text-sm ${activeTab === "search" ? "bg-[var(--Primary_3)] text-white" : "bg-transparent border border-[var(--Primary_3)] text-[var(--Primary_3)]"}`}>
+                            className={`px-3 py-1 rounded-md text-sm cursor-pointer ${activeTab === "search" ? "bg-[var(--Primary_3)] text-white" : "bg-transparent border border-[var(--Primary_3)] text-[var(--Primary_3)] "}`}>
                             Búsqueda de artículos
                         </button>
                         <button
                             onClick={() => setActiveTab("add")}
-                            className={`px-3 py-1 rounded-md text-sm ${activeTab === "add" ? "bg-[var(--Primary_3)] text-white" : "bg-transparent border border-gray-200 text-gray-700"}`}>
+                            className={`px-3 py-1 rounded-md text-sm cursor-pointer ${activeTab === "add" ? "bg-[var(--Primary_3)] text-white" : "bg-transparent border border-gray-200 text-gray-700"}`}>
                             Añadir stock / Producto
                         </button>
                     </div>
@@ -482,7 +443,7 @@ export function Inventory() {
                                     <button 
                                         type="submit" 
                                         disabled={loading}
-                                        className="px-4 py-2 bg-[var(--Primary_5)] text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="px-4 py-2 bg-[var(--Primary_5)] text-white rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         {loading ? "Creando..." : "Crear producto"}
                                     </button>
@@ -490,7 +451,7 @@ export function Inventory() {
                                         type="button" 
                                         onClick={handleClearForm}
                                         disabled={loading}
-                                        className="px-4 py-2 border rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="px-4 py-2 border rounded-md disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                                     >
                                         Limpiar
                                     </button>
@@ -519,13 +480,13 @@ export function Inventory() {
                                             <div className="mt-2 flex gap-2">
                                                 <button 
                                                     onClick={() => openAddStock(p.id)} 
-                                                    className="flex-1 px-3 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors text-sm"
+                                                    className="flex-1 px-3 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] cursor-pointer transition-colors text-sm"
                                                 >
                                                     Stock
                                                 </button>
                                                 <button 
                                                     onClick={() => openEditModal(p.id)} 
-                                                    className="px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                                                    className="px-3 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors cursor-pointer"
                                                     title="Editar producto"
                                                 >
                                                     <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -535,7 +496,7 @@ export function Inventory() {
                                                 </button>
                                                 <button 
                                                     onClick={() => setShowDeleteConfirm(p.id)} 
-                                                    className="px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                                                    className="px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors cursor-pointer"
                                                     title="Eliminar producto"
                                                 >
                                                     <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -551,99 +512,6 @@ export function Inventory() {
                                 </div>
                             )}
                         </>
-                    )}
-
-                    {/* calendario y nuevas llegadas */}
-                    {activeTab === "supply" && (
-                        <div className="mt-6">
-                            <div className="flex items-center justify-between mb-3">
-                                <h2 className="text-xl font-semibold">Calendario de provisiones</h2>
-                                <div className="flex items-center gap-2">
-                                    <button onClick={goPrevMonth} className="px-2 py-1 border rounded">◀</button>
-                                    <div className="px-3 py-1 bg-gray-50 rounded">{visibleMonth.toLocaleString(undefined, { month: 'long', year: 'numeric' })}</div>
-                                    <button onClick={goNextMonth} className="px-2 py-1 border rounded">▶</button>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-7 gap-1 text-center text-sm">
-                                {['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'].map(w => (
-                                    <div key={w} className="font-medium text-gray-600 py-1">{w}</div>
-                                ))}
-                                {/** build leading empty cells to align first day */}
-                                {(() => {
-                                    const firstWeekday = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), 1).getDay();
-                                    const cells: React.ReactNode[] = [];
-                                    for (let i = 0; i < firstWeekday; i++) cells.push(<div key={`e-${i}`} />);
-                                    arrivalsForVisibleMonth.forEach(d => {
-                                        const dayNum = Number(d.date.slice(-2));
-                                        const has = d.products.length > 0;
-                                        cells.push(
-                                            <div key={d.date} className={`p-2 border rounded ${selectedDate === d.date ? 'bg-[var(--Primary_3)] text-white' : ''}`} onClick={() => setSelectedDate(d.date)}>
-                                                <div className="text-sm">{dayNum}</div>
-                                                {has && <div className="text-xs mt-1 bg-[var(--Primary_5)] text-white rounded-full w-6 h-6 mx-auto flex items-center justify-center">{d.products.length}</div>}
-                                            </div>
-                                        );
-                                    });
-                                    return cells;
-                                })()}
-                            </div>
-
-                            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <h3 className="font-medium mb-2">Productos previstos {selectedDate ? `para ${selectedDate}` : '(selecciona una fecha)'}</h3>
-                                    <div className="space-y-3">
-                                        {(selectedDate && productsByArrivalDate[selectedDate] ? productsByArrivalDate[selectedDate] : []).map(p => {
-                                            const imgUrl = p.imageUrl 
-                                                ? (
-                                                    p.imageUrl.startsWith('http') ||
-                                                    p.imageUrl.startsWith('/assets') ||
-                                                    p.imageUrl.startsWith('blob:')
-                                                        ? p.imageUrl
-                                                        : `${API_BASE}${p.imageUrl}`
-                                                  )
-                                                : "/assets/imgs/placeholder.svg";
-                                            return (
-                                            <div key={p.id} className="flex items-center gap-3 border rounded p-2">
-                                                <img src={imgUrl} alt={p.name} className="w-12 h-12 object-contain" />
-                                                <div>
-                                                    <div className="font-medium">{p.name}</div>
-                                                    <div className="text-sm text-gray-600">S/ {Number(p.price).toFixed(2)}</div>
-                                                </div>
-                                            </div>
-                                        );
-                                        })}
-                                        {!selectedDate && <div className="text-sm text-gray-500">Selecciona una fecha del calendario para ver los productos.</div>}
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <h3 className="font-medium mb-2">Nuevas llegadas</h3>
-                                    <div className="space-y-2">
-                                        {newestArrivals.map(p => {
-                                            const imgUrl = p.imageUrl 
-                                                ? (
-                                                    p.imageUrl.startsWith('http') ||
-                                                    p.imageUrl.startsWith('/assets') ||
-                                                    p.imageUrl.startsWith('blob:')
-                                                        ? p.imageUrl
-                                                        : `${API_BASE}${p.imageUrl}`
-                                                  )
-                                                : "/assets/imgs/placeholder.svg";
-                                            return (
-                                            <div key={p.id} className="flex items-center gap-3 border rounded p-2">
-                                                <img src={imgUrl} alt={p.name} className="w-12 h-12 object-contain" />
-                                                <div className="flex-1">
-                                                    <div className="font-medium">{p.name}</div>
-                                                    <div className="text-xs text-gray-500">Creado: {p.createdAt ? new Date(p.createdAt).toLocaleDateString() : '-'}</div>
-                                                </div>
-                                                <div className="text-sm font-semibold">S/ {Number(p.price).toFixed(2)}</div>
-                                            </div>
-                                        );
-                                        })}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     )}
 
                     {/* modal para editar producto */}
@@ -718,7 +586,7 @@ export function Inventory() {
                                 </div>
                                 <div className="flex gap-2 justify-end mt-6">
                                     <button 
-                                        className="px-4 py-2 border rounded-md hover:bg-gray-100 transition-colors" 
+                                        className="px-4 py-2 border rounded-md hover:bg-gray-100 transition-colors cursor-pointer" 
                                         onClick={() => { 
                                             setShowEditModal(null); 
                                             setEditName("");
@@ -734,7 +602,7 @@ export function Inventory() {
                                         Cancelar
                                     </button>
                                     <button 
-                                        className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
+                                        className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed" 
                                         onClick={handleUpdateProduct}
                                         disabled={editLoading}
                                     >
@@ -758,14 +626,14 @@ export function Inventory() {
                                 </p>
                                 <div className="flex gap-2 justify-end">
                                     <button 
-                                        className="px-4 py-2 border rounded-md hover:bg-gray-100 transition-colors" 
+                                        className="px-4 py-2 border rounded-md hover:bg-gray-100 transition-colors cursor-pointer" 
                                         onClick={() => { setShowDeleteConfirm(null); setError(null); }}
                                         disabled={deleteLoading}
                                     >
                                         Cancelar
                                     </button>
                                     <button 
-                                        className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
+                                        className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" 
                                         onClick={() => handleDeleteProduct(showDeleteConfirm)}
                                         disabled={deleteLoading}
                                     >
@@ -796,14 +664,14 @@ export function Inventory() {
                                 />
                                 <div className="flex gap-2 justify-end">
                                     <button 
-                                        className="px-4 py-2 border rounded-md" 
+                                        className="px-4 py-2 border rounded-md cursor-pointer" 
                                         onClick={() => { setShowAddStockFor(null); setAddQuantity(""); setError(null); }}
                                         disabled={stockLoading}
                                     >
                                         Cancelar
                                     </button>
                                     <button 
-                                        className="px-4 py-2 bg-[var(--Primary_5)] text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed" 
+                                        className="px-4 py-2 bg-[var(--Primary_5)] text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer" 
                                         onClick={confirmAddStock}
                                         disabled={stockLoading}
                                     >

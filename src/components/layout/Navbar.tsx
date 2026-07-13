@@ -72,7 +72,7 @@ const Navbar: React.FC = () => {
               onClick={() => setCatsOpen(v => !v)}
               onMouseEnter={() => setCatsOpen(true)}
               onMouseLeave={() => setCatsOpen(false)}
-              className="flex items-center gap-1"
+              className="flex items-center gap-1 cursor-pointer"
               aria-expanded={catsOpen}
             >
               Categorías
@@ -131,7 +131,7 @@ const Navbar: React.FC = () => {
             <button
               onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               aria-label={isAuthenticated ? "Menú de usuario" : "Iniciar sesión"}
-              className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white text-[#27557a] hover:scale-105 transition flex-shrink-0"
+              className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white text-[#27557a] hover:scale-105 transition flex-shrink-0 cursor-pointer"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                 <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5z" />
@@ -184,7 +184,7 @@ const Navbar: React.FC = () => {
                     
                     <button
                       onClick={handleLogout}
-                      className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition-colors w-full text-left"
+                      className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition-colors w-full text-left cursor-pointer"
                     >
                       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
@@ -199,7 +199,7 @@ const Navbar: React.FC = () => {
 
           {/* hamburger: visible en mobile/tablet */}
           <button
-            className="lg:hidden p-1.5 sm:p-2 rounded text-white/90 hover:bg-white/10 flex-shrink-0"
+            className="lg:hidden p-1.5 sm:p-2 rounded text-white/90 hover:bg-white/10 flex-shrink-0 "
             onClick={() => setMenuOpen(v => !v)}
             aria-label="Abrir menu"
           >
