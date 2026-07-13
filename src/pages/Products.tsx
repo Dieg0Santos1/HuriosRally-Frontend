@@ -147,7 +147,7 @@ export default function Products() {
                   </p>
                   <button
                     onClick={handleResetFilters}
-                    className="text-sm text-[var(--Primary_5)] hover:underline"
+                    className="text-sm text-[var(--Primary_5)] hover:underline cursor-pointer"
                   >
                     Limpiar filtros
                   </button>

@@ -64,7 +64,7 @@ const CartSidebar: React.FC = () => {
               <p className="text-gray-500 mb-4">Añade algunos productos para empezar</p>
               <button
                 onClick={toggleCart}
-                className="px-6 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors"
+                className="px-6 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors cursor-pointer"
               >
                 Continuar comprando
               </button>

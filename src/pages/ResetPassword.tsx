@@ -84,7 +84,7 @@ export const ResetPassword: React.FC = () => {
                 <button
                   type="submit"
                   disabled={!isEmailValid || isLoading}
-                  className="w-full bg-gradient-to-r from-[var(--Primary_4)] to-[var(--Primary_5)] text-white py-3 px-4 rounded-lg font-medium hover:from-[var(--Primary_5)] hover:to-[var(--Primary_6)] transition-all duration-300 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="w-full bg-gradient-to-r from-[var(--Primary_4)] to-[var(--Primary_5)] text-white py-3 px-4 rounded-lg font-medium hover:from-[var(--Primary_5)] hover:to-[var(--Primary_6)] transition-all duration-300 transform hover:scale-[1.02] shadow-lg disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed disabled:transform-none"
                 >
                   {isLoading ? (
                     <div className="flex items-center justify-center">

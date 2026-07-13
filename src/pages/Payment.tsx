@@ -381,7 +381,7 @@ export function Payment() {
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">Metodo de Pago</h1>
                         <button
                             onClick={() => navigate("/checkout")}
-                            className="text-[var(--Primary_5)] hover:underline text-sm"
+                            className="text-[var(--Primary_5)] hover:underline text-sm cursor-pointer"
                         >
                             ← Volver
                         </button>
@@ -704,7 +704,7 @@ export function Payment() {
                                     <button
                                         onClick={handleSubmitPayment}
                                         disabled={isProcessing}
-                                        className="w-full bg-[var(--Primary_5)] text-white py-3 px-4 rounded-md font-medium hover:bg-[#1e4a6f] transition-colors mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                        className="w-full bg-[var(--Primary_5)] text-white py-3 px-4 rounded-md font-medium hover:bg-[#1e4a6f] transition-colors mt-4 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                     >
                                         {isProcessing ? (
                                             <>
@@ -807,7 +807,7 @@ export function Payment() {
                                         setShowThankYouModal(false);
                                         navigate("/", { state: { orderSuccess: true, orderId } });
                                     }}
-                                    className="w-full bg-gradient-to-r from-[var(--Primary_5)] to-[#1e4a6f] text-white py-4 px-6 rounded-xl font-semibold text-lg hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+                                    className="w-full bg-gradient-to-r from-[var(--Primary_5)] to-[#1e4a6f] text-white py-4 px-6 rounded-xl cursor-pointer font-semibold text-lg hover:shadow-lg transform hover:scale-105 transition-all duration-200"
                                 >
                                     Aceptar
                                 </button>

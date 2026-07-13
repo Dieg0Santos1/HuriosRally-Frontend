@@ -132,7 +132,7 @@ export function Login() {
   {/* Crear cuenta - color más notorio */}
   <a 
     href="/register" 
-    className="block w-full text-center bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition-all duration-300 font-semibold shadow-md"
+    className="block w-full text-center bg-orange-500 text-white py-3 rounded-lg cursor-pointer hover:bg-orange-600 transition-all duration-300 font-semibold shadow-md"
   >
     Crear cuenta nueva
   </a>
