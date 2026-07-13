@@ -1,6 +1,8 @@
-import { getToken } from "../utils/token";
+import { getToken, handleUnauthorizedResponse } from "../utils/token";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+import { API_BASE_URL } from "../config/api";
+
+const API_BASE = API_BASE_URL;
 
 export interface Product {
   id: number;
@@ -18,6 +20,12 @@ function asNetworkError(error: unknown): never {
     throw new Error("No se puede conectar con el servidor. Verifica que el backend esté corriendo.");
   }
   throw error;
+}
+
+function handleUnauthorizedStatus(status: number) {
+  if (status === 401 || status === 403) {
+    handleUnauthorizedResponse();
+  }
 }
 
 export async function getAllProducts(category?: string): Promise<Product[]> {
@@ -83,6 +91,8 @@ export async function addStockToProduct(
       body: JSON.stringify({ quantity }),
     });
 
+    handleUnauthorizedStatus(res.status);
+
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
       throw new Error(body.error || body.message || "Error al agregar stock");
@@ -130,6 +140,8 @@ export async function uploadImage(file: File): Promise<{ imageUrl: string; filen
       body: formData,
     });
 
+    handleUnauthorizedStatus(res.status);
+
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
       throw new Error(body.error || body.message || "Error al subir imagen");
@@ -160,6 +172,8 @@ export async function updateProduct(
       body: JSON.stringify(productData),
     });
 
+    handleUnauthorizedStatus(res.status);
+
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
       throw new Error(body.error || body.message || "Error al actualizar producto");
@@ -185,6 +199,8 @@ export async function deleteProduct(productId: number): Promise<{ message: strin
         "Content-Type": "application/json",
       },
     });
+
+    handleUnauthorizedStatus(res.status);
 
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
@@ -218,6 +234,8 @@ export async function createProduct(productData: {
       },
       body: JSON.stringify(productData),
     });
+
+    handleUnauthorizedStatus(res.status);
 
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));

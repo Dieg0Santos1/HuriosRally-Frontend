@@ -6,8 +6,7 @@ import { getUserProfile, updateUserProfile, type UserProfile as UserProfileType 
 import { getToken } from "../utils/token";
 import { useAdminSessionTimeout } from "../hooks/useAdminSessionTimeout";
 import { ProfileAvatar } from "../components/user/ProfileAvatar";
-import { getOrders, getProducts, getUsers } from "../api/localStorageDb";
-import * as XLSX from "xlsx";
+import { downloadExportReport, type ExportType } from "../api/exports";
 
 export function AdminProfile() {
     const navigate = useNavigate();
@@ -18,6 +17,7 @@ export function AdminProfile() {
     const [editing, setEditing] = useState(false);
     const [saving, setSaving] = useState(false);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [exportingType, setExportingType] = useState<ExportType | null>(null);
 
     // Formulario - solo nombre y email
     const [fullName, setFullName] = useState("");
@@ -88,50 +88,12 @@ export function AdminProfile() {
         setError(null);
     };
 
-    const handleExport = async (type: 'clients' | 'sales' | 'products') => {
+    const handleExport = async (type: ExportType) => {
         try {
-            setLoading(true);
-
-            const timestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, -5);
-            const filenameBase =
-                type === "clients" ? "Clientes" : type === "sales" ? "Ventas" : "Productos";
-
-            let rows: Record<string, string | number>[] = [];
-            if (type === "clients") {
-                const users = getUsers().filter((u) => u.role === "CLIENTE");
-                rows = users.map((u) => ({
-                    Email: u.email,
-                    Nombre: u.fullName || "",
-                    Telefono: u.phone || "",
-                    FechaRegistro: u.createdAt || "",
-                }));
-            } else if (type === "products") {
-                const products = getProducts();
-                rows = products.map((p) => ({
-                    ID: p.id,
-                    Nombre: p.name,
-                    Categoria: p.category || "",
-                    Precio: p.price,
-                    Stock: p.stock ?? 0,
-                    FechaCreacion: p.createdAt || "",
-                }));
-            } else {
-                const orders = getOrders();
-                rows = orders.map((o) => ({
-                    Orden: o.orderId,
-                    Fecha: o.createdAt,
-                    Pago: o.paymentMethod,
-                    Total: o.finalTotal,
-                    Cliente: o.customerEmail || "",
-                }));
-            }
-
-            const worksheet = XLSX.utils.json_to_sheet(rows);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, filenameBase);
-            XLSX.writeFile(workbook, `${filenameBase}_${timestamp}.xlsx`);
-
-            setSuccessMessage("Archivo Excel exportado correctamente");
+            setExportingType(type);
+            setError(null);
+            const fileName = await downloadExportReport(type);
+            setSuccessMessage(`Reporte descargado correctamente: ${fileName}`);
             setTimeout(() => setSuccessMessage(null), 3000);
         } catch (err: unknown) {
             if (err instanceof Error) {
@@ -140,7 +102,7 @@ export function AdminProfile() {
                 setError("Error al exportar");
             }
         } finally {
-            setLoading(false);
+            setExportingType(null);
         }
     };
 
@@ -193,7 +155,7 @@ export function AdminProfile() {
                             {!editing && (
                                 <button
                                     onClick={() => setEditing(true)}
-                                    className="px-4 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors flex items-center gap-2"
+                                    className="px-4 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors flex items-center gap-2 cursor-pointer"
                                 >
                                     <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -208,7 +170,6 @@ export function AdminProfile() {
                     <section className="flex gap-4 mb-6 flex-wrap justify-between">
                         <ButtonAdmin label="INVENTARIO" route="/inventario" />
                         <ButtonAdmin label="BOLETAS/FACTURAS" route="/boletas-facturas" />
-                        <ButtonAdmin label="PROVEEDORES" route="/proveedores" />
                     </section>
 
                     {/* Botones de exportación */}
@@ -217,39 +178,39 @@ export function AdminProfile() {
                         <div className="flex gap-4 flex-wrap">
                             <button
                                 onClick={() => handleExport('clients')}
-                                disabled={loading}
-                                className="flex-1 min-w-[200px] px-4 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled={exportingType !== null}
+                                className="flex-1 min-w-[200px] px-4 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed "
                             >
                                 <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                                     <polyline points="7 10 12 15 17 10" />
                                     <line x1="12" y1="15" x2="12" y2="3" />
                                 </svg>
-                                Exportar Clientes
+                                {exportingType === "clients" ? "Exportando..." : "Exportar Clientes"}
                             </button>
                             <button
                                 onClick={() => handleExport('sales')}
-                                disabled={loading}
-                                className="flex-1 min-w-[200px] px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled={exportingType !== null}
+                                className="flex-1 min-w-[200px] px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                             >
                                 <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                                     <polyline points="7 10 12 15 17 10" />
                                     <line x1="12" y1="15" x2="12" y2="3" />
                                 </svg>
-                                Exportar Ventas
+                                {exportingType === "sales" ? "Exportando..." : "Exportar Ventas"}
                             </button>
                             <button
                                 onClick={() => handleExport('products')}
-                                disabled={loading}
-                                className="flex-1 min-w-[200px] px-4 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled={exportingType !== null}
+                                className="flex-1 min-w-[200px] px-4 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                             >
                                 <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                                     <polyline points="7 10 12 15 17 10" />
                                     <line x1="12" y1="15" x2="12" y2="3" />
                                 </svg>
-                                Exportar Productos
+                                {exportingType === "products" ? "Exportando..." : "Exportar Productos"}
                             </button>
                         </div>
                     </section>
@@ -279,7 +240,7 @@ export function AdminProfile() {
                             {/* Email (solo lectura) */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Correo electronico
+                                    Correo electrónico
                                 </label>
                                 <input
                                     type="email"

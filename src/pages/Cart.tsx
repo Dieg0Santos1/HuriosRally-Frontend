@@ -6,10 +6,11 @@ import { useCart } from "../context/CartContext";
 import { createPortal } from "react-dom";
 import { getToken } from "../utils/token";
 import { useRoleProtection } from "../hooks/useRoleProtection";
+import { API_BASE_URL } from "../config/api";
 
 export function Cart() {
     useRoleProtection('cart'); // Bloquear acceso a admins
-    const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+    const API_BASE = API_BASE_URL;
     const navigate = useNavigate();
     const { 
         items, 
@@ -156,8 +157,8 @@ export function Cart() {
     const validatePayment = () => {
         const e: Record<string, string> = {};
         const numSan = sanitizeNumber(cardNumber);
-        if (!numSan) e.cardNumber = 'Numerode tarjeta requerido';
-        else if (!luhnCheck(numSan)) e.cardNumber = 'Numero de tarjeta invalido';
+        if (!numSan) e.cardNumber = 'Número de tarjeta requerido';
+        else if (!luhnCheck(numSan)) e.cardNumber = 'Número de tarjeta inválido';
         if (!cardName.trim()) e.cardName = 'Nombre del titular requerido';
         // expiry MM/YY or MM/YYYY
         const expMatch = expiry.match(/^(0[1-9]|1[0-2])\/(?:(\d{2})|(\d{4}))$/);
@@ -176,9 +177,9 @@ export function Cart() {
             const expDate = new Date(year, month - 1 + 1, 0, 23, 59, 59); // end of month
             if (expDate < new Date()) e.expiry = 'Tarjeta expirada';
         }
-    if (!/^[0-9]{3,4}$/.test(cvc)) e.cvc = 'CVC invalido';
+    if (!/^[0-9]{3,4}$/.test(cvc)) e.cvc = 'CVC inválido';
     // email validation
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Correo electronico invalido';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Correo electrónico inválido';
 
         setErrors(e);
         return Object.keys(e).length === 0;
@@ -283,7 +284,7 @@ export function Cart() {
                                                 ? item.imageUrl
                                                 : `${API_BASE}${item.imageUrl}`
                                             )
-                                          : "/assets/imgs/placeholder.png";
+                                          : "/assets/imgs/placeholder.svg";
                                         return (
                                         <div key={item.id} className="p-4 sm:p-6">
                                             <div className="flex flex-col sm:flex-row gap-4">
@@ -304,7 +305,7 @@ export function Cart() {
                                                                 {item.name}
                                                             </h3>
                                                             <p className="text-sm text-gray-600">
-                                                                {item.description || "Sin descripcion"}
+                                                                {item.description || "Sin descripción"}
                                                             </p>
                                                             <p className="text-sm text-green-600 mt-1">
                                                                 En stock
@@ -339,7 +340,7 @@ export function Cart() {
                                                                 className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent"
                                                                 disabled={item.stock !== undefined && item.quantity >= item.stock}
                                                                 aria-label="Aumentar cantidad"
-                                                                title={item.stock !== undefined && item.quantity >= item.stock ? `Stock maximo: ${item.stock}` : ""}
+                                                                title={item.stock !== undefined && item.quantity >= item.stock ? `Stock máximo: ${item.stock}` : ""}
                                                             >
                                                                 <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                                                                     <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -399,11 +400,11 @@ export function Cart() {
                                                             <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"></path>
                                                             <path d="M3 12h6m6 0h6"></path>
                                                         </svg>
-                                                        Tu pedido califica para envio gratis y priorizado
+                                                        Tu pedido califica para envío gratis y priorizado
                                                     </span>
                                                 ) : (
                                                     <span>
-                                                        Agrega <span className="font-semibold">S/ {(200 - totalPrice).toFixed(2)}</span> mas para <span className="text-green-600 font-medium">envio gratis y priorizado</span>
+                                                        Agrega <span className="font-semibold">S/ {(200 - totalPrice).toFixed(2)}</span> más para <span className="text-green-600 font-medium">Envío gratis y priorizado</span>
                                                     </span>
                                                 )}
                                             </p>
@@ -429,14 +430,14 @@ export function Cart() {
                                         </div>
                                         <div className="flex-1">
                                             <h3 className="font-medium text-gray-900 mb-1">
-                                                Envio Gratis y Priorizado
+                                                Envío Gratis y Priorizado
                                             </h3>
                                             <p className="text-sm text-gray-600 mb-2">
-                                                Por compras mayores de <span className="font-semibold text-green-700">S/ 200</span>, obten envio completamente gratis y con prioridad en la entrega.
+                                                Por compras mayores de <span className="font-semibold text-green-700">S/ 200</span>, obten envío completamente gratis y con prioridad en la entrega.
                                             </p>
                                             <div className="text-xs text-gray-500">
                                                 {totalPrice >= 200 ? (
-                                                    <span className="text-green-600 font-medium">OK Felicitaciones! Tu pedido califica para envio gratis y priorizado</span>
+                                                    <span className="text-green-600 font-medium">OK !Felicitaciones! Tu pedido califica para envío gratis y priorizado</span>
                                                 ) : (
                                                     <span>Te faltan <span className="font-semibold text-green-700">S/ {(200 - totalPrice).toFixed(2)}</span> para calificar</span>
                                                 )}
@@ -498,7 +499,7 @@ export function Cart() {
                             {!paymentSuccess ? (
                                 <form className="mt-4 space-y-4" onSubmit={onSubmitPayment}>
                                     <div className="relative">
-                                        <label className="block text-sm font-medium text-gray-700">Numerode tarjeta</label>
+                                        <label className="block text-sm font-medium text-gray-700">Número de tarjeta</label>
                                         <div className="mt-1 relative">
                                             <input
                                                 ref={cardInputRef}
@@ -533,7 +534,7 @@ export function Cart() {
 
                                     <div className="grid grid-cols-3 gap-3">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700">Expiracion (MM/AA)</label>
+                                            <label className="block text-sm font-medium text-gray-700">Expiración (MM/AA)</label>
                                             <input
                                                 ref={expiryInputRef}
                                                     value={expiry}
@@ -560,7 +561,7 @@ export function Cart() {
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700">Correo electronico</label>
+                                        <label className="block text-sm font-medium text-gray-700">Correo electrónico</label>
                                         <input
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}

@@ -7,9 +7,15 @@ import Footer from "../components/layout/Footer";
 
 const CATEGORIES: { [key: string]: string } = {
   "1": "Motor",
-  "2": "Neumaticos",
-  "3": "Carroceria",
+  "2": "Neumáticos",
+  "3": "Carrocería",
   "4": "Filtros",
+  "5":"Suspensión",
+  "6":"Frenos",
+  "7":"Eléctrico",
+  "8":"Accesorios",
+  "9":"Transmisión",
+  "10":"Lubricantes"
 };
 
 export function Category() {
@@ -88,7 +94,7 @@ export function Category() {
             </div>
           ) : products.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-gray-600 text-lg">No se encontraron productos en esta categoria</p>
+              <p className="text-gray-600 text-lg">No se encontraron productos en esta categoría</p>
               <button
                 onClick={() => navigate("/products")}
                 className="mt-4 px-6 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors"

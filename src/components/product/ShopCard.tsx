@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import { useCart } from "../../context/CartContext";
 import { getRole } from "../../utils/token";
+import { API_BASE_URL } from "../../config/api";
 
 /**
  * Tipo/Interfaz pública del producto.
@@ -24,7 +25,7 @@ export type Product = {
  *   para que puedas importarlo de la forma que prefieras.
  */
 export const ShopCard: React.FC<{ product: Product }> = ({ product }) => {
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+  const API_BASE = API_BASE_URL;
   const { addToCart, isOpen, toggleCart } = useCart();
   const isAdmin = getRole() === 'ADMINISTRADOR';
 
@@ -39,7 +40,7 @@ export const ShopCard: React.FC<{ product: Product }> = ({ product }) => {
           ? product.imageUrl
           : `${API_BASE}${product.imageUrl}`
       )
-    : "/assets/imgs/placeholder.png";
+    : "/assets/imgs/placeholder.svg";
 
   const handleImageError = () => {
     console.error(`Error cargando imagen para producto ${product.id}:`, imageUrl);
@@ -60,7 +61,7 @@ export const ShopCard: React.FC<{ product: Product }> = ({ product }) => {
       {/* Imagen (placeholder si no hay) */}
       <div className="aspect-[4/3] w-full mb-3 overflow-hidden rounded">
         <img
-          src={imgError ? "/assets/imgs/placeholder.png" : imageUrl}
+          src={imgError ? "/assets/imgs/placeholder.svg" : imageUrl}
           alt={product.name}
           className="object-cover h-full w-full"
           onError={handleImageError}
@@ -147,7 +148,7 @@ export const ShopCard: React.FC<{ product: Product }> = ({ product }) => {
               <div className="md:flex md:gap-6 items-start">
                 <div className="md:w-2/5 w-full flex items-center justify-center bg-gray-50 p-4">
                   <img
-                    src={imgError ? "/assets/imgs/placeholder.png" : imageUrl}
+                    src={imgError ? "/assets/imgs/placeholder.svg" : imageUrl}
                     alt={product.name}
                     className="w-full h-auto max-h-[36rem] object-contain"
                     onError={handleImageError}

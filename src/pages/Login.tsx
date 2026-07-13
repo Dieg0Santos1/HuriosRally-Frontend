@@ -1,28 +1,36 @@
-﻿
 import { Input } from "../components/ui/Input";
 import { ButtonState } from "../components/ui/ButtonState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginUser } from "../api/auth";
-import { saveToken, saveRole } from "../utils/token";
+import { clearToken, consumeAuthMessage, saveRole, saveToken } from "../utils/token";
 import { useNavigate, Link } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
+import ButtonShowPsd from "../components/ui/ButtonShowPwd";
 
 export function Login() {
-  const [selectedRole, setSelectedRole] = useState<"CLIENTE" | "ADMINISTRADOR" | null>(null);
+
   const [correo, setCorreo] = useState("");
   const [clave, setClave] = useState("");
-  const [clicked, setClicked] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [verContra,setVerContra]=useState(false)
+
+  useEffect(() => {
+    const authMessage = consumeAuthMessage();
+    if (authMessage) {
+      setError(authMessage);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    if (!isFormValid || !selectedRole) return;
-    setClicked(true);
+    setIsSubmitting(true);
     try {
-      const res = await loginUser({ email: correo, password: clave, role: selectedRole });
+      const res = await loginUser({ email: correo, password: clave});
       // res: { token, role }
+      clearToken();
       saveToken(res.token);
       saveRole(res.role);
       // redirigir a home
@@ -34,7 +42,7 @@ export function Login() {
         setError("Error al iniciar sesión");
       }
     } finally {
-      setClicked(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -76,87 +84,31 @@ export function Login() {
           {/* Formulario */}
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Selección de rol */}
-            {!selectedRole ? (
+            
               <div className="space-y-4">
-                <h2 className="text-center text-lg font-semibold text-[var(--Primary_6)] mb-4">
-                  Selecciona tu tipo de perfil
-                </h2>
-                <div className="grid grid-cols-2 gap-4">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedRole("CLIENTE")}
-                    className="p-6 border-2 border-[var(--Primary_4)] rounded-lg hover:bg-[var(--Primary_1)] transition-all duration-300 group"
-                  >
-                    <div className="flex flex-col items-center gap-3">
-                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--Primary_5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:scale-110 transition-transform">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                      </svg>
-                      <span className="font-semibold text-[var(--Primary_6)]">Cliente</span>
-                    </div>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedRole("ADMINISTRADOR")}
-                    className="p-6 border-2 border-[var(--Primary_4)] rounded-lg hover:bg-[var(--Primary_1)] transition-all duration-300 group"
-                  >
-                    <div className="flex flex-col items-center gap-3">
-                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--Primary_5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:scale-110 transition-transform">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                      </svg>
-                      <span className="font-semibold text-[var(--Primary_6)]">Administrador</span>
-                    </div>
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {/* Mostrar rol seleccionado */}
-                <div className="flex items-center justify-between bg-[var(--Primary_1)] p-3 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--Primary_5)" strokeWidth="2">
-                      {selectedRole === "CLIENTE" ? (
-                        <>
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                          <circle cx="12" cy="7" r="4"></circle>
-                        </>
-                      ) : (
-                        <>
-                          <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                          <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                        </>
-                      )}
-                    </svg>
-                    <span className="font-medium text-[var(--Primary_6)]">
-                      Perfil: {selectedRole === "CLIENTE" ? "Cliente" : "Administrador"}
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedRole(null);
-                      setCorreo("");
-                      setClave("");
-                      setError(null);
-                    }}
-                    className="text-sm text-[var(--Primary_5)] hover:text-[var(--Primary_6)] font-medium"
-                  >
-                    Cambiar
-                  </button>
-                </div>
                 <div className="space-y-4">
                   <Input 
-                    label="Correo electronico" 
+                    label="Correo electrónico" 
                     type="email" 
                     placeholder="ejemplo@gmail.com" 
                     onChange={(e) => setCorreo(e.target.value)} 
                   />
-                   <Input 
-                    label="Contraseña" 
-                    type="password" 
-                    placeholder="********" 
-                    onChange={(e) => setClave(e.target.value)} 
+                  <Input
+                    label="Contraseña"
+                    type={verContra ? "text" : "password"}
+                    placeholder="********"
+                    onChange={(e) => setClave(e.target.value)}
+                    rightIcon={
+                      <ButtonShowPsd
+                        onClick={() => setVerContra(prev => !prev)}
+                        aria-label={verContra ? "Ocultar contraseña" : "Ver contraseña"}
+                        className="bg-transparent border-0 cursor-pointer text-inherit p-0 flex items-center"
+                        >
+                        <span className="material-symbols-outlined"  translate="no">
+                          {verContra ? "visibility" : "visibility_off"}
+                        </span>
+                      </ButtonShowPsd>
+                    }
                   />
                 </div>
 
@@ -169,17 +121,18 @@ export function Login() {
 
                 {/* Botón principal */}
                 <div className="space-y-4">
-  <ButtonState 
-    initialText="Iniciar sesión" 
-    successText="¡Ingreso exitoso!" 
-    disabled={!isFormValid || !selectedRole} 
-    clicked={clicked} 
-  />
+      <ButtonState 
+        initialText="Iniciar sesión" 
+        successText="¡Ingreso exitoso!" 
+        loadingText="Verificando..."
+        disabled={!isFormValid || isSubmitting} 
+        clicked={isSubmitting} 
+      />
 
   {/* Crear cuenta - color más notorio */}
   <a 
     href="/register" 
-    className="block w-full text-center bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition-all duration-300 font-semibold shadow-md"
+    className="block w-full text-center bg-orange-500 text-white py-3 rounded-lg cursor-pointer hover:bg-orange-600 transition-all duration-300 font-semibold shadow-md"
   >
     Crear cuenta nueva
   </a>
@@ -195,7 +148,7 @@ export function Login() {
                   </Link>
                 </div>
               </div>
-            )}
+            
           </form>
         </div>
 
@@ -210,6 +163,5 @@ export function Login() {
     </>
   );
 }
-
 
 

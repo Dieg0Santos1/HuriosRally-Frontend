@@ -120,13 +120,14 @@ interface FacturaData {
 // Función auxiliar para convertir imagen a base64
 async function getLogoBase64(): Promise<string | null> {
     try {
-        const response = await fetch('/assets/imgs/logo.webp');
-        const blob = await response.blob();
+        const response = await fetch('/assets/imgs/Logo_Mejorado.png');
+        const originalBlob = await response.blob();
+        const pngBlob = new Blob([originalBlob], { type: 'image/png' })
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.onloadend = () => resolve(reader.result as string);
             reader.onerror = reject;
-            reader.readAsDataURL(blob);
+            reader.readAsDataURL(pngBlob);
         });
     } catch (e) {
         console.error('Error cargando logo:', e);
@@ -176,7 +177,7 @@ export async function generateBoletaPDF(data: BoletaData) {
     const logoBase64 = await getLogoBase64();
     if (logoBase64) {
         try {
-            doc.addImage(logoBase64, 'WEBP', 15, 15, 25, 25);
+            doc.addImage(logoBase64, 'PNG', 15, 15, 25, 25, undefined, 'FAST');
         } catch (e) {
             console.error('Error agregando logo:', e);
         }
@@ -355,7 +356,7 @@ export async function generateFacturaPDF(data: FacturaData) {
     const logoBase64 = await getLogoBase64();
     if (logoBase64) {
         try {
-            doc.addImage(logoBase64, 'WEBP', 15, 15, 25, 25);
+            doc.addImage(logoBase64, 'PNG', 15, 15, 25, 25, undefined, 'FAST');
         } catch (e) {
             console.error('Error agregando logo:', e);
         }
@@ -517,7 +518,7 @@ export async function generateFacturaPDF(data: FacturaData) {
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
     
-    doc.text("Sub Total Ventas", labelsX, totalsY);
+    doc.text("Sub total en ventas", labelsX, totalsY);
     doc.text(`S/ ${data.subtotal.toFixed(2)}`, valuesX, totalsY, { align: "right" });
     
     totalsY += 6;
@@ -531,7 +532,7 @@ export async function generateFacturaPDF(data: FacturaData) {
     doc.line(totalsX, totalsY + 2, totalsX + 70, totalsY + 2);
     
     totalsY += 6;
-    doc.text("Valor venta", labelsX, totalsY);
+    doc.text("Valor total de venta", labelsX, totalsY);
     doc.text(`S/ ${baseImponible.toFixed(2)}`, valuesX, totalsY, { align: "right" });
     
     totalsY += 6;

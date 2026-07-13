@@ -7,9 +7,15 @@ import { getToken, clearToken, getRole } from "../../utils/token";
 
 const categories = [
   { id: 1, name: "Motor" },
-  { id: 2, name: "Neumaticos" },
-  { id: 3, name: "Carroceria" },
+  { id: 2, name: "Neumáticos" },
+  { id: 3, name: "Carrocería" },
   { id: 4, name: "Filtros" },
+  {id:5,name:"Suspensión"},
+  {id:6,name:"Frenos"},
+  {id:7,name:"Eléctrico"},
+  {id:8,name:"Accesorios"},
+  {id:9,name:"Transmisión"},
+  {id:10,name:"Lubricantes"}
 ];
 
 const Navbar: React.FC = () => {
@@ -66,10 +72,10 @@ const Navbar: React.FC = () => {
               onClick={() => setCatsOpen(v => !v)}
               onMouseEnter={() => setCatsOpen(true)}
               onMouseLeave={() => setCatsOpen(false)}
-              className="flex items-center gap-1"
+              className="flex items-center gap-1 cursor-pointer"
               aria-expanded={catsOpen}
             >
-              Categorias
+              Categorías
               <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden>
                 <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06-.02L10 10.67l3.71-3.48a.75.75 0 111.04 1.08l-4.25 4a.75.75 0 01-1.04 0l-4.25-4a.75.75 0 01-.02-1.06z" clipRule="evenodd" />
               </svg>
@@ -125,7 +131,7 @@ const Navbar: React.FC = () => {
             <button
               onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               aria-label={isAuthenticated ? "Menú de usuario" : "Iniciar sesión"}
-              className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white text-[#27557a] hover:scale-105 transition flex-shrink-0"
+              className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white text-[#27557a] hover:scale-105 transition flex-shrink-0 cursor-pointer"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                 <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5z" />
@@ -171,14 +177,14 @@ const Navbar: React.FC = () => {
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                       </svg>
-                      <span>Cambiar contraseña</span>
+                      <span>Restablecer contraseña</span>
                     </Link>
                     
                     <hr className="my-2 border-gray-200" />
                     
                     <button
                       onClick={handleLogout}
-                      className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition-colors w-full text-left"
+                      className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition-colors w-full text-left cursor-pointer"
                     >
                       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
@@ -193,7 +199,7 @@ const Navbar: React.FC = () => {
 
           {/* hamburger: visible en mobile/tablet */}
           <button
-            className="lg:hidden p-1.5 sm:p-2 rounded text-white/90 hover:bg-white/10 flex-shrink-0"
+            className="lg:hidden p-1.5 sm:p-2 rounded text-white/90 hover:bg-white/10 flex-shrink-0 "
             onClick={() => setMenuOpen(v => !v)}
             aria-label="Abrir menu"
           >
@@ -213,7 +219,7 @@ const Navbar: React.FC = () => {
 
           {/* details permite expandir categorias y seguir siendo accesible/clickable */}
           <details className="py-2 border-b border-white/10">
-            <summary className="cursor-pointer">Categorias</summary>
+            <summary className="cursor-pointer">Categorías</summary>
             <ul className="pl-4 mt-2">
               {categories.map(c => (
                 <li key={c.id} className="py-1">

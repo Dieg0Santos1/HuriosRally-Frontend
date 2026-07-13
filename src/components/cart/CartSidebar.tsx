@@ -1,9 +1,10 @@
 ﻿import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import { API_BASE_URL } from '../../config/api';
 
 const CartSidebar: React.FC = () => {
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+  const API_BASE = API_BASE_URL;
   const { 
     isOpen, 
     items, 
@@ -63,7 +64,7 @@ const CartSidebar: React.FC = () => {
               <p className="text-gray-500 mb-4">Añade algunos productos para empezar</p>
               <button
                 onClick={toggleCart}
-                className="px-6 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors"
+                className="px-6 py-2 bg-[var(--Primary_5)] text-white rounded-md hover:bg-[#1e4a6f] transition-colors cursor-pointer"
               >
                 Continuar comprando
               </button>
@@ -82,7 +83,7 @@ const CartSidebar: React.FC = () => {
                             ? item.imageUrl
                             : `${API_BASE}${item.imageUrl}`
                         )
-                      : "/assets/imgs/placeholder.png";
+                      : "/assets/imgs/placeholder.svg";
                     return (
                     <div key={item.id} className="flex items-start gap-3 p-2 border-b border-gray-100 last:border-b-0">
                       {/* Imagen del producto */}
@@ -137,7 +138,7 @@ const CartSidebar: React.FC = () => {
                       <span className="text-green-600 font-medium">✓ Tu pedido califica para envío gratis y priorizado</span>
                     ) : (
                       <span>
-                        Agrega S/ {(200 - totalPrice).toFixed(2)} más para <span className="text-green-600 font-medium">envío gratis</span>
+                        Agrega S/ {(200 - totalPrice).toFixed(2)} más para <span className="text-green-600 font-medium">Envío gratis</span>
                       </span>
                     )}
                   </p>

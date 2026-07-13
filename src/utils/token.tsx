@@ -1,37 +1,76 @@
 import { clearCurrentEmail } from "../api/localStorageDb";
 
-// src/utils/token.tsx
-/*Sirve para que el localStorage guarde el Token del usuario autorizado */
+const TOKEN_KEY = "hurios_token";
+const ROLE_KEY = "hurios_role";
+const AUTH_MESSAGE_KEY = "hurios_auth_message";
+const DEFAULT_EXPIRED_MESSAGE = "Tu sesion expiro. Inicia sesion de nuevo.";
+
 export function saveToken(token: string) {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    localStorage.setItem("hurios_token", token);
+  if (typeof window !== "undefined" && window.localStorage) {
+    localStorage.setItem(TOKEN_KEY, token);
   }
 }
-/*Sirve para obtener el token del usuario que inicio sesión */
+
 export function getToken(): string | null {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    return localStorage.getItem("hurios_token");
+  if (typeof window !== "undefined" && window.localStorage) {
+    return localStorage.getItem(TOKEN_KEY);
   }
   return null;
 }
-/*Sirve para que el localStorage borre el token de autorización una vez finaliza la sesión */
+
 export function clearToken() {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    localStorage.removeItem("hurios_token");
-    localStorage.removeItem("hurios_role");
+  if (typeof window !== "undefined" && window.localStorage) {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(ROLE_KEY);
     clearCurrentEmail();
   }
 }
-/*Sirve para que el localStorage guarde el nuevo rol que tiene el usuario */
+
 export function saveRole(role: string) {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    localStorage.setItem("hurios_role", role);
+  if (typeof window !== "undefined" && window.localStorage) {
+    localStorage.setItem(ROLE_KEY, role);
   }
 }
-/*Sirve para obtener obtener el rol del usuario */
+
 export function getRole(): string | null {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    return localStorage.getItem("hurios_role");
+  if (typeof window !== "undefined" && window.localStorage) {
+    return localStorage.getItem(ROLE_KEY);
   }
   return null;
+}
+
+export function redirectToLoginForExpiredSession(
+  message: string = DEFAULT_EXPIRED_MESSAGE,
+) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  clearToken();
+  window.sessionStorage?.setItem(AUTH_MESSAGE_KEY, message);
+
+  if (window.location.pathname !== "/login") {
+    window.location.replace("/login");
+  }
+}
+
+export function consumeAuthMessage(): string | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const message = window.sessionStorage?.getItem(AUTH_MESSAGE_KEY) || null;
+
+  if (message) {
+    window.sessionStorage?.removeItem(AUTH_MESSAGE_KEY);
+  }
+
+  return message;
+}
+
+export function handleUnauthorizedResponse(
+  message: string = DEFAULT_EXPIRED_MESSAGE,
+): never {
+  redirectToLoginForExpiredSession(message);
+  throw new Error(message);
 }

@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../components/layout/Footer";
 import Navbar from "../components/layout/Navbar";
 import { useCart } from "../context/CartContext";
-import { getToken } from "../utils/token";
+import { getToken, handleUnauthorizedResponse } from "../utils/token";
 import { generateBoletaPDF, generateFacturaPDF } from "../utils/pdfGenerator";
 import { useRoleProtection } from "../hooks/useRoleProtection";
+import ButtonShowPsd from "../components/ui/ButtonShowPwd";
+import { Input } from "../components/ui/Input";
+import { API_BASE_URL } from "../config/api";
 
 type PaymentMethod = "card" | "yape";
 
@@ -21,7 +24,7 @@ interface YapeData {
     approvalCode: string;
 }
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8080";
+const API_BASE = API_BASE_URL;
 
 export function Payment() {
     useRoleProtection('payment'); // Bloquear acceso a admins
@@ -32,7 +35,7 @@ export function Payment() {
     const [processingError, setProcessingError] = useState("");
     const [showThankYouModal, setShowThankYouModal] = useState(false);
     const [orderId, setOrderId] = useState<string | null>(null);
-
+    const [CVC,setVerCVC]=useState(false)
     // Card payment state
     const [cardData, setCardData] = useState<CardData>({
         cardNumber: "",
@@ -285,6 +288,10 @@ export function Payment() {
                 body: JSON.stringify(paymentData),
             });
 
+            if (res.status === 401 || res.status === 403) {
+                handleUnauthorizedResponse();
+            }
+
             if (!res.ok) {
                 const errorData = await res.json().catch(() => ({}));
                 throw new Error(errorData.error || errorData.message || "Error al procesar el pago");
@@ -374,7 +381,7 @@ export function Payment() {
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">Metodo de Pago</h1>
                         <button
                             onClick={() => navigate("/checkout")}
-                            className="text-[var(--Primary_5)] hover:underline text-sm"
+                            className="text-[var(--Primary_5)] hover:underline text-sm cursor-pointer"
                         >
                             ← Volver
                         </button>
@@ -478,7 +485,7 @@ export function Payment() {
                                         <div className="space-y-4">
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                    Numerode tarjeta *
+                                                    Número de tarjeta *
                                                 </label>
                                                 <div className="relative">
                                                     <input
@@ -541,7 +548,7 @@ export function Payment() {
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        Fecha de expiracion *
+                                                        Fecha de expiración *
                                                     </label>
                                                     <input
                                                         ref={expiryInputRef}
@@ -559,11 +566,8 @@ export function Payment() {
                                                     )}
                                                 </div>
                                                 <div>
-                                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        CVC *
-                                                    </label>
-                                                    <input
-                                                        type="text"
+                                                    <Input
+                                                        type={CVC ? "text" : "password"}
                                                         value={cardData.cvc}
                                                         onChange={(e) =>
                                                             setCardData((prev) => ({
@@ -571,11 +575,23 @@ export function Payment() {
                                                                 cvc: e.target.value.replace(/\D/g, "").slice(0, 4),
                                                             }))
                                                         }
+                                                        label="CVC"
                                                         placeholder="123"
                                                         inputMode="numeric"
                                                         maxLength={4}
-                                                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--Primary_5)]"
+                                                        rightIcon={
+                                                            <ButtonShowPsd
+                                                                onClick={() => setVerCVC(prev => !prev)}
+                                                                aria-label={CVC ? "Ocultar contraseña" : "Ver contraseña"}
+                                                                className="bg-transparent border-0 cursor-pointer text-inherit p-0 flex items-center"
+                                                                >
+                                                                <span className="material-symbols-outlined"  translate="no">
+                                                                {CVC ? "visibility" : "visibility_off"}
+                                                                </span>
+                                                            </ButtonShowPsd>
+                                                            }
                                                     />
+                                                    
                                                     {cardErrors.cvc && (
                                                         <p className="text-xs text-red-600 mt-1">
                                                             {cardErrors.cvc}
@@ -596,7 +612,7 @@ export function Payment() {
                                         <div className="space-y-4">
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                    Numerode Celular *
+                                                    Número de Celular *
                                                 </label>
                                                 <input
                                                     type="tel"
@@ -667,7 +683,7 @@ export function Payment() {
                                         <span className="font-medium">S/ {totalPrice.toFixed(2)}</span>
                                     </div>
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-gray-600">Envio</span>
+                                        <span className="text-gray-600">Envío</span>
                                         <span
                                             className={`font-medium ${
                                                 shippingCost === 0 ? "text-green-600" : ""
@@ -688,7 +704,7 @@ export function Payment() {
                                     <button
                                         onClick={handleSubmitPayment}
                                         disabled={isProcessing}
-                                        className="w-full bg-[var(--Primary_5)] text-white py-3 px-4 rounded-md font-medium hover:bg-[#1e4a6f] transition-colors mt-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                        className="w-full bg-[var(--Primary_5)] text-white py-3 px-4 rounded-md font-medium hover:bg-[#1e4a6f] transition-colors mt-4 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                     >
                                         {isProcessing ? (
                                             <>
@@ -791,7 +807,7 @@ export function Payment() {
                                         setShowThankYouModal(false);
                                         navigate("/", { state: { orderSuccess: true, orderId } });
                                     }}
-                                    className="w-full bg-gradient-to-r from-[var(--Primary_5)] to-[#1e4a6f] text-white py-4 px-6 rounded-xl font-semibold text-lg hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+                                    className="w-full bg-gradient-to-r from-[var(--Primary_5)] to-[#1e4a6f] text-white py-4 px-6 rounded-xl cursor-pointer font-semibold text-lg hover:shadow-lg transform hover:scale-105 transition-all duration-200"
                                 >
                                     Aceptar
                                 </button>

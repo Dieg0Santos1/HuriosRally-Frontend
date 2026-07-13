@@ -4,7 +4,9 @@ import ShopCard, { type Product } from "../components/product/ShopCard";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 
-const CATEGORIES = ["Motor", "Neumaticos", "Carroceria", "Filtros"];
+const CATEGORIES = ["Motor","Neumáticos",
+  "Carrocería","Filtros",
+  "Suspensión","Frenos","Eléctrico","Accesorios","Transmisión","Lubricantes"];
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -95,7 +97,7 @@ export default function Products() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Categoria</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Categoría</label>
                     <select
                       value={selectedCategory}
                       onChange={(e) => setSelectedCategory(e.target.value)}
@@ -125,7 +127,7 @@ export default function Products() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Precio maximo: S/ {priceRange[1]}
+                      Precio máximo: S/ {priceRange[1]}
                     </label>
                     <input
                       type="range"
@@ -145,7 +147,7 @@ export default function Products() {
                   </p>
                   <button
                     onClick={handleResetFilters}
-                    className="text-sm text-[var(--Primary_5)] hover:underline"
+                    className="text-sm text-[var(--Primary_5)] hover:underline cursor-pointer"
                   >
                     Limpiar filtros
                   </button>
